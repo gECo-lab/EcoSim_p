@@ -26,7 +26,8 @@ HTTP Status
 path_pages = os.path.join(os.getcwd(), 'pages')
 app = Flask(__name__, template_folder=path_pages, static_folder=path_pages)
 
-app.config['PROPAGATE_EXCEPTIONS'] = True # To allow flask propagating exception even if debug is set to false on app
+# To allow flask propagating exception even if debug is set to false on app
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 app.secret_key = os.urandom(64)
 
@@ -47,6 +48,7 @@ app.register_blueprint(result_blueprint, url_prefix="/result")
 api = Api(app)
 api.add_resource(ModelList, '/models')
 
+
 ##################
 # Initialization #
 ##################
@@ -54,6 +56,7 @@ api.add_resource(ModelList, '/models')
 @app.before_first_request
 def init_db():
     Database.initialize()
+
 
 if __name__ == '__main__':
     app.run('127.0.0.1', '5000', debug=True)  # important to mention debug=True

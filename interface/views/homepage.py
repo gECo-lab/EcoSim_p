@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template
+
 homepage_blueprint = Blueprint('homepage', __name__)
+
 
 @homepage_blueprint.route('/', methods=['GET'])
 def parametrization():
-	"""
-	Route to render the homepage page
-	"""
+    """
+    Route to render the homepage page
+    """
 
-	return render_template('/homepage/homepage.html')
+    return render_template('/homepage/homepage.html')

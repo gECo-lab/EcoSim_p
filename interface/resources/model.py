@@ -8,7 +8,7 @@ class ModelList(Resource):
     RESTful API for consulting/list the models that can be simulated
     """
 
-    def get(self):                
+    def get(self):
         """
         GET the models which the user will choose to simulate
         """

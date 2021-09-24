@@ -20,7 +20,7 @@ class Database:
     # Model List #
     ##############
     @classmethod
-    def _initialize_example_and_model_files(cls) -> None:
+    def _initialize_models_parameters(cls) -> None:
 
         example_and_model_files: List[str] = []
 
@@ -63,7 +63,8 @@ class Database:
         Get models from the models directory
         Get path of zip, wich contains csv simulation results
         """
-        Database._initialize_example_and_model_files()
+        Database._initialize_models_parameters()
+
         Database._initialize_files()
 
     @staticmethod

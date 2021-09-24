@@ -1,6 +1,5 @@
 from flask import Blueprint, send_file, render_template
 from common.database import Database
-import pdb
 
 result_blueprint = Blueprint('result', __name__)
 
@@ -17,8 +16,6 @@ def download_csv(version_date):
 
     path_zip_result_file = Database.get_file(
         'path_zip_result')['path_zip_result']
-
-    pdb.set_trace()
 
     # https://www.youtube.com/watch?v=sy1MNWt7om4
     return send_file(filename_or_fp=path_zip_result_file, as_attachment=True)

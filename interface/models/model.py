@@ -17,4 +17,4 @@ class Models(AbstractDataModel):
         Get models from the models directory
         """
 
-        return Database.get("models")
+        return Database.get_parameter("models")

@@ -1,6 +1,5 @@
 import os
 import shutil
-import pdb
 
 
 def execute_selected_simulation(model: str) -> None:
@@ -8,7 +7,6 @@ def execute_selected_simulation(model: str) -> None:
     Execute the simulation by executing the .sh of the model
     """
 
-    pdb.set_trace()
     cwd = os.getcwd()
 
     folders = ["examples", "models"]
@@ -29,8 +27,6 @@ def execute_selected_simulation(model: str) -> None:
     os.system(f'./{sh_file}')
 
     os.chdir(cwd)
-
-    pdb.set_trace()
 
 
 def write_simulation_results_in_results_html(model: str) -> None:

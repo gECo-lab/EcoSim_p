@@ -12,9 +12,9 @@ class Database:
 
     # Redis
     # r = redis.Redis(host='localhost', port=6379, db=0)
-    parameters: Dict = {}
+    _parameters: Dict = {}
 
-    files: Dict = {}
+    _files: Dict = {}
 
     ##############
     # Model List #
@@ -39,7 +39,7 @@ class Database:
 
         # Redis
         # Database.r.set("models", json.dumps(list_models))
-        Database.parameters['models'] = list_models
+        Database._parameters['models'] = list_models
 
     #################
     # Zip file path #
@@ -53,7 +53,7 @@ class Database:
 
         path_zip_result_file = os.path.join(path_files, 'result.zip')
 
-        Database.files['path_zip_result'] = path_zip_result_file
+        Database._files['path_zip_result'] = path_zip_result_file
 
     @staticmethod
     def initialize() -> None:
@@ -67,16 +67,20 @@ class Database:
         Database._initialize_files()
 
     @staticmethod
-    def get(key: str) -> Dict:
+    def get_parameter(key: str) -> Dict:
         # Redis
         # return {key: json.loads(Database.r.get(key))}
-        return {key: Database.parameters[key]}
+        return {key: Database._parameters[key]}
 
     @staticmethod
-    def set(key: str, value: Any) -> None:
-        Database.parameters[key] = value
+    def set_parameter(key: str, value: Any) -> None:
+        Database._parameters[key] = value
         return None
 
     @staticmethod
     def get_file(key: str) -> Dict:
-        return {key: Database.files[key]}
+        return {key: Database._files[key]}
+
+    @staticmethod
+    def set_file(key: str, value: Any) -> None:
+        Database._files[key] = value

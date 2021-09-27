@@ -11,7 +11,7 @@ class Models(AbstractDataModel):
     Retrive data in a format to send to the interface (webpage)
     """
 
-    def json():
+    def json(self):
         """
         Get examples from the examples directory
         Get models from the models directory

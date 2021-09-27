@@ -13,4 +13,6 @@ class ModelList(Resource):
         GET the models which the user will choose to simulate
         """
 
-        return Models.json(), 200
+        models = Models()
+
+        return models.json(), 200

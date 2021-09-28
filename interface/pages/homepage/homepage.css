@@ -12,6 +12,11 @@ nav {
     font-size: 40px;
 }
 
+.nav-title:hover {
+    cursor: pointer;
+    font-weight: 900;    
+}
+
 .container {
     margin: 0;
     padding: 0;

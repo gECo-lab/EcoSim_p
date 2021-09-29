@@ -4,7 +4,7 @@ class Homepage {
 
 		this._formEl = document.querySelector("form");		
 
-		this._arrayContent = Array.prototype.slice.call(document.querySelectorAll("aside > [content]"));
+		this._arrayContent = Array.prototype.slice.call(document.querySelectorAll("content > [content]"));
 
 		this._contentResultEl = document.querySelector("result");
 

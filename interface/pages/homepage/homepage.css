@@ -32,22 +32,22 @@ sidebar {
     max-height: 300px;
 }
 
-aside {            
+content {            
     margin: 0px;
     padding: 10px;
     width: 100%;
 
 }
 
-aside > models {
+content > models {
     display: block;
 }
 
-aside > progress {
+content > progress {
     display: none;
 }
 
-aside > result {
+content > result {
     display: none;
 }
 

@@ -4,7 +4,7 @@ homepage_blueprint = Blueprint('homepage', __name__)
 
 
 @homepage_blueprint.route('/', methods=['GET'])
-def parametrization():
+def homepage():
     """
     Route to render the homepage page
     """

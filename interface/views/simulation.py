@@ -7,7 +7,8 @@ from common.utils import generate_zip_csv_result
 
 simulation_blueprint = Blueprint('simulation', __name__)
 
-@simulation_blueprint.route("/execution", methods=['GET', 'POST'])
+
+@simulation_blueprint.route("/execution", methods=['POST'])
 def execution():
     """
     Execute the simulation
@@ -23,6 +24,6 @@ def execution():
 
         write_simulation_results_in_results_html(model)
 
-        generate_zip_csv_result(model, older_csv_files_paths)    
+        generate_zip_csv_result(model, older_csv_files_paths)
 
     return ('', 204)

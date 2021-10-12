@@ -23,12 +23,6 @@ class Homepage {
 
 	// Events
 
-	addEventListenerToMenuItemToHideCorrespondingContent(contentSelectorEl, selector) {
-		contentSelectorEl.addEventListener("click", e => {
-			this.hideContent(selector);
-		});		
-	}
-
 	addEventListenerToMenuItemToShowCorrespondingContent(contentSelectorEl, selector) {
 		contentSelectorEl.addEventListener("click", e => {
 			this.showContent(selector);			
@@ -51,11 +45,6 @@ class Homepage {
 		document.querySelector(selector).style.display = "block";
 	}
 
-	hideContent(selector)
-	{
-		document.querySelector(selector).style.display = "none";
-	}
-
 	initializate()
 	{
 
@@ -68,8 +57,7 @@ class Homepage {
 			});
 
 		this._btnModels.addEventListener(["click"], event => {
-			this._btnSimulate.style.display = 'block';
-			caches.delete('result/download/csv');
+			this._btnSimulate.style.display = 'block';			
 		});
 
 		this._btnResult.addEventListener(["click"], event => {
@@ -103,7 +91,6 @@ class Homepage {
 	                this.showContent("result");
 	                
 	                this._btnModels.style.display = "block";
-	                this._btnSimulate.style.display = "none";	                
 	                this._btnStop.style.display = "none";
 	                this._btnResult.style.display = "block";	                
 
@@ -126,7 +113,7 @@ class Homepage {
 
 			event.preventDefault();			
 
-			this.showContent("progress");
+			// this.showContent("progress");
 			
 			this._btnModels.style.display = "none";
 			this._btnSimulate.style.display = "none";			

@@ -1,0 +1,77 @@
+body {    
+    height: 100%;
+    padding: 0;
+}
+
+nav {    
+    margin-left: 0px;
+    width: 100%;    
+}
+
+.nav-title {
+    font-size: 40px;
+}
+
+.nav-title:hover {
+    cursor: pointer;
+    font-weight: 900;    
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+container-row {
+    margin: 0px;        
+    padding: 0px;    
+}
+
+sidebar {    
+    max-height: 300px;
+}
+
+content {            
+    margin: 0px;
+    padding: 10px;
+    width: 100%;
+
+}
+
+content > models {
+    display: block;
+}
+
+content > progress {
+    display: none;
+}
+
+content > result {
+    display: none;
+}
+
+.btn-menu {
+    background-color: #227;
+    border-color: #227;
+}
+
+.btn-models {
+    border-radius: 0px;
+}
+
+.btn-stop {
+    display: none;
+}
+
+.btn-simulate:hover {
+
+    background-color:  rgb(200, 0, 50);
+    border-color:  rgb(200, 0, 50);
+}
+
+.btn-result:hover {
+
+    background-color:  rgb(0, 150, 100);
+    border-color:  rgb(0, 150, 100);
+}

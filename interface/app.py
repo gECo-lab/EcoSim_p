@@ -1,60 +1,62 @@
-from flask import Flask, request, render_template
-from flask_restful import Resource, Api
-import os
+##############
+# Controller #
+##############
 
-from modules.interface import ParameterProvider, ExecuteSimulationFromJson
+import os
+from flask import Flask
+from flask_restful import Api
+
+from common.database import Database
+from resources.model import ModelList
+from views.homepage import homepage_blueprint
+from views.simulation import simulation_blueprint
+from views.result import result_blueprint
 
 """
-HTTP Status                                                   
+HTTP Status
 200 - Ok
 201 - Created
 404 - Error
+204 - No Content
 """
 
-app = Flask(__name__)
-app.config['PROPAGATE_EXCEPTIONS'] = True # To allow flask propagating exception even if debug is set to false on app
+#####################
+# Flask basic Setup #
+#####################
+path_pages = os.path.join(os.getcwd(), 'pages')
+app = Flask(__name__, template_folder=path_pages, static_folder=path_pages)
+
+# To allow flask propagating exception even if debug is set to false on app
+app.config['PROPAGATE_EXCEPTIONS'] = True
+
+app.secret_key = os.urandom(64)
+
+#############
+# Endpoints #
+#  (Views)  #
+#############
+
+app.register_blueprint(homepage_blueprint, url_prefix="/")
+app.register_blueprint(simulation_blueprint, url_prefix="/simulation")
+app.register_blueprint(result_blueprint, url_prefix="/result")
+
+#############
+# Resources #
+# (Models)  #
+#############
+
 api = Api(app)
-
-parameter_provider = ParameterProvider()
-executeSimulationFromJson = ExecuteSimulationFromJson(path_to_app_server=os.getcwd())
-
-@app.route('/', methods=['GET'])
-def homepage():
-    """
-    Route to render the homepage
-    """
-
-    return render_template('/homepage.html')
-
-
-@app.route('/simulation', methods=['GET', 'POST'])
-def simulation():
-    """    
-    Receive the model_name from a POST Request from the homepage    
-    Execute the simulation (of the choosen model) itself
-    Render the simulation web page
-    """
-
-    model_name = request.form["model"]    
-    executeSimulationFromJson.exec_simulation(model_name)
-
-    return render_template('/simulation.html')
-
-
-class ModelList(Resource):
-    """
-    RESTful API for consulting/list the models that can be simulated
-    """
-
-    def get(self):                
-        """
-        GET the models which the user will choose to simulate
-        """
-
-        return parameter_provider.get_models(), 200        
-
 api.add_resource(ModelList, '/models')
+
+
+##################
+# Initialization #
+##################
+
+@app.before_first_request
+def init_db():
+    Database.initialize()
+
 
 if __name__ == '__main__':
     app.run('127.0.0.1', '5000', debug=True)  # important to mention debug=True
-    

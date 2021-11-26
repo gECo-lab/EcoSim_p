@@ -42,12 +42,10 @@ class Model:
         self.spaces = dict()
         self.agents = dict()
         self.agents_by_type = dict()
-        # self.model_observers = {}
-        self.agent_observers = {}
+        self.agent_observers = dict()
 
         self.create_schedule(self.schedule_def)
         self.create_spaces()
-        #self.create_agents()
         self.create_observers(path_to_results)
 
 

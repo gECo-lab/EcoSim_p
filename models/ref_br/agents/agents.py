@@ -36,3 +36,10 @@ class EconomicAgent(DiscreteEventAgent):
         """ Agent releases a demmand """
         # TODO: Implemented by subclass
         self.demand_satisfied = False
+
+    def notify_policy(self, interst_rate, macroprudential_policy):
+        """ The agent receives notification for interest rate 
+            and macroprudential policy 
+        """
+        self.interst_rate = interst_rate
+        self.macroprudential_policy = macroprudential_policy

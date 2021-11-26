@@ -36,8 +36,8 @@ sim_results_cf <- do.call(rbind, lapply(cf_simulation_file, read.csv))
 hh_stats <- sim_results_hh %>%
             filter(alive == 'True') %>% 
             group_by(scenario, run, step, re_market) %>%
-            summarise( avg_income = mean(income),
-                       income = sum(income),
+            summarise(avg_income = mean(current_income),
+                       income = sum(current_income),
                        avg_savings = mean(savings),
                        savings = sum(savings),
                        rent = sum(rent),
@@ -46,6 +46,7 @@ hh_stats <- sim_results_hh %>%
                        avg_age = mean(age),
                        alive = sum(alive=="True"),
                        owners = sum(house_ownership == "owner"),
+                       avg_fin_avail =  mean(financial_availability),
                        n = n(),
                        perc_unemployed = (n - employed)/n
             )
@@ -119,10 +120,22 @@ ggplot(hh_stats, aes(x = step, y = owners, color=re_market)) +
 
 ```
 
+```{r hh_all_fa_01}
+
+ggplot(hh_stats, aes(x = step, y = avg_fin_avail, color=re_market)) + 
+  geom_point(alpha = 0.01) +
+  geom_smooth(aes(group=re_market), method='lm') +
+  facet_grid(scenario~run) +
+  labs(title = "Household Average Financial Availability by Scenario and Run - All Agents")+
+  ylab("mean financial availability") +
+  xlab("Step")
+
+```
+
 
 ```{r hh_all_gr_01, eval=FALSE}
 
-ggplot(subset(sim_results_hh, alive == 'True'), aes(x = step, y = income, color = re_market)) + 
+ggplot(subset(sim_results_hh, alive == 'True'), aes(x = step, y = current_income, color = re_market)) + 
   geom_point(alpha = 0.01) +
   geom_smooth(aes(group=re_market), method='lm') +
   facet_grid(scenario~run) +
@@ -136,7 +149,8 @@ ggplot(subset(sim_results_hh, alive == 'True'), aes(x = step, y = income, color 
 ```{r hh_all_gr_02, eval=FALSE}
 
 
-ggplot(subset(sim_results_hh, alive == 'True'), aes(x = step, y = savings, color=re_market)) + 
+ggplot(subset(sim_results_hh, alive == 'True'),
+       aes(x = step, y = savings, color=re_market)) + 
   geom_point(alpha = 0.01) +
   geom_smooth(aes(group=re_market), method='loess') +
   facet_grid(scenario~run) +
@@ -152,27 +166,32 @@ ggplot(subset(sim_results_hh, alive == 'True'), aes(x = step, y = savings, color
 
 last = max(sim_results_hh$step)
 
-scn1_m1_mean = mean(subset(sim_results_hh, scenario == "Scenario1" & re_market == "SP")$income)
-scn2_m1_mean = mean(subset(sim_results_hh, scenario == "Scenario2" & re_market == "SP")$income)
-scn1_m2_mean = mean(subset(sim_results_hh, scenario == "Scenario1" & re_market == "RJ")$income)
-scn2_m2_mean = mean(subset(sim_results_hh, scenario == "Scenario2" & re_market == "RJ")$income)
+scn1_m1_mean = mean(subset(sim_results_hh,
+                           scenario == "Scenario1" &
+                           re_market == "BR")$current_income)
+
+scn2_m1_mean = mean(subset(sim_results_hh,
+                           scenario == "Scenario2" &
+                           re_market == "BR")$current_income)
 
 
-scn1 = ggplot(subset(sim_results_hh, scenario == "Scenario1"), aes(x = income, color=re_market)) + 
-            geom_density() +
-            geom_vline(aes(xintercept=scn1_m1_mean, color="SP"), linetype="dashed", size=1) +
-            geom_vline(aes(xintercept=scn1_m2_mean, color="RJ"),linetype="dashed", size=1) +
-            labs(title = "Income Distribution - Scenario 1 - All steps")+
-            xlab("Income")
+scn1 = ggplot(subset(sim_results_hh,
+                     scenario == "Scenario1"),
+              aes(x = current_income, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn1_m1_mean, color="BR"), linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 1 - All steps")+
+    xlab("Income")
 
-scn2 = ggplot(subset(sim_results_hh, scenario == "Scenario2"), aes(x = income, color=re_market)) + 
-            geom_density() +
-            geom_vline(aes(xintercept=scn2_m1_mean, color="SP"), linetype="dashed", size=1) +
-            geom_vline(aes(xintercept=scn2_m2_mean, color="RJ"),linetype="dashed", size=1) +
-            labs(title = "Income Distribution - Scenario 2 All steps")+
-            xlab("Income")
+scn2 = ggplot(subset(sim_results_hh,
+                     scenario == "Scenario2"),
+              aes(x = current_income, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn2_m1_mean, color="BR"), linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 2 All steps")+
+    xlab("Income")
             
-#grid.arrange(scn1, scn2, nrow=2)
+
 scn1
 
 scn2
@@ -180,7 +199,7 @@ scn2
 
 ```{r income_violin_01}
 
-ggplot(sim_results_hh,  aes(x = scenario, y= income, color=re_market)) + 
+ggplot(sim_results_hh,  aes(x = scenario, y= current_income, color=re_market)) + 
   geom_violin() +
   labs(title = "Income Distribution All steps")+
   xlab("Income")
@@ -193,31 +212,42 @@ ggplot(sim_results_hh,  aes(x = scenario, y= income, color=re_market)) +
 
 ```{r hh_dist_gr_02}
 
+# Precisa Generalizar este código. Colocar um subset por re_market. Talvez usar o purrr
 
-scn1_m1_mean_income_first = mean(subset(sim_results_hh, re_market == "SP" & scenario == "Scenario1" & step == 0)$income)
-scn2_m1_mean_income_first = mean(subset(sim_results_hh, re_market == "SP" & scenario == "Scenario2" & step == 0)$income)
-scn1_m2_mean_income_first = mean(subset(sim_results_hh, re_market == "RJ" & scenario == "Scenario1" & step == 0)$income)
-scn2_m2_mean_income_first = mean(subset(sim_results_hh, re_market == "RJ" & scenario == "Scenario2" & step == 0)$income)
+scn1_m1_mean_income_first = mean(subset(sim_results_hh,
+                                        re_market == "BR" &
+                                        scenario == "Scenario1" &
+                                        step == 0)$current_income)
+
+scn2_m1_mean_income_first = mean(subset(sim_results_hh,
+                                        re_market == "BR" &
+                                        scenario == "Scenario2" &
+                                        step == 0)$current_income)
 
 
-scn1 = ggplot(subset(sim_results_hh, scenario == 'Scenario1' & step == 0), aes(x = income, color=re_market)) +
-          geom_density() +
-          geom_vline(aes(xintercept=scn1_m1_mean_income_first,  color = "SP"), linetype="dashed", size=1) +
-          geom_vline(aes(xintercept=scn1_m2_mean_income_first,  color = "RJ"),linetype="dashed", size=1) +
-          labs(title = "Income Distribution - Scenario 1 - first step")+
-          xlab("Income") 
+scn1 = ggplot(subset(sim_results_hh, scenario == 'Scenario1' &
+                                     step == 0),
+              aes(x = current_income, color=re_market)) +
+    geom_density() +
+    geom_vline(aes(xintercept=scn1_m1_mean_income_first,  color = "BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 1 - first step")+
+    xlab("Income") 
 
-scn2 = ggplot(subset(sim_results_hh, scenario == 'Scenario2' & step == 0), aes(x = income, color=re_market)) +
-          geom_density() +
-          geom_vline(aes(xintercept=scn2_m1_mean_income_first,  color = "SP"), linetype="dashed", size=1) +
-          geom_vline(aes(xintercept=scn2_m2_mean_income_first,  color = "RJ"),linetype="dashed", size=1) +
-          labs(title = "Income Distribution - Scenario 2 - first step")+
-          xlab("Income") 
+scn2 = ggplot(subset(sim_results_hh, scenario == 'Scenario2' &
+                                     step == 0),
+              aes(x = current_income, color=re_market)) +
+    geom_density() +
+    geom_vline(aes(xintercept=scn2_m1_mean_income_first,
+                   color = "BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 2 - first step")+
+    xlab("Income") 
 
 scn1
 
 scn2
-#grid.arrange(scn1, scn2, nrow=2)
+
 
 ```
 
@@ -226,25 +256,32 @@ scn2
 
 ```{r hh_dist_gr_03}
 
-scn1_m1_mean_income_last = mean(subset(sim_results_hh, re_market == "SP" & scenario == "Scenario1" & step == last)$income)
-scn1_m2_mean_income_last = mean(subset(sim_results_hh, re_market == "RJ" & scenario == "Scenario1" & step == last)$income)
-scn2_m1_mean_income_last = mean(subset(sim_results_hh, re_market == "SP" & scenario == "Scenario2" & step == last)$income)
-scn2_m2_mean_income_last = mean(subset(sim_results_hh, re_market == "RJ" & scenario == "Scenario2" & step == last)$income)
+scn1_m1_mean_income_last = mean(subset(sim_results_hh, re_market == "BR" &
+                                                       scenario == "Scenario1" &
+                                                       step == last)$current_income)
+
+scn2_m1_mean_income_last = mean(subset(sim_results_hh, re_market == "BR" &
+                                                       scenario == "Scenario2" &
+                                                       step == last)$current_income)
 
 
-scn1 = ggplot(subset(sim_results_hh, scenario == 'Scenario1' & step == last), aes(x = income, color=re_market)) + 
-          geom_density() +
-          geom_vline(aes(xintercept=scn1_m1_mean_income_last, color="SP"), linetype="dashed", size=1) +
-          geom_vline(aes(xintercept=scn1_m2_mean_income_last, color="RJ"),linetype="dashed", size=1) +
-          labs(title = "Income Distribution - Scenario 1 last step")+
-          xlab("Income")
+
+scn1 = ggplot(subset(sim_results_hh, scenario == 'Scenario1' & step == last),
+              aes(x = current_income, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn1_m1_mean_income_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 1 last step")+
+    xlab("Income")
   
-scn2 = ggplot(subset(sim_results_hh, scenario == 'Scenario2' & step == last), aes(x = income, color=re_market)) + 
-          geom_density() +
-          geom_vline(aes(xintercept=scn2_m1_mean_income_last, color="SP"), linetype="dashed", size=1) +
-          geom_vline(aes(xintercept=scn2_m2_mean_income_last, color="RJ"),linetype="dashed", size=1) +
-          labs(title = "Income Distribution - Scenario 1 last step")+
-          xlab("Income")
+scn2 = ggplot(subset(sim_results_hh, scenario == 'Scenario2' &
+                                     step == last),
+              aes(x = current_income, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn2_m1_mean_income_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Income Distribution - Scenario 1 last step")+
+    xlab("Income")
 
 scn1
 
@@ -252,12 +289,14 @@ scn2
 
 
 ```
+
 ```{r income_violin_02}
 
-ggplot(subset(sim_results_hh,step == last),  aes(x = scenario, y= income, color=re_market)) + 
-  geom_violin() + 
-  labs(title = "Income Distribution last steps")+
-  xlab("Income")
+ggplot(subset(sim_results_hh,step == last),
+       aes(x = scenario, y= current_income, color=re_market)) + 
+    geom_violin() + 
+    labs(title = "Income Distribution last steps")+
+    xlab("Income")
 
 ```
 
@@ -265,86 +304,130 @@ ggplot(subset(sim_results_hh,step == last),  aes(x = scenario, y= income, color=
 
 ```{r hh_dist_gr_04}
 
-ggplot(subset(sim_results_hh, scenario == 'Scenario1' & step == last & alive == 'True'), aes(x = income, color=re_market)) + 
-  stat_ecdf(geom = 'step') +
-  geom_vline(aes(xintercept=scn1_m1_mean_income_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn1_m2_mean_income_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Cumulative Income Distribution - Scenario 1 - last step")+
-  xlab("Income")
+ggplot(subset(sim_results_hh, scenario == 'Scenario1' &
+                              step == last &
+                              alive == 'True'),
+       aes(x = current_income, color=re_market)) + 
+    stat_ecdf(geom = 'step') +
+    geom_vline(aes(xintercept=scn1_m1_mean_income_last,
+                   color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Cumulative Income Distribution - Scenario 1 - last step")+
+    xlab("Income")
 
-ggplot(subset(sim_results_hh, scenario == 'Scenario2' & step == last & alive == 'True'), aes(x = income, color=re_market)) + 
-  stat_ecdf(geom = 'step') +
-  geom_vline(aes(xintercept=scn2_m1_mean_income_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn2_m2_mean_income_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Cumulative Income Distribution - Scenario 2 - last step")+
-  xlab("Income")
+
+
+
+ggplot(subset(sim_results_hh, scenario == 'Scenario2' &
+                              step == last &
+                              alive == 'True'),
+       aes(x = current_income, color=re_market)) + 
+    stat_ecdf(geom = 'step') +
+    geom_vline(aes(xintercept=scn2_m1_mean_income_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Cumulative Income Distribution - Scenario 2 - last step")+
+    xlab("Income")
+
 
 ```
 
 
 ```{r dist_sav_01_vars}
 
-scn1_m1_mean_savings_first = mean(subset(sim_results_hh, re_market = 'SP' & scenario == "Scenario1" & step == 0)$savings)
-scn2_m1_mean_savings_first = mean(subset(sim_results_hh, re_market = 'SP' &  scenario == "Scenario2" & step == 0)$savings)
-scn1_m2_mean_savings_first = mean(subset(sim_results_hh, re_market = 'RJ' & scenario == "Scenario1" & step == 0)$savings)
-scn2_m2_mean_savings_first = mean(subset(sim_results_hh, re_market = 'RJ' &  scenario == "Scenario2" & step == 0)$savings)
+scn1_m1_mean_savings_first = mean(subset(sim_results_hh,
+                                         re_market = 'BR' &
+                                             scenario == "Scenario1" &
+                                             step == 0)$savings)
+
+
+scn2_m1_mean_savings_first = mean(subset(sim_results_hh,
+                                         re_market = 'BR' &
+                                             scenario == "Scenario2" &
+                                             step == 0)$savings)
+
 
 ```
 
 
 ```{r dist_sav_01_graf}
 
-ggplot(subset(sim_results_hh, scenario == "Scenario1" & step == 0 & alive == 'True'), aes(x = savings, color=re_market)) + 
-  geom_density() +
-  geom_vline(aes(xintercept=scn1_m1_mean_savings_first, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn1_m2_mean_savings_first, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Savings Distribution - Scenario 1 - first step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario == "Scenario1" &
+              step == 0 &
+              alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn1_m1_mean_savings_first, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Savings Distribution - Scenario 1 - first step")+
+    xlab("Savings")
+
+
 
 ```
 
 
 ```{r dist_sav_02_graf}
 
-ggplot(subset(sim_results_hh, scenario == "Scenario2" & step == 0 & alive == 'True'), aes(x = savings, color=re_market)) + 
-  geom_density() +
-  geom_vline(aes(xintercept=scn2_m1_mean_savings_first, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn2_m2_mean_savings_first, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Savings Distribution - Scenario 2 - first step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario == "Scenario2" &
+              step == 0 & alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn2_m1_mean_savings_first, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Savings Distribution - Scenario 2 - first step")+
+    xlab("Savings")
+
 
 ```
 
 
 ```{r dist_sav_02_var}
 
-scn1_m1_mean_savings_last = mean(subset(sim_results_hh, re_market = 'SP' & scenario == "Scenario1" & step == last)$savings)
-scn2_m1_mean_savings_last = mean(subset(sim_results_hh, re_market = 'SP' &  scenario == "Scenario2" & step == last)$savings)
-scn1_m2_mean_savings_last = mean(subset(sim_results_hh, re_market = 'RJ' & scenario == "Scenario1" & step == last)$savings)
-scn2_m2_mean_savings_last = mean(subset(sim_results_hh, re_market = 'RJ' &  scenario == "Scenario2" & step == last)$savings)
+scn1_m1_mean_savings_last = mean(subset(sim_results_hh,
+                                        re_market = 'BR' &
+                                            scenario == "Scenario1" &
+                                            step == last)$savings)
+
+
+scn2_m1_mean_savings_last = mean(subset(sim_results_hh,
+                                        re_market = 'BR' &
+                                            scenario == "Scenario2" &
+                                            step == last)$savings)
+
 
 ```
 
 
 ```{r dist_sav_03_graf}
 
-ggplot(subset(sim_results_hh, scenario = 'Scenario1' & step == last & alive == 'True'), aes(x = savings, color=re_market)) + 
-  geom_density() +
-  geom_vline(aes(xintercept=scn1_m1_mean_savings_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn1_m2_mean_savings_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Savings Distribution - Scenario 1 - last step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario = 'Scenario1' &
+                  step == last &
+                  alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn1_m1_mean_savings_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Savings Distribution - Scenario 1 - last step")+
+    xlab("Savings")
+
+
 
 ```
 
 ```{r dist_sav_04_graf}
 
-ggplot(subset(sim_results_hh, scenario = 'Scenario2' & step == last & alive == 'True'), aes(x = savings, color=re_market)) + 
-  geom_density() +
-  geom_vline(aes(xintercept=scn2_m1_mean_savings_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn2_m2_mean_savings_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Savings Distribution - Scenario 2 - last step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario = 'Scenario2' &
+                  step == last & alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    geom_density() +
+    geom_vline(aes(xintercept=scn2_m1_mean_savings_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Savings Distribution - Scenario 2 - last step")+
+    xlab("Savings")
 
 ```
 
@@ -352,163 +435,70 @@ ggplot(subset(sim_results_hh, scenario = 'Scenario2' & step == last & alive == '
 ```{r dist_sav_05_graf}
 
 
-ggplot(subset(sim_results_hh, scenario = 'Scenario1' & step == last & alive == 'True'), aes(x = savings, color=re_market)) + 
-  stat_ecdf(geom = 'step') +
-  geom_vline(aes(xintercept=scn1_m1_mean_savings_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn1_m2_mean_savings_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Cumulative Savings Distribution - Scenario 1 last step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario = 'Scenario1' &
+                  step == last &
+                  alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    stat_ecdf(geom = 'step') +
+    geom_vline(aes(xintercept=scn1_m1_mean_savings_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Cumulative Savings Distribution - Scenario 1 last step")+
+    xlab("Savings")
 
 ```
+
+
+
 
 ```{r dist_sav_06_graf}
 
 
-ggplot(subset(sim_results_hh, scenario = 'Scenario2' & step == last & alive == 'True'), aes(x = savings, color=re_market)) + 
-  stat_ecdf(geom = 'step') +
-  geom_vline(aes(xintercept=scn2_m1_mean_savings_last, color="SP"), linetype="dashed", size=1) +
-  geom_vline(aes(xintercept=scn2_m2_mean_savings_last, color="RJ"),linetype="dashed", size=1) +
-  labs(title = "Cumulative Savings Distribution - Scenario 2 last step")+
-  xlab("Savings")
+ggplot(subset(sim_results_hh,
+              scenario = 'Scenario2' &
+                  step == last &
+                  alive == 'True'),
+       aes(x = savings, color=re_market)) + 
+    stat_ecdf(geom = 'step') +
+    geom_vline(aes(xintercept=scn2_m1_mean_savings_last, color="BR"),
+               linetype="dashed", size=1) +
+    labs(title = "Cumulative Savings Distribution - Scenario 2 last step")+
+    xlab("Savings")
 
 ```
 
 
 ```{r house_owners}
 
-ggplot(subset(sim_results_hh, step == 0 & alive == 'True'), aes(x = scenario, fill=house_ownership, color=house_ownership, group=re_market)) + 
-  geom_bar(position='fill') +
-  scale_y_continuous(labels = scales::percent)+
-  labs(title = "Proportion of owners - first step")+
-  ylab("Percentage") +
-  xlab("Scenarios") +
-  facet_grid(~re_market)
-
-
-ggplot(subset(sim_results_hh, step == last & alive == 'True'), aes(x = scenario, fill=house_ownership, color=house_ownership)) + 
-  geom_bar(position="fill") +
-  scale_y_continuous(labels = scales::percent)+
-  labs(title = "Proportion of owners - last step")+
-  ylab("Percentage") +
-  xlab("Scenarios") +
-  facet_grid(~re_market)
+ggplot(subset(sim_results_hh,
+              step == 0 &
+              alive == 'True'),
+       aes(x = scenario, fill=house_ownership,
+           color=house_ownership, group=re_market)
+       ) + 
+    geom_bar(position='fill') +
+    scale_y_continuous(labels = scales::percent)+
+    labs(title = "Proportion of owners - first step")+
+    ylab("Percentage") +
+    xlab("Scenarios") +
+    facet_grid(~re_market)
 
 
 
-```
+ggplot(subset(sim_results_hh,
+              step == last &
+              alive == 'True'),
+       aes(x = scenario, fill=house_ownership,
+           color=house_ownership)
+       ) + 
+    geom_bar(position="fill") +
+    scale_y_continuous(labels = scales::percent)+
+    labs(title = "Proportion of owners - last step")+
+    ylab("Percentage") +
+    xlab("Scenarios") +
+    facet_grid(~re_market)
 
-## Construction Firms
-
-
-
-```{r summarize_CF}
-
-cf_stats <- sim_results_cf %>%
-            group_by(scenario, run, step, re_market) %>%
-            summarise( avg_demand = mean(housing_demand),
-                       demand = sum(housing_demand),
-                       avg_offer = mean(housing_offer),
-                       offer = sum(housing_offer),
-                       avg_capital = mean(available_capital),
-                       capital_stock = sum(available_capital),
-                       f_mark_up = mean(avg_mark_up),
-                       sd_mark_up = sd(avg_mark_up),
-                       f_house_cost = mean(avg_house_cost),
-                       sd_house_cost = sd(avg_house_cost),
-                       f_house_price = mean(avg_house_price),
-                       sd_house_price = sd(avg_house_price),
-                       n = n()
-            )
 
 
 ```
 
-
-```{r nuber_of_firms}
-
-ggplot(data=cf_stats, aes(x = step, y = n, color=re_market)) + 
-  geom_line() + 
-  facet_grid(scenario~run)+
-  labs(title = "Number of Firms by Scenario and Run")+
-  ylab("Firms") +
-  xlab("Step")
-
-
-```
-
-```{r Housing_Demand}
-
-ggplot(cf_stats, aes(x = step, y = avg_demand, color=re_market)) + 
-  geom_line() + 
-  facet_grid(scenario~run)+
-  labs(title = "Housing Mean Demand by Scenario and Run")+
-  ylab("mean Demand") +
-  xlab("Step")
-
-ggplot(sim_results_cf, aes(x = step, y = housing_demand, color=re_market)) + 
-  geom_point(alpha=0.1) + 
-  stat_smooth(method="loess", span=0.5, se=TRUE, aes(fill=re_market), alpha=0.3) +
-  facet_grid(scenario~run)+
-  labs(title = "Housing Demand by Scenario and Run")+
-  ylab("Demand") +
-  xlab("Step")
-
-```
-
-```{r Housing_offer}
-
-ggplot(cf_stats, aes(x = step, y = avg_offer, color=re_market)) + 
-  geom_line() + 
-  facet_grid(scenario~run)+
-  labs(title = "Housing Mean Offer by Scenario and Run")+
-  ylab("mean Offer") +
-  xlab("Step")
-
-ggplot(cf_stats, aes(x = step, y = offer, color=re_market)) + 
-  geom_line() + 
-  facet_grid(scenario~run)+
-  labs(title = "Housing offer by Scenario and Run")+
-  ylab("Offer") +
-  xlab("Step")
-
-```
-
-
-```{r firms_markup_and_cost}
-
-ggplot(cf_stats, aes(x = step, y = f_mark_up, color=re_market)) + 
-  geom_line() + 
-  facet_grid(scenario~run)+
-  labs(title = "Firms mean mark-up by Scenario and Run")+
-  ylab("mean Mark-Up") +
-  xlab("Step")
-
-
-```
-
-```{r firms_cost}
-
-ggplot(sim_results_cf, aes(x = step, y = avg_house_cost, color=re_market)) + 
-  geom_point(alpha=0.1) + 
-  stat_smooth(method="loess", span=0.5, se=TRUE, aes(fill=re_market), alpha=0.3) +
-  facet_grid(scenario~run)+
-  labs(title = "Firms mean house cost by Scenario and Run")+
-  ylab("mean Mark-Up") +
-  xlab("Step")
-
-
-```
-
-
-```{r firms_price}
-
-ggplot(sim_results_cf, aes(x = step, y = avg_house_price, color=re_market)) + 
-  geom_point(alpha=0.1) + 
-  stat_smooth(method="loess", span=0.5, se=TRUE, aes(fill=re_market), alpha=0.3) +
-  facet_grid(scenario~run)+
-  labs(title = "Firms mean house price by Scenario and Run")+
-  ylab("mean Mark-Up") +
-  xlab("Step")
-
-
-```

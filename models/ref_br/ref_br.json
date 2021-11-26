@@ -25,33 +25,6 @@
       }
     },
     {
-      "space_type": "RealStateMarket",
-      "space_name": "REMarket",
-      "action_set": "ref_br_action_set_RE",
-      "action_class": "REActionSet",
-      "space_variables": {
-        "intensity_of_choice": 0.0
-      }
-    },
-    {
-      "space_type": "SPRealStateMarket",
-      "space_name": "SPREMarket",
-      "action_set": "ref_br_action_set_RE",
-      "action_class": "REActionSet",
-      "space_variables": {
-        "intensity_of_choice": 0.0
-      }
-    },
-    {
-      "space_type": "RJRealStateMarket",
-      "space_name": "RJREMarket",
-      "action_set": "ref_br_action_set_RE",
-      "action_class": "REActionSet",
-      "space_variables": {
-        "intensity_of_choice": 0.0
-      }
-    },
-    {
       "space_type": "CreditMarket",
       "space_name": "CreditMarket",
       "action_set": "ref_br_action_set_Credit",
@@ -59,156 +32,87 @@
       "space_variables": {
         "intensity_of_choice": 0.0
       }
+    },
+    {
+      "space_type": "CentralBankMarket",
+      "space_name": "CentralBankMarket",
+      "action_set": "ref_br_action_set_CB",
+      "action_class": "CBActionSet",
+      "space_variables": {
+        "interest_rate": 1.03,
+        "macroprudential_policy": 0.2
+      }
     }
   ],
   "agents": {
-    "SPHousehold": {
-      "agent_type": "SPHousehold",
-      "agent_prefix": "HH_SP",
+    "Household": {
+      "agent_type": "Household",
+      "agent_prefix": "HH",
       "agent_spaces": [
-        "SPREMarket",
+        "CentralBankMarket",
         "CreditMarket"
       ],
-      "no_of_agents": 200
-    },
-    "RJPHousehold": {
-      "agent_type": "RJHousehold",
-      "agent_prefix": "HH_RJ",
-      "agent_spaces": [
-        "RJREMarket",
-        "CreditMarket"
-      ],
-      "no_of_agents": 200
-    },
-    "SPConstructionFirm": {
-      "agent_type": "SPConstructionFirm",
-      "agent_prefix": "CF_SP",
-      "agent_spaces": [
-        "SPREMarket",
-        "CreditMarket"
-      ],
-      "no_of_agents": 5
-    },
-    "RJConstructionFirm": {
-      "agent_type": "RJConstructionFirm",
-      "agent_prefix": "CF_RJ",
-      "agent_spaces": [
-        "RJREMarket",
-        "CreditMarket"
-      ],
-      "no_of_agents": 5
+      "no_of_agents": 50
     },
     "Bank": {
       "agent_type": "Bank",
       "agent_prefix": "Ba",
       "agent_spaces": [
-        "CreditMarket",
-        "REMarket"
+        "CentralBankMarket",
+        "CreditMarket"
       ],
-      "no_of_agents": 2
+      "no_of_agents": 1
     },
     "CentralBank": {
       "agent_type": "CentralBank",
       "agent_prefix": "CB",
       "agent_spaces": [
-        "CreditMarket",
-        "REMarket"
+        "CentralBankMarket",
+        "CreditMarket"
       ],
-      "no_of_agents": 1
-    },
-    "Government": {
-      "agent_type": "Government",
-      "agent_prefix": "Gov",
-      "agent_spaces": [
-        "CreditMarket",
-        "REMarket"
-      ],
-      "no_of_agents": 1
-    },
-    "HouseholdGenerator": {
-      "agent_type": "HouseholdGenerator",
-      "agent_prefix": "HG",
-      "agent_spaces": [],
-      "no_of_agents": 1
+	"no_of_agents": 1
     }
   },
   "observers": [
     {
       "observer_type": "Observer",
-      "observer_name": "SP_HH_Obs",
+      "observer_name": "HH_Obs",
       "observer_actions": [
         "obs_hh"
       ],
-      "observer_agent": "SPHousehold",
-      "observable_vars": [
-        "re_market",
-        "savings",
-        "income",
-        "rent",
-        "mortgage",
-        "employed",
-        "age",
-        "alive",
-        "house_ownership"
+      "observer_agent": "Household",
+	"observable_vars": [
+	    "re_market",
+      "savings",
+	    "current_savings",
+      "current_income",
+      "current_expenditure",
+      "rent",
+      "mortgage",
+      "employed",
+      "age",
+      "alive",
+      "house_ownership",
+      "financial_availability",
+      "can_bid"
       ]
     },
     {
       "observer_type": "Observer",
-      "observer_name": "RJ_HH_Obs",
+      "observer_name": "Ba_Obs",
       "observer_actions": [
-        "obs_hh"
+        "obs_Ba"
       ],
-      "observer_agent": "RJHousehold",
+      "observer_agent": "Bank",
       "observable_vars": [
-        "re_market",
-        "savings",
-        "income",
-        "rent",
-        "mortgage",
-        "employed",
-        "age",
-        "alive",
-        "house_ownership"
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "SP_CF_Obs",
-      "observer_actions": [
-        "obs_CF"
-      ],
-      "observer_agent": "SPConstructionFirm",
-      "observable_vars": [
-        "re_market",
-        "housing_demand",
-        "housing_offer",
-        "available_capital",
-        "mark_up",
-        "house_cost",
-        "avg_mark_up",
-        "avg_house_cost",
-        "avg_house_price"
-
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "RJ_CF_Obs",
-      "observer_actions": [
-        "obs_CF"
-      ],
-      "observer_agent": "RJConstructionFirm",
-      "observable_vars": [
-        "re_market",
-        "housing_demand",
-        "housing_offer",
-        "available_capital",
-        "mark_up",
-        "house_cost",
-        "avg_mark_up",
-        "avg_house_cost",
-        "avg_house_price"
-
+          "housing_demand",
+          "housing_offer",
+          "available_capital",
+          "mark_up",
+          "house_cost",
+          "avg_mark_up",
+          "avg_house_cost",
+          "avg_house_price"
       ]
     }
   ],
@@ -219,7 +123,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 3
+          "parameter_value": 1
         },
         {
           "parameter_name": "reset_each_run",
@@ -235,58 +139,102 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 120
+          "parameter_value": 10
         }
       ],
       "scenario_variables": [
-        {
-          "var_name": "heat",
-          "var_init_value": 10.0,
-          "var_type": "sharp"
-        },
-        {
-          "var_name": "happiness",
-          "var_init_value": 1.0,
-          "var_type": "sharp"
-        }
       ],
       "agents_init": {
-        "SPHousehold": [
+        "Household": [
+          {
+            "var_name": "can_bid",
+            "var_type": "binary",
+            "var_dist": "None",
+            "var_value": false
+          },
           {
             "var_name": "re_market",
             "var_type": "character",
             "var_dist": "None",
-            "var_value": "SP"
+            "var_value": "BR"
+          },
+          {
+            "var_name": "re_market",
+            "var_type": "character",
+            "var_dist": "None",
+            "var_value": "BR"
           },
           {
             "var_name": "savings",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(60000.0,5000.0)",
+            "var_dist": "np.random.lognormal(9.0,2.0)",
             "var_value": 0.0
           },
           {
-            "var_name": "income",
+            "var_name": "current_savings",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(2000.0, 500.0)",
+            "var_dist": "np.random.lognormal(9.0,2.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "current_income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(7.5, 1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(7.5, 1.0)",
             "var_value": 0.0
           },
           {
             "var_name": "consumption_rate",
             "var_type": "stochastic",
             "var_dist": "np.random.normal(0.4,0.2)",
-            "var_value": 0.0
+            "var_value": 0.2
           },
           {
             "var_name": "rent",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(400.0,100.0)",
+            "var_dist": "np.random.lognormal(2.0,0.7)",
             "var_value": 0.0
           },
           {
             "var_name": "mortgage",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(300.0,50.0)",
+            "var_type": "float",
+            "var_dist": "None",
             "var_value": 0.0
+          },
+          {
+            "var_name": "current_expenditure",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "financial_availability",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "availability_limit",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.2
+          },
+          {
+            "var_name": "financial_liability",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+	  {
+            "var_name": "number_of_payments",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 420
           },
           {
             "var_name": "employed",
@@ -305,10 +253,9 @@
             "var_type": "list",
             "var_dist": "None",
             "var_value": [
-              "social",
               "renter",
               "owner",
-              "investor"
+              "borrower"
             ]
           },
           {
@@ -377,306 +324,100 @@
               1,
               1
             ]
+          },
+          {
+            "var_name": "interest_rate",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.05
+          },
+          {
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.3
           }
         ],
-        "RJHousehold": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "RJ"
-          },
-          {
-            "var_name": "savings",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(10000.0,5000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "income",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(1000.0, 500.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "consumption_rate",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.4,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "rent",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(400.0,100.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mortgage",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(300.0,50.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "employed",
-            "var_type": "binary",
-            "var_dist": "None",
-            "var_value": true
-          },
-          {
-            "var_name": "age",
-            "var_type": "stochastic",
-            "var_dist": "np.round(np.random.normal(25,5))",
-            "var_value": 30
-          },
-          {
-            "var_name": "house_ownership",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              "social",
-              "renter",
-              "owner",
-              "investor"
-            ]
-          },
-          {
-            "var_name": "ownership_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              0.1,
-              0.6,
-              0.8,
-              0.1
-            ]
-          },
-          {
-            "var_name": "house_type_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              0.05,
-              0.1,
-              0.15,
-              0.2,
-              0.2,
-              0.1,
-              0.07,
-              0.06,
-              0.04,
-              0.03
-            ]
-          },
-          {
-            "var_name": "age_group",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              [
-                60,
-                70
-              ],
-              [
-                71,
-                80
-              ],
-              [
-                81,
-                90
-              ],
-              [
-                91,
-                100
-              ],
-              [
-                101,
-                999
-              ]
-            ]
-          },
-          {
-            "var_name": "death_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              1,
-              1,
-              1,
-              1,
-              1
-            ]
-          }
-        ],
-        "SPConstructionFirm": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "SP"
-          },
-          {
-            "var_name": "housing_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "actual_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "housing_offer",
-            "var_type": "stochastic",
-            "var_dist": "int(np.random.normal(70.0,5.0))",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "available_capital",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(5000000.0,1.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "total_house_cost",
-            "var_type": "number",
-            "var_dist": "None",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "revenue",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_price",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          }
-        ],              
-        "RJConstructionFirm": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "RJ"
-          },
-          {
-            "var_name": "housing_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "actual_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "housing_offer",
-            "var_type": "stochastic",
-            "var_dist": "int(np.random.normal(70.0,5.0))",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "available_capital",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(5000000.0,1.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "total_house_cost",
-            "var_type": "number",
-            "var_dist": "None",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "revenue",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_price",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          }
-        ],  
         "Bank": [
           {
-            "var_name": "ammount",
+            "var_name": "interest_rate",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.05
+          },
+          {
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.3
+          },
+          {
+            "var_name": "housing_demand",
+            "var_type": "integer",
+            "var_dist": "np.random.randint(80,180)",
+            "var_value": 150
+          },
+	  {
+            "var_name": "housing_offer",
+            "var_type": "integer",
+            "var_dist": "np.random.randing(60,70)",
+            "var_value": 150
+          },
+	  {
+            "var_name": "available_capital",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 1293847
+          },
+	  {
+            "var_name": "number_of_payments",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 420
+          },
+	  {
+            "var_name": "mark_up",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.2
+          },
+          {
+            "var_name": "house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(30000000.0,1.0)",
+            "var_dist": "np.random.normal(105000.0,10000.0)",
             "var_value": 0.0
-          }
+          },
+          {
+            "var_name": "avg_mark_up",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.8,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "avg_house_cost",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(55000.0,5000.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "revenue",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1050.0,100.0)",
+            "var_value": 0.0
+          }	    
         ],
         "CentralBank": [
           {
-            "var_name": "MacroPolicy",
-            "var_type": "String",
+            "var_name": "interest_rate",
+            "var_type": "float",
             "var_dist": "None",
-            "var_value": "DTI"
-          }
-        ],
-        "Government": [
+            "var_value": 1.02
+          },
           {
-            "var_name": "ammount",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(30000000.0,1.0)",
-            "var_value": 0.0
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.2
           }
         ]
       }
@@ -687,7 +428,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 3
+          "parameter_value": 1
         },
         {
           "parameter_name": "reset_each_run",
@@ -703,39 +444,47 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 120
+          "parameter_value": 10
         }
       ],
       "scenario_variables": [
-        {
-          "var_name": "heat",
-          "var_init_value": 10.0,
-          "var_type": "sharp"
-        },
-        {
-          "var_name": "happiness",
-          "var_init_value": 1.0,
-          "var_type": "sharp"
-        }
       ],
       "agents_init": {
-        "SPHousehold": [
+        "Household": [
+          {
+            "var_name": "can_bid",
+            "var_type": "binary",
+            "var_dist": "None",
+            "var_value": false
+          },
           {
             "var_name": "re_market",
             "var_type": "character",
             "var_dist": "None",
-            "var_value": "SP"
+            "var_value": "BR"
           },
           {
             "var_name": "savings",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(10000.0,5000.0)",
+            "var_dist": "np.random.lognormal(9.0,2.0)",
             "var_value": 0.0
           },
           {
-            "var_name": "income",
+            "var_name": "current_savings",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(1000.0, 500.0)",
+            "var_dist": "np.random.lognormal(9.0,2.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "current_income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(7.5, 1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(7.5, 1.0)",
             "var_value": 0.0
           },
           {
@@ -747,14 +496,44 @@
           {
             "var_name": "rent",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(400.0,100.0)",
+            "var_dist": "np.random.lognormal(2.0,0.7)",
             "var_value": 0.0
           },
           {
             "var_name": "mortgage",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(300.0,50.0)",
+            "var_type": "float",
+            "var_dist": "None",
             "var_value": 0.0
+          },
+          {
+            "var_name": "current_expenditure",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "financial_availability",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "availability_limit",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.2
+          },
+          {
+            "var_name": "financial_liability",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.0
+          },
+	  {
+            "var_name": "number_of_payments",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 420
           },
           {
             "var_name": "employed",
@@ -773,10 +552,9 @@
             "var_type": "list",
             "var_dist": "None",
             "var_value": [
-              "social",
               "renter",
               "owner",
-              "investor"
+              "borrower"
             ]
           },
           {
@@ -845,306 +623,106 @@
               1,
               1
             ]
+          },
+          {
+            "var_name": "interest_rate",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.05
+          },
+          {
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.3
           }
         ],
-        "RJHousehold": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "RJ"
-          },
-          {
-            "var_name": "savings",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(10000.0,5000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "income",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(1000.0, 500.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "consumption_rate",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.4,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "rent",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(400.0,100.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mortgage",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(300.0,50.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "employed",
-            "var_type": "binary",
-            "var_dist": "None",
-            "var_value": true
-          },
-          {
-            "var_name": "age",
-            "var_type": "stochastic",
-            "var_dist": "np.round(np.random.normal(25,5))",
-            "var_value": 30
-          },
-          {
-            "var_name": "house_ownership",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              "social",
-              "renter",
-              "owner",
-              "investor"
-            ]
-          },
-          {
-            "var_name": "ownership_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              0.1,
-              0.6,
-              0.8,
-              0.1
-            ]
-          },
-          {
-            "var_name": "house_type_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              0.05,
-              0.1,
-              0.15,
-              0.2,
-              0.2,
-              0.1,
-              0.07,
-              0.06,
-              0.04,
-              0.03
-            ]
-          },
-          {
-            "var_name": "age_group",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              [
-                60,
-                70
-              ],
-              [
-                71,
-                80
-              ],
-              [
-                81,
-                90
-              ],
-              [
-                91,
-                100
-              ],
-              [
-                101,
-                999
-              ]
-            ]
-          },
-          {
-            "var_name": "death_probability",
-            "var_type": "list",
-            "var_dist": "None",
-            "var_value": [
-              1,
-              1,
-              1,
-              1,
-              1
-            ]
-          }
-        ],
-        "SPConstructionFirm": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "SP"
-          },
-          {
-            "var_name": "housing_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "actual_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "housing_offer",
-            "var_type": "stochastic",
-            "var_dist": "int(np.random.normal(70.0,5.0))",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "available_capital",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(5000000.0,1.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "total_house_cost",
-            "var_type": "number",
-            "var_dist": "None",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "revenue",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_price",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          }
-        ],              
-        "RJConstructionFirm": [
-          {
-            "var_name": "re_market",
-            "var_type": "character",
-            "var_dist": "None",
-            "var_value": "RJ"
-          },
-          {
-            "var_name": "housing_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "actual_demand",
-            "var_type": "integer",
-            "var_dist": "None",
-            "var_value": 0
-          },
-          {
-            "var_name": "housing_offer",
-            "var_type": "stochastic",
-            "var_dist": "int(np.random.normal(70.0,5.0))",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "available_capital",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(5000000.0,1.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "total_house_cost",
-            "var_type": "number",
-            "var_dist": "None",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "revenue",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_mark_up",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(0.8,0.2)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_cost",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          },
-          {
-            "var_name": "avg_house_price",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
-            "var_value": 0.0
-          }
-        ],  
         "Bank": [
           {
-            "var_name": "revenues",
+            "var_name": "interest_rate",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.05
+          },
+          {
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.3
+          },
+          {
+            "var_name": "housing_demand",
+            "var_type": "integer",
+            "var_dist": "np.random.randint(80,180)",
+            "var_value": 0
+          },
+	  {
+            "var_name": "housing_offer",
+            "var_type": "integer",
+            "var_dist": "np.random.randing(60,70)",
+            "var_value": 0
+          },
+	  {
+            "var_name": "available_capital",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 1293847
+          },
+	  {
+            "var_name": "number_of_payments",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 420
+          },
+	  {
+            "var_name": "mark_up",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 1.2
+          },
+          {
+            "var_name": "house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(30000000.0,1000000.0)",
+            "var_dist": "np.random.normal(55000.0,5000.0)",
             "var_value": 0.0
-          }
+          },
+          {
+            "var_name": "avg_mark_up",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.8,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "avg_house_cost",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(105000.0,10000.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "avg_house_price",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(105000.0,10000.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "revenue",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1050.0,100.0)",
+            "var_value": 0.0
+          }	    
         ],
         "CentralBank": [
           {
-            "var_name": "MacroPolicy",
-            "var_type": "String",
+            "var_name": "interest_rate",
+            "var_type": "float",
             "var_dist": "None",
-            "var_value": "DTI"
-          }
-        ],
-        "Government": [
+            "var_value": 1.02
+          },
           {
-            "var_name": "ammount",
-            "var_type": "stochastic",
-            "var_dist": "np.random.normal(30000000.0,1.0)",
-            "var_value": 0.0
+            "var_name": "macroprudential_policy",
+            "var_type": "float",
+            "var_dist": "None",
+            "var_value": 0.2
           }
         ]
       }

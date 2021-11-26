@@ -9,8 +9,7 @@ import random
 class Household(EconomicAgent):
     """ Household Agent """
 
-    H_REL = ['social','renter', 'owner', 'investor']
-    SPACE = 'REMarket'
+    SPACE = 'CreditMarket'
 
 
     def __init__(self, simulation, model, agent_number, agent_def):
@@ -19,6 +18,7 @@ class Household(EconomicAgent):
         self.house = House("house",owner_of_g=None, producer_of_g=None)
         self.demanded_house = House("house",owner_of_g=self, producer_of_g=self)
         self.my_market = self.spaces[self.SPACE]
+        self.can_bid = False
     
 
     def step(self):
@@ -27,17 +27,9 @@ class Household(EconomicAgent):
             #self.my_ownership = random.choices(self.house_ownership,
             #                                   self.ownership_probability)
             self.house_ownership = "renter"
-            self.my_house_type = random.choices(self.house.QUALITY,
-                                               self.house_type_probability)
-            self.house.quality = self.my_house_type
-            
-            ## demand house
-            self.demanded_house.quality = self.my_house_type
-            self.demanded_house.value_of_g = self.savings
+            self.define_demmanded_house()
             self.first_step = False
 
-
-        self.update_demography()
         self.calculate_income()
         self.consume()
         self.housing_decision()
@@ -45,76 +37,80 @@ class Household(EconomicAgent):
         self.got_house()
         self.pay_contracts()
         self.pay_taxes()
-        self.check_survivability()
 
-    def update_demography(self):
-        """ The household instance updates demographic variables 
-            Families are born, die and leave an inheritance. 
-            There is a constant birth rate and age and 
-            income distribution appropriate to the analyzed reality. 
-            When one family dies, another family is chosen at random 
-            to inherit property and wealth.
-        """
-        self.age += 1
+    def define_demmanded_house(self):
+        """ The agent defines the demanded house type and value"""
+        self.my_house_type = random.choices(self.house.QUALITY,
+                                               self.house_type_probability)
+        self.house.quality = self.my_house_type
+            
+        ## demand house
+        self.demanded_house.quality = self.my_house_type
+        self.demanded_house.value_of_g = self.savings
+
     
-    def check_survivability(self):
-        """Check if the agent will die using probability and age"""
-        pass
-        #for index, age_interval in enumerate(self.age_group):
-        #    age_range = range(age_interval[0],age_interval[1])
-        #    agrng = self.age in age_range
-        #    if self.age in age_range:
-        #        if self.death_probability[index]*random.random() > 0.999:
-        #            self.dead()
-
-        
-        #if random.random() > 0.99:
-        #    self.dead()
-
     def calculate_income(self):
         """ Households receive income according to 
-        an appropriate distribution throughout life and age"""
-        change = random.gauss(0,0.02)
-        if(change < 0):
-            self.income *= (1 - change)
-        else:
-            self.income *= (1 + change)
-
+            an appropriate distribution throughout life and age
+        
+            A renda das famílias advêm das seguintes fontes:
+        
+            Y = I + T + M
+        
+            I = Renda do trabalho;
+            T = Transferências Governamentais;
+            M = Ganhos de Capital.
+        """
+        ### Government transfers and capital gains will be included
+        
+        self.current_income = self.labor_income  
+        self.labor_income = self.labor_income * 1.003 # upgrading labor income to test it
+ 
     def consume(self):
-        """Households use a percentage of income in essential consumption"""
-        self.consumption = self.income * self.consumption_rate
-        self.savings += self.income * (1 - self.consumption_rate)
+        """
+            Households use a percentage of income in essential consumption
+        
+            Todas as Famílias realizam gastos de sua renda conforme equação:
+        
+            Y = C + F + R + S (2)
+
+            C = Gasto Não-Habitacional (aqui é substituido por um percentual da renda);
+            F = Financiamento Imobiliário (mortgage);
+            R = Aluguel (value percentage of income);
+            S = Poupança.
+
+            Ou S = Y - (C + F + R)
+
+            E C = cY (c = consumption_rate)
+        
+        """
+        self.consumption = self.current_income * self.consumption_rate
+        self.current_expenditure = self.consumption + self.rent + self.mortgage
+        self.current_savings = self.current_income - self.current_expenditure
+        self.savings += self.current_savings
 
     def housing_decision(self):
-
-    
-        """ Households decide on housing following this protocol:
-            1) Whether in a “social house” or if the contract has ended, 
-            they decide between buying or renting a new house.
-
-            2) If they rent they keep paying. There is no breach of 
-            contract between the parties.
-
-            3) If you are an owner, that is, you occupy a house, you
-            decide whether to sell and buy a new house or move to rent.
-
-            4) If they have the investor DNA, they decide whether 
-            to buy new properties, and for each property 
-            they decide whether to sell or rent.
-
-            5) Families that want to buy or rent houses place their offers 
-            on the respective markets (property or rent). 
-            
-            6) Families who also decide to sell or rent their homes 
-            also place their offers on the markets.
+        """ 
+            The agent have financial_availability?
+               yes
+               The agent have enough wealth?
+                   yes: make_bid
         """
-        # TODO: This is very complex 
-        #       - Maybe to separate in multiple methods
+
+        self.calculate_financial_availability()
+        self.calculate_PV()
+        self.calculate_finacial_liability()
+
+        ### Housing Decision
+        if (self.availability_limit >= self.financial_availability):
+           #and (self.savings >= self.financial_liability)):
+           self.can_bid = True
+        else:
+            self.can_bid = False
     
     def generate_offer(self):
         "Agent generates offer"
-        if self.house_ownership == 'renter':
-            self.demanded_house.value_of_g = self.savings
+        if self.can_bid:
             self.my_market.bid_market("D", self.demanded_house)
 
 
@@ -132,9 +128,6 @@ class Household(EconomicAgent):
         """ Tenants pay rent. Owners with financing pay the bank. """
         pass
 
-    def formulate_price_expectations(self):
-        """ The household formulates price expectations for consumer goods """
-        pass
 
     def pay_taxes(self):
         """ The HH pay taxes to the government """
@@ -142,27 +135,42 @@ class Household(EconomicAgent):
 
     def got_contract(self):
         """ The household bought a house """
-    pass
+        pass
 
     def release_bid(self):
         """ The agent have a house """
         pass
 
+    def calculate_financial_availability(self):
+        """ 
+        A Disponibilidade Financeira (D) é definida pela soma dos gastos com R
+        (Aluguel 2 ) e S (Poupança) que será disponibilizada para pagamento da
+        prestação do financiamento imobiliário. A (D) em cada período deve ser
+        superior a 30% para se tornar “elegível” na aquisição de um imóvel.
+        Assim, temos:
+                        D=(1−(C + F)/Y)∗100
+        """
+        self.financial_availability = 1 - self.current_expenditure/self.current_income
 
-class SPHousehold(Household):
-    """ Household from the SP REM"""
+        return self.financial_availability
 
-    H_REL = ['social','renter', 'owner', 'investor']
-    SPACE = 'SPREMarket'
+    def calculate_PV(self):
+        """ The agent calculate the house present value """
 
-    def __init__(self, simulation, model, agent_number, agent_def):
-        super().__init__(simulation, model, agent_number, agent_def)
+        D = self.financial_availability
+        Y = self.current_income
+        i = self.interest_rate
+        n = self.number_of_payments
+
+        self.PV = Y * D * (((1+ i)**n - i) / ((1 + i)**n * i))
         
+        return self.PV
 
-class RJHousehold(Household):
-    """ Household from the RJ REM"""
-    H_REL = ['social','renter', 'owner', 'investor']
-    SPACE = 'RJREMarket'
+    def calculate_finacial_liability(self):
+        """ The financial liability is que percentage of the house PV 
+            regulated by the financial authority or bank
+             E = m.PV
+        """
+        self.financial_liability = self.macroprudential_policy * self.PV
 
-    def __init__(self, simulation, model, agent_number, agent_def):
-        super().__init__(simulation, model, agent_number, agent_def)
+        return self.financial_liability

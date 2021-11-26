@@ -15,7 +15,7 @@
     }
   ],
   "spaces": [
-    {
+  {
 	    "space_type": "EFBGame",
 	    "space_name": "EFBGame",
 	    "action_set": "el_farol_bar_action_set",

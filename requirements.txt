@@ -16,7 +16,7 @@ dependency-injector==4.5.4
 pyYAML>=5.4
 
 #data science
-numpy==1.19.4
+numpy>=1.21
 pandas==1.2.0
 scipy==1.6.0
 

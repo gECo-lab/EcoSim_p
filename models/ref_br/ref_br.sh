@@ -2,7 +2,7 @@ mv runs/*.csv runs/previous_runs/.
 
 cd ../../kernel
 
-python3.8 main.py ../models/ref_br/ ref_br_config.json ref_br.json
+python3 main.py ../models/ref_br/ ref_br_config.json ref_br.json
 
 cd ../models/ref_br
 

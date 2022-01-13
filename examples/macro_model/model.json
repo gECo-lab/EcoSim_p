@@ -1,0 +1,240 @@
+{
+  "simulation_name": "macro_Caiani",
+  "simulation_model": "macro_Caiani",
+  "simulation_parameters": [
+    {
+      "parameter_name": "M1",
+      "parameter_value": 0.0
+    }
+  ],
+  "model_name": "macro_Caiani",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "Market",
+      "space_name": "Market",
+      "action_set": "macro_Caiani_action_set",
+      "action_class": "MacroEcoActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "LaborMarket",
+      "space_name": "LaborMarket",
+      "action_set": "macro_Caiani_action_set_Labor",
+      "action_class": "LaborActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "CGMarket",
+      "space_name": "CGMarket",
+      "action_set": "macro_Caiani_action_set_CG",
+      "action_class": "CGActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "KGMarket",
+      "space_name": "KGMarket",
+      "action_set": "macro_Caiani_action_set_KG",
+      "action_class": "KGActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "CreditMarket",
+      "space_name": "CreditMarket",
+      "action_set": "macro_Caiani_action_set_Credit",
+      "action_class": "CreditActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "DepositsMarket",
+      "space_name": "DepositsMarket",
+      "action_set": "macro_Caiani_action_set_Deposits",
+      "action_class": "DepositsActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    }
+  ],
+  "agents": {
+    "Household": {
+      "agent_type": "Household",
+      "agent_prefix": "HH",
+      "agent_spaces": [
+        "LaborMarket"
+      ],
+      "no_of_agents": 500
+    },
+    "CGFirm": {
+      "agent_type": "CGFirm",
+      "agent_prefix": "CG",
+      "agent_spaces": [
+        "CGMarket",
+        "LaborMarket",
+        "KGMarket"
+      ],
+      "no_of_agents": 10
+    },
+    "KGFirm": {
+      "agent_type": "KGFirm",
+      "agent_prefix": "KG",
+      "agent_spaces": [
+        "KGMarket",
+        "LaborMarket"
+      ],
+      "no_of_agents": 5
+    },
+    "Bank": {
+      "agent_type": "Bank",
+      "agent_prefix": "Ba",
+      "agent_spaces": [
+        "DepositsMarket",
+        "CreditMarket"
+      ],
+      "no_of_agents": 2
+    },
+    "CentralBank": {
+      "agent_type": "CentralBank",
+      "agent_prefix": "CB",
+      "agent_spaces": [
+        "DepositsMarket",
+        "CreditMarket"
+      ],
+      "no_of_agents": 1
+    },
+    "Government": {
+      "agent_type": "Government",
+      "agent_prefix": "Gov",
+      "agent_spaces": [
+        "DepositsMarket",
+        "CreditMarket",
+        "LaborMarket"
+      ],
+      "no_of_agents": 1
+    }
+  },
+  "observers": [
+    {
+      "observer_type": "Observer",
+      "observer_name": "HH_Obs",
+      "observer_actions": [
+        "obs_hh"
+      ],
+      "observer_agent": "Household",
+      "observable_vars": [
+        "expected_wage",
+        "labor_capacity",
+        "employed",
+        "demand",
+        "consumption",
+        "consumption_expected",
+        "workforce",
+        "total_cash",
+        "deposits_cash"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "CG_Obs",
+      "observer_actions": [
+        "obs_CG"
+      ],
+      "observer_agent": "CGFirm",
+      "observable_vars": [
+        "labor_demand",
+        "labor_productivity",
+        "offered_wage",
+        "desired_output",
+        "desired_output_value",
+        "expected_sales",
+        "output",
+        "inventory",
+        "inventory_t_1",
+        "labor_to_contract",
+        "labor_contracted",
+        "unitary_cost",
+        "price",
+        "deposits_cash",
+        "capital_stock",
+        "desired_perc_inv",
+        "perc_inv",
+        "mark_up",
+        "capacity_utilization",
+        "capital_labor_ratio",
+        "capital_productivity"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "KG_Obs",
+      "observer_actions": [
+        "obs_KG"
+      ],
+      "observer_agent": "KGFirm",
+      "observable_vars": [
+        "labor_demand",
+        "labor_productivity",
+        "offered_wage",
+        "desired_output",
+        "desired_output_value",
+        "output",
+        "labor_to_contract",
+        "labor_contracted",
+        "labor_productivity",
+        "unitary_cost",
+        "price",
+        "deposits_cash",
+        "desired_perc_inv",
+        "perc_inv",
+        "mark_up"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "Bank_Obs",
+      "observer_actions": [
+        "obs_Bank"
+      ],
+      "observer_agent": "Bank",
+      "observable_vars": [
+        "ammount"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "CB_Obs",
+      "observer_actions": [
+        "obs_CB"
+      ],
+      "observer_agent": "CentralBank",
+      "observable_vars": [
+        "ammount"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "Gov_Obs",
+      "observer_actions": [
+        "obs_Gov"
+      ],
+      "observer_agent": "Government",
+      "observable_vars": [
+        "ammount"
+      ]
+    }
+  ]
+}

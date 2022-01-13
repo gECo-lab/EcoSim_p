@@ -2,7 +2,7 @@
 
 cd ../../kernel
 
-pdb3.8 main.py ../models/ref_br/ ref_br_config.json ref_br.json
+pdb3.8 main.py ../models/ref_br/ config.json model.json sceanarios.json
 
 cd ../models/ref_br
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Agents from the basic macroeconomic model """
 
-from basicAgents import DiscreteEventAgent
+from agent.basicAgents import DiscreteEventAgent
 
 
 class EconomicAgent(DiscreteEventAgent):

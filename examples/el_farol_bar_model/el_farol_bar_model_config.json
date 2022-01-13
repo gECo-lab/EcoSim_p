@@ -1,9 +1,0 @@
-{
-  "Description": "Configuration file for the el farol model",
-  "paths":
-    {
-      "kernel": "../kernel/",
-      "model": "../examples/el_farol_bar_model/",
-      "results": "../examples/el_farol_bar_model/runs/"
-    }
-}

@@ -14,18 +14,20 @@ import sys
 import simulation
 
 
-def new_simulation(path_to_model, model_config, simulation_defs):
+def new_simulation(path_to_model, model_config, model_defs, scenarios_defs):
     """ This is the main simulation method without a graphical interface.
         This method receives 3 parameters:
         path_to_model - The path to the model that is executing
         model_config - The configuration file for the model that is executing
-        simulation_defs - The model and simulation definition file
+        model_defs - The model definition file
+        scenario_defs - The scenarios definition file
     """
 
     config_file = path_to_model + model_config
-    simulation_file = path_to_model + simulation_defs
+    model_file = path_to_model + model_defs
+    scenarios_file = path_to_model + scenarios_defs
 
-    new_sim = simulation.Simulation(config_file, simulation_file)
+    new_sim = simulation.Simulation(config_file, model_file, scenarios_file)
 
     new_sim.execute_simulation()
 
@@ -34,5 +36,6 @@ if __name__ == "__main__":
 
     path_to_model = str(sys.argv[1])
     model_config = str(sys.argv[2])
-    simulation_defs = str(sys.argv[3])
-    new_simulation(path_to_model, model_config, simulation_defs)
+    model_defs = str(sys.argv[3])
+    scenarios_defs = str(sys.argv[4])
+    new_simulation(path_to_model, model_config, model_defs, scenarios_defs)

@@ -1,9 +1,0 @@
-{
-  "Description": "Configuration file for the ipd model",
-  "paths":
-    {
-      "kernel": "../kernel/",
-      "model": "../examples/ipd_model/",
-      "results": "../examples/ipd_model/runs/"
-    }
-}

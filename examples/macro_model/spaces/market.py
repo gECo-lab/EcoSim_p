@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Basic Market Class implementation """
 
-from basicSpaces import Space
+from space.basicSpaces import Space
 from sortedcontainers import SortedDict
 
 

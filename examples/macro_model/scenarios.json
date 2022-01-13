@@ -1,0 +1,380 @@
+{
+  "scenarios": [
+    {
+      "scenario_type": "Scenario",
+      "scenario_name": "Scenario1",
+      "scenario_parameters": [
+        {
+          "parameter_name": "no_of_runs",
+          "parameter_value": 1
+        },
+        {
+          "parameter_name": "reset_each_run",
+          "parameter_value": true
+        },
+        {
+          "parameter_name": "step_unit",
+          "parameter_value": "step"
+        },
+        {
+          "parameter_name": "step_interval",
+          "parameter_value": 1
+        },
+        {
+          "parameter_name": "no_of_steps",
+          "parameter_value": 100
+        }
+      ],
+      "scenario_variables": [
+        {
+          "var_name": "heat",
+          "var_init_value": 10.0,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "happiness",
+          "var_init_value": 1.0,
+          "var_type": "sharp"
+        }
+      ],
+      "agents_init": {
+        "Household": [
+          {
+            "var_name": "expected_wage",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_capacity",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "employed",
+            "var_type": "binary",
+            "var_dist": "None",
+            "var_value": false
+          },
+          {
+            "var_name": "demand",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "consumption",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "consumption_expected",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "workforce",
+            "var_type": "integer",
+            "var_dist": "None",
+            "var_value": 1
+          },
+          {
+            "var_name": "total_cash",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "deposits_cash",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(2.0,0.2)",
+            "var_value": 0.0
+          }
+        ],
+        "CGFirm": [
+          {
+            "var_name": "labor_demand",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(80.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_productivity",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(80.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_sales",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_price",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_wage",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(5.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "offered_wage",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(5.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output_value",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "output",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "inventory",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "inventory_t_1",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_to_contract",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_contracted",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "unitary_cost",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(20.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "price",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(50.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "deposits_cash",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1000.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "capital_stock",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1000.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_perc_inv",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "perc_inv",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "mark_up",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "capacity_utilization",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "capital_labor_ratio",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "capital_productivity",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.9,0.05)",
+            "var_value": 0.0
+          }
+        ],
+        "KGFirm": [
+          {
+            "var_name": "labor_demand",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(100.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_productivity",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.1,0.5)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_price",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_wage",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "offered_wage",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output_value",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "output",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "inventory",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "inventory_t_1",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "expected_sales",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(40.0,0.2)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_to_contract",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "labor_contracted",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "unitary_cost",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "price",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "deposits_cash",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(10.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_perc_inv",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "perc_inv",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "mark_up",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(0.09,0.05)",
+            "var_value": 0.0
+          }
+        ],
+        "Bank": [
+          {
+            "var_name": "ammount",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(30.0,1.0)",
+            "var_value": 0.0
+          }
+        ],
+        "CentralBank": [
+          {
+            "var_name": "ammount",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(30.0,1.0)",
+            "var_value": 0.0
+          }
+        ],
+        "Government": [
+          {
+            "var_name": "ammount",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(30.0,1.0)",
+            "var_value": 0.0
+          }
+        ]
+      }
+    }
+  ]
+}

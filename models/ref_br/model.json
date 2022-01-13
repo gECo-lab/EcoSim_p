@@ -1,0 +1,119 @@
+{
+  "simulation_name": "ref_br",
+  "simulation_model": "ref_br",
+  "simulation_parameters": [
+    {
+      "parameter_name": "M1",
+      "parameter_value": 0.0
+    }
+  ],
+  "model_name": "ref_br",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "Market",
+      "space_name": "Market",
+      "action_set": "ref_br_action_set",
+      "action_class": "REActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "CreditMarket",
+      "space_name": "CreditMarket",
+      "action_set": "ref_br_action_set_Credit",
+      "action_class": "CreditActionSet",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    },
+    {
+      "space_type": "CentralBankMarket",
+      "space_name": "CentralBankMarket",
+      "action_set": "ref_br_action_set_CB",
+      "action_class": "CBActionSet",
+      "space_variables": {
+        "interest_rate": 1.03,
+        "macroprudential_policy": 0.2
+      }
+    }
+  ],
+  "agents": {
+    "Household": {
+      "agent_type": "Household",
+      "agent_prefix": "HH",
+      "agent_spaces": [
+        "CentralBankMarket",
+        "CreditMarket"
+      ],
+      "no_of_agents": 50
+    },
+    "Bank": {
+      "agent_type": "Bank",
+      "agent_prefix": "Ba",
+      "agent_spaces": [
+        "CentralBankMarket",
+        "CreditMarket"
+      ],
+      "no_of_agents": 1
+    },
+    "CentralBank": {
+      "agent_type": "CentralBank",
+      "agent_prefix": "CB",
+      "agent_spaces": [
+        "CentralBankMarket",
+        "CreditMarket"
+      ],
+	"no_of_agents": 1
+    }
+  },
+  "observers": [
+    {
+      "observer_type": "Observer",
+      "observer_name": "HH_Obs",
+      "observer_actions": [
+        "obs_hh"
+      ],
+      "observer_agent": "Household",
+	"observable_vars": [
+	    "re_market",
+      "savings",
+	    "current_savings",
+      "current_income",
+      "current_expenditure",
+      "rent",
+      "mortgage",
+      "employed",
+      "age",
+      "alive",
+      "house_ownership",
+      "financial_availability",
+      "can_bid"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "Ba_Obs",
+      "observer_actions": [
+        "obs_Ba"
+      ],
+      "observer_agent": "Bank",
+      "observable_vars": [
+          "housing_demand",
+          "housing_offer",
+          "available_capital",
+          "mark_up",
+          "house_cost",
+          "avg_mark_up",
+          "avg_house_cost",
+          "avg_house_price"
+      ]
+    }
+  ]
+}

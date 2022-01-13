@@ -138,3 +138,9 @@ dmypy.json
 cython_debug/
 
 # Emacs Junk
+
+*~
+\#*\#
+
+# Simulation Results
+*.csv

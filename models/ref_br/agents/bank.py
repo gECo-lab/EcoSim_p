@@ -83,40 +83,21 @@ class Bank(EconomicAgent):
             
 
     def form_expectations(self):
-        """ 
-            The agent establish its expectations about the demmand 
-        """
-        # #É necessário reescrever esta função
-        # not_sold_houses = self.offered_houses.__len__()
-        # self.actual_demand = self.housing_demand - not_sold_houses
-        self.actual_demand = self.housing_demand
-        initial_number = self.housing_demand
-        not_sold_houses = 0
-        
-        if self.credit_market.excess_demand > 0:
-            max_offer =int(self.credit_market.excess_demand)
-        else:
-            max_offer = int(self.housing_demand)
-                
-        if self.actual_demand == self.housing_demand:
-            new_offer_no = self.housing_demand + random.randint(0,max_offer+1)
-            for i in range(1, new_offer_no):
-                house_nr = initial_number + i
-                house_name = "nhhd_" + str(house_nr)
-                house = self.generate_house(house_name)
-                house.mark_up = house.mark_up * (1 + random.normal(0.2, 0.05))
-                house.value_of_g = house.cost + (1 + house.mark_up)
-        else:
-            new_offer_no = self.actual_demand - not_sold_houses
-            for i in range(1, new_offer_no):
-                house_nr = initial_number + i
-                house_name = "nhld_" + str(house_nr)
-                house = self.generate_house(house_name)
-                house.mark_up = house.mark_up / (1 + random.normal(0.2, 0.05))
-                house.value_of_g = house.cost + (1 + house.mark_up)
+         """ 
+             The agent establish its expectations about the demmand 
+         """
+         self.offered_houses.clear()
+         lower = int(self.housing_demand * .8)
+         high = int(self.housing_demand * 1.2)
+         house_it = self.step
 
-        self.previous_demand = self.actual_demand
-        self.housing_demand = self.housing_offer = self.offered_houses.__len__()
+         self.housing_offer = random.randint(lower, high)
+    
+         for i in range(1,self.housing_offer):
+             house_name = "h_" + str(house_it) + "_" + str(i)
+             house = self.generate_house(house_name)
+             house.mark_up = house.mark_up * (1 + random.normal(0.2, 0.05))
+             house.value_of_g = house.cost + (1 + house.mark_up)
             
     def generate_offer(self):
         """ The construction firm generates the number of houses in the REM """

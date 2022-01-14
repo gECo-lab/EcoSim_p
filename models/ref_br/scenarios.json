@@ -6,7 +6,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 1
+          "parameter_value": 2
         },
         {
           "parameter_name": "reset_each_run",
@@ -22,7 +22,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 10
+          "parameter_value": 100
         }
       ],
       "scenario_variables": [
@@ -51,25 +51,25 @@
             "var_name": "savings",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(9.0,2.0)",
-            "var_value": 0.0
+            "var_value": 2000.0
           },
           {
             "var_name": "current_savings",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(9.0,2.0)",
-            "var_value": 0.0
+            "var_value": 2000.0
           },
           {
             "var_name": "current_income",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(7.5, 1.0)",
-            "var_value": 0.0
+            "var_value": 5000.0
           },
           {
             "var_name": "labor_income",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(7.5, 1.0)",
-            "var_value": 0.0
+            "var_value": 5000.0
           },
           {
             "var_name": "consumption_rate",
@@ -81,19 +81,19 @@
             "var_name": "rent",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(2.0,0.7)",
-            "var_value": 0.0
+            "var_value": 200.0
           },
           {
             "var_name": "mortgage",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.0
+            "var_value": 300.0
           },
           {
             "var_name": "current_expenditure",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.0
+            "var_value": 500.0
           },
           {
             "var_name": "financial_availability",
@@ -113,7 +113,7 @@
             "var_dist": "None",
             "var_value": 0.0
           },
-	  {
+	        {
             "var_name": "number_of_payments",
             "var_type": "integer",
             "var_dist": "None",
@@ -243,7 +243,7 @@
 	  {
             "var_name": "housing_offer",
             "var_type": "integer",
-            "var_dist": "np.random.randing(60,70)",
+            "var_dist": "np.random.randint(60,70)",
             "var_value": 150
           },
 	  {
@@ -267,7 +267,7 @@
           {
             "var_name": "house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
+            "var_dist": "np.random.normal(25000.0,10000.0)",
             "var_value": 0.0
           },
           {
@@ -279,7 +279,7 @@
           {
             "var_name": "avg_house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(55000.0,5000.0)",
+            "var_dist": "np.random.normal(25000.0,5000.0)",
             "var_value": 0.0
           },
           {
@@ -311,7 +311,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 1
+          "parameter_value": 2
         },
         {
           "parameter_name": "reset_each_run",
@@ -327,7 +327,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 10
+          "parameter_value": 100
         }
       ],
       "scenario_variables": [
@@ -350,55 +350,55 @@
             "var_name": "savings",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(9.0,2.0)",
-            "var_value": 0.0
+            "var_value": 15000.0
           },
           {
             "var_name": "current_savings",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(9.0,2.0)",
-            "var_value": 0.0
+            "var_value": 15000.0
           },
           {
             "var_name": "current_income",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(7.5, 1.0)",
-            "var_value": 0.0
+            "var_value": 15000.0
           },
           {
             "var_name": "labor_income",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(7.5, 1.0)",
-            "var_value": 0.0
+            "var_value": 15000.0
           },
           {
             "var_name": "consumption_rate",
             "var_type": "stochastic",
             "var_dist": "np.random.normal(0.4,0.2)",
-            "var_value": 0.0
+            "var_value": 0.2
           },
           {
             "var_name": "rent",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(2.0,0.7)",
-            "var_value": 0.0
+            "var_value": 500.0
           },
           {
             "var_name": "mortgage",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.0
+            "var_value": 200.0
           },
           {
             "var_name": "current_expenditure",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.0
+            "var_value": 300.0
           },
           {
             "var_name": "financial_availability",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.0
+            "var_value": 150000.0
           },
           {
             "var_name": "availability_limit",
@@ -531,19 +531,19 @@
             "var_name": "macroprudential_policy",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.3
+            "var_value": 0.1
           },
           {
             "var_name": "housing_demand",
             "var_type": "integer",
             "var_dist": "np.random.randint(80,180)",
-            "var_value": 0
+            "var_value": 150
           },
 	  {
             "var_name": "housing_offer",
             "var_type": "integer",
-            "var_dist": "np.random.randing(60,70)",
-            "var_value": 0
+            "var_dist": "np.random.randint(60,70)",
+            "var_value": 150
           },
 	  {
             "var_name": "available_capital",
@@ -566,7 +566,7 @@
           {
             "var_name": "house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(55000.0,5000.0)",
+            "var_dist": "np.random.normal(25000.0,5000.0)",
             "var_value": 0.0
           },
           {
@@ -578,13 +578,13 @@
           {
             "var_name": "avg_house_cost",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
+            "var_dist": "np.random.normal(25000.0,10000.0)",
             "var_value": 0.0
           },
           {
             "var_name": "avg_house_price",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(105000.0,10000.0)",
+            "var_dist": "np.random.normal(25000.0,10000.0)",
             "var_value": 0.0
           },
           {
@@ -605,7 +605,7 @@
             "var_name": "macroprudential_policy",
             "var_type": "float",
             "var_dist": "None",
-            "var_value": 0.2
+            "var_value": 0.1
           }
         ]
       }

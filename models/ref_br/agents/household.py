@@ -27,6 +27,7 @@ class Household(EconomicAgent):
             #self.my_ownership = random.choices(self.house_ownership,
             #                                   self.ownership_probability)
             self.house_ownership = "renter"
+            self.house.set_rent(self, self.rent)
             self.define_demmanded_house()
             self.first_step = False
 
@@ -126,7 +127,6 @@ class Household(EconomicAgent):
 
     def pay_contracts(self):
         """ Tenants pay rent. Owners with financing pay the bank. """
-        pass
 
 
     def pay_taxes(self):
@@ -148,7 +148,7 @@ class Household(EconomicAgent):
         prestação do financiamento imobiliário. A (D) em cada período deve ser
         superior a 30% para se tornar “elegível” na aquisição de um imóvel.
         Assim, temos:
-                        D=(1−(C + F)/Y)∗100
+                        D=(1-(C + F)/Y)*100
         """
         self.financial_availability = 1 - self.current_expenditure/self.current_income
 

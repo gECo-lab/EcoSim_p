@@ -52,7 +52,7 @@
         "CentralBankMarket",
         "CreditMarket"
       ],
-      "no_of_agents": 50
+      "no_of_agents": 500
     },
     "Bank": {
       "agent_type": "Bank",
@@ -61,7 +61,7 @@
         "CentralBankMarket",
         "CreditMarket"
       ],
-      "no_of_agents": 1
+      "no_of_agents": 10
     },
     "CentralBank": {
       "agent_type": "CentralBank",

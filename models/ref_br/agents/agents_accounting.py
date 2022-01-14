@@ -179,7 +179,7 @@ class House(Good):
         """A house changes owner"""
         self.owner_of_g = new_owner
 
-    def rent(self, a_tenant, rent):
+    def set_rent(self, a_tenant, rent):
         """Renting a House"""
         self.tenant = a_tenant
         self.rent = rent

@@ -9,6 +9,9 @@ import random
 class Household(EconomicAgent):
     """ Household Agent """
 
+    # Stablish the agent objective
+    # Organize better the agent schedule
+
     SPACE = 'CreditMarket'
 
 

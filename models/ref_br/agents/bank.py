@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-""" Banks from the basic macroeconomic model """
+""" Banks from the basic Real Estate model """
+
+## Chech bank statistics and decision
+
 from numpy import random
 from numpy.lib.shape_base import column_stack
 

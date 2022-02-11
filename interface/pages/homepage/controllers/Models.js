@@ -4,12 +4,12 @@ class Models {
 
 		this._modelsEl = document.querySelector("models");
 
-		this.initializate();			
+		this.initialize();			
 
 	}
 
 
-	initializate() {
+	initialize() {
 
 		this.getModels();        
 
@@ -33,12 +33,12 @@ class Models {
     renderModels = (models) => {
     	let modelsEl = document.createElement("div");
 
-        function captilize(string){
+        function capitalize(string){
             return string.replace(/^./, string[0].toUpperCase());
         }
 
         function split_names(string){
-            return string.split("_").map(name => captilize(name)).join(" ");
+            return string.split("_").map(name => capitalize(name)).join(" ");
         }    
 
     	modelsEl.innerHTML = `

@@ -1,110 +1,161 @@
-<!DOCTYPE html>
-
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="keywords" content="htmlcss bootstrap, multi level menu, submenu, treeview nav menu examples" />
+<meta name="description" content="Bootstrap 5 navbar multilevel treeview examples for any type of project, Bootstrap 5" />  
 
-    <meta charset="UTF-8">
+<title>EcoSim(p) - Economic Simulation in Python</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-    <title>EcoSim</title>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="/pages/homepage/homepage.css">
+<link rel="stylesheet" href="/pages/homepage/homepage.css">
 
 
 </head>
-
 <body>
 
-    <header>
+<header class="section-header py-4">
+<div class="container">
+	<h2>EcoSim(p) - Economic Simulation in Python </h2> 
+</div>
+</header> <!-- section-header.// -->
 
-        <!-- https://getbootstrap.com/docs/5.0/components/navbar/ -->        
+<form action="/simulation/execution" method="post">
 
-        <nav class="navbar navbar-light bg-light">
+    <main class="container">
 
-          <nav-element class="container-fluid">
+    <!-- ============= COMPONENT ============== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">EcoSim(p)</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"  aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="collapse navbar-collapse" id="main_nav">  
+        <ul class="navbar-nav">
+            <li class="nav-item active"> <a class="nav-link" href="https://github.com/sergiolmrivero/EcoSim_p">Home </a> </li>
+            <li class="nav-item"><a class="nav-link" href="https://sergiolmrivero.github.io/ecos_p.github.io/"> About </a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Model  </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"> Model Definition &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Model</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Model</a></li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-item" href="#"> Schedule &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Schedule</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Schedule</a></li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-item" href="#"> Spaces &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Spaces</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Spaces</a></li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-item" href="#"> Agents &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Agents</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Agents</a></li>
+                        <li><a class="dropdown-item" href="#">Include Agent in Space</a></li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-item" href="#"> Observers &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Observers</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Observers</a></li>
+                    </ul>
+                </li>
+            </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Scenario  </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"> Copy from Scenario </a></li>
+                <li><a class="dropdown-item" href="#"> Scenario Definition &raquo; </a>
+                    <ul class="submenu dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Create Scenario</a></li>
+                        <li><a class="dropdown-item" href="#">Edit Scenario</a></li>
+                        <li><a class="dropdown-item" href="#">Initialize Agents</a></li>
+                    </ul>
+                </li>
+                <li><a class="dropdown-item" href="#"> Generate Model Base Code  </a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Simulation  </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#"> Select Model </a></li>
+                <li><a class="dropdown-item" href="#"> Simulate  </a></li>
+                <li><a class="dropdown-item" href="#"> View Results  </a></li>
+                </ul>
+            </li>
 
-            <nav-element-title class="navbar-brand mb-0 h1 nav-title">EcoSim</nav-element-title>
+        </ul>
 
-          </nav-element>
+    </div> <!-- navbar-collapse.// -->
 
-        </nav>        
+    </div> <!-- container-fluid.// -->
 
-    </header>       
+    </nav>
 
-    <form action="/simulation/execution" method="post">
+    <!-- ================ Call Code ================= -->
 
-        <main class="container">
+    <!-- https://getbootstrap.com/docs/5.0/components/button-group/ -->
+    <!-- https://getbootstrap.com/docs/5.0/utilities/overflow/ -->
+    <section class="section-content py-5">
+    <!-- <content class="col-md-10"> -->
+        
+        <models content class="container"></models>
 
-            <container-row class="row">
+        <!-- https://www.w3schools.com/tags/tag_progress.asp -->
+        <!-- <label for="file">Simulation progress: </label> -->
+        <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
+        <progress content class="progress-bar-animated"></progress>
 
-                <!-- https://stackoverflow.com/questions/28340054/bootstrap-keep-div-fixed-after-scrolling-to-it -->
-                <sidebar class="btn-group-vertical col-md-2 sticky-top" role="group" aria-label="Vertical button group">
-
-                    <button content-selector="models" type="button" class="btn btn-primary btn-menu btn-models">Models</button>
-
-                    <button type="submit" class="btn btn-primary btn-menu btn-simulate">Simulate</button>
-
-                    <!-- Issue: Stop Simulation funcionality -->
-                    <!-- <button type="button" class="btn btn-primary btn-menu btn-stop">Stop Simulation</button> -->
-
-                    <!-- Use it while Stop Simulation functionality  isn't implemented-->
-                    <button type="button" class="btn btn-primary btn-menu btn-stop">Simulating</button>
-
-                    <button content-selector="result" type="button" class="btn btn-primary btn-menu btn-result">Simulation Results</button>
-
-                </sidebar>
-
-                <!-- https://getbootstrap.com/docs/5.0/components/button-group/ -->
-                <!-- https://getbootstrap.com/docs/5.0/utilities/overflow/ -->
-                <content class="col-md-10">
-                    
-                    <models content class="container"></models>
-                    
-                    <!-- https://www.w3schools.com/tags/tag_progress.asp -->
-                    <!-- <label for="file">Simulation progress: </label> -->
-                    <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
-                    <progress content class="progress-bar-animated"></progress>
-
-                    <result content class="container">
-                        
-                        <!-- https://www.w3schools.com/tags/att_a_download.asp -->
-                        <!-- https://www.educative.io/edpresso/how-to-download-files-in-flask -->
-
-                        <h3>Simulation Results</h3>
-                        <br>
-                        <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
-                        <a link-download-zip-CSV target="_blank">Download CSV</a>
-
-                        <br>
-                        <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
-                        <a link-data-visualization target="_blank">Data Visualization</a>
-
-                    </result>
-                    
-                </content>
-
-            </container-row>
+        <result content class="container">
             
-        </main>
+            <!-- https://www.w3schools.com/tags/att_a_download.asp -->
+            <!-- https://www.educative.io/edpresso/how-to-download-files-in-flask -->
 
-    </form>
+            <h3>Simulation Results</h3>
+            <br>
+            <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
+            <a link-download-zip-CSV target="_blank">Download CSV</a>
 
-    <footer>
+            <br>
+            <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
+            <a link-data-visualization target="_blank">Data Visualization</a>
 
-        <script type="text/javascript" src="/pages/homepage/controllers/Homepage.js"></script>
+        </result>
+        
+    <!--</content> -->
+    </section>
 
-        <script type="text/javascript" src="/pages/homepage/controllers/Models.js"></script>
+</main><!-- container //  -->
 
-        <script type="text/javascript" src="/pages/homepage/controllers/Result.js"></script>
+</form>
 
-        <script type="text/javascript" src="/pages/homepage/controllers/Header.js"></script>
+<footer>
 
-        <script type="text/javascript" src="/pages/homepage/homepage.js"></script>
+    <script type="text/javascript" src="/pages/homepage/controllers/Homepage.js"></script>
 
-    </footer>
+    <script type="text/javascript" src="/pages/homepage/controllers/Models.js"></script>
+
+    <script type="text/javascript" src="/pages/homepage/controllers/Result.js"></script>
+
+    <script type="text/javascript" src="/pages/homepage/controllers/Header.js"></script>
+
+    <script type="text/javascript" src="/pages/homepage/homepage.js"></script>
+
+</footer>
+
 
 </body>
-
+</html>

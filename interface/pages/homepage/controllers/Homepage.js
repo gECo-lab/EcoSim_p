@@ -48,7 +48,7 @@ class Homepage {
 	initializate()
 	{
 
-		document.querySelectorAll("sidebar > [content-selector]").forEach(contentSelectorEl => {
+		document.querySelectorAll("ul li > [content-selector]").forEach(contentSelectorEl => {
 
 			const selector = contentSelectorEl.getAttribute("content-selector");
 

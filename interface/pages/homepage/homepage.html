@@ -6,10 +6,20 @@
 <meta name="keywords" content="htmlcss bootstrap, multi level menu, submenu, treeview nav menu examples" />
 <meta name="description" content="Bootstrap 5 navbar multilevel treeview examples for any type of project, Bootstrap 5" />  
 
-<title>EcoSim(p) - Economic Simulation in Python</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<title>
+  EcoSim(p) - Economic Simulation in Python
+</title>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+      >
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+	crossorigin="anonymous">
+</script>
 
 <link rel="stylesheet" href="/pages/homepage/homepage.css">
 
@@ -18,18 +28,18 @@
 <body>
 
 <header class="section-header py-4">
-<div class="container">
-	<h2>EcoSim(p) - Economic Simulation in Python </h2> 
-</div>
+  <div class="container">
+    <h2>EcoSim(p) - Economic Simulation in Python </h2> 
+  </div>
 </header> <!-- section-header.// -->
 
 <form action="/simulation/execution" method="post">
 
-    <main class="container">
+  <main class="container">
 
     <!-- ============= COMPONENT ============== -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
+      <div class="container-fluid">
         <a class="navbar-brand" href="#">EcoSim(p)</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"  aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -91,9 +101,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">  Simulation  </a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="selectModel.html"> Select Model </a></li>
-                <li><a class="dropdown-item" href="#"> Simulate  </a></li>
-                <li><a class="dropdown-item" href="#"> View Results  </a></li>
+                <li><a class="dropdown-item" content-selector="models" href="pages/homepage/subpages/selectModel.html"> Select Model </a></li>
+                <li><a class="dropdown-item" href="pages/homepage/subpages/simulate.html"> Simulate  </a></li>
+                <li><a class="dropdown-item" href="pages/homepage/subpages/results.html"> View Results  </a></li>
                 </ul>
             </li>
 
@@ -105,38 +115,7 @@
 
     </nav>
 
-    <!-- ================ Call Code ================= -->
-
-    <!-- https://getbootstrap.com/docs/5.0/components/button-group/ -->
-    <!-- https://getbootstrap.com/docs/5.0/utilities/overflow/ -->
-    <section class="section-content py-5">
-    <!-- <content class="col-md-10"> -->
-        
-        <models content class="container"></models>
-
-        <!-- https://www.w3schools.com/tags/tag_progress.asp -->
-        <!-- <label for="file">Simulation progress: </label> -->
-        <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
-        <progress content class="progress-bar-animated"></progress>
-
-        <result content class="container">
-            
-            <!-- https://www.w3schools.com/tags/att_a_download.asp -->
-            <!-- https://www.educative.io/edpresso/how-to-download-files-in-flask -->
-
-            <h3>Simulation Results</h3>
-            <br>
-            <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
-            <a link-download-zip-CSV target="_blank">Download CSV</a>
-
-            <br>
-            <!-- https://www.youtube.com/watch?v=sy1MNWt7om4 -->
-            <a link-data-visualization target="_blank">Data Visualization</a>
-
-        </result>
-        
-    <!--</content> -->
-    </section>
+<!-- ================ Call Code ================= -->
 
 </main><!-- container //  -->
 
@@ -145,12 +124,6 @@
 <footer>
 
     <script type="text/javascript" src="/pages/homepage/controllers/Homepage.js"></script>
-
-    <script type="text/javascript" src="/pages/homepage/controllers/Models.js"></script>
-
-    <script type="text/javascript" src="/pages/homepage/controllers/Result.js"></script>
-
-    <script type="text/javascript" src="/pages/homepage/controllers/Header.js"></script>
 
     <script type="text/javascript" src="/pages/homepage/homepage.js"></script>
 

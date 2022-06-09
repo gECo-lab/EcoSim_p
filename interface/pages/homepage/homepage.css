@@ -86,12 +86,14 @@ content > result {
 }
 
 .btn-menu {
-    background-color: #227;
-    border-color: #227;
+    background-color: #f1f1f1;
+    border-color: #f1f1f1;
 }
 
 .btn-models {
     border-radius: 0px;
+    background-color: #f1f1f1;
+    border-color: #f1f1f1;
 }
 
 .btn-stop {

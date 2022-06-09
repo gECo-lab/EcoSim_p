@@ -15,7 +15,7 @@ class Homepage {
 		this._btnStop = document.querySelector(".btn-stop");
 		this._btnResult = document.querySelector(".btn-result");
 
-		this.initializate();
+		this.initialize();
 		
 		this.onSubmit();
 
@@ -45,7 +45,7 @@ class Homepage {
 		document.querySelector(selector).style.display = "block";
 	}
 
-	initializate()
+	initialize()
 	{
 
 		document.querySelectorAll("ul li > [content-selector]").forEach(contentSelectorEl => {
@@ -62,6 +62,7 @@ class Homepage {
 
 		this._btnResult.addEventListener(["click"], event => {
 			this._btnSimulate.style.display = 'none';
+
 		})
 		
 	}
@@ -128,3 +129,5 @@ class Homepage {
 	}
 
 }
+
+

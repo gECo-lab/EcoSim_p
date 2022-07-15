@@ -45,4 +45,3 @@ six>=1.15.0
 Werkzeug>=1.0.1
 
 zope.interface>=5.2.0
-pkg_resources>=0.0.0 # Does not exist

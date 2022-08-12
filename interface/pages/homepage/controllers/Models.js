@@ -4,12 +4,12 @@ class Models {
 
 		this._modelsEl = document.querySelector("models");
 
-		this.initialize();			
+		this.initializate();			
 
 	}
 
 
-	initialize() {
+	initializate() {
 
 		this.getModels();        
 
@@ -33,17 +33,17 @@ class Models {
     renderModels = (models) => {
     	let modelsEl = document.createElement("div");
 
-        function capitalize(string){
+        function captilize(string){
             return string.replace(/^./, string[0].toUpperCase());
         }
 
         function split_names(string){
-            return string.split("_").map(name => capitalize(name)).join(" ");
+            return string.split("_").map(name => captilize(name)).join(" ");
         }    
 
     	modelsEl.innerHTML = `
-            <h3>Models</h3>
-    	 	<label for="select-model">Model: choose a model to simulate</label><br>
+            <h3>Choose a model to simulate</h3>
+    	 	<label for="select-model">Models</label><br>
     		<select id="select-model" name="model">
 				${
                     models.map(model => `<option value="${model}">${split_names(model)}</option>`).join("")

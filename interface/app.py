@@ -11,6 +11,7 @@ from resources.model import ModelList
 from views.homepage import homepage_blueprint
 from views.simulation import simulation_blueprint
 from views.result import result_blueprint
+from views.homepageSimulation import homepageSimulation_blueprint
 
 """
 HTTP Status
@@ -39,14 +40,14 @@ app.secret_key = os.urandom(64)
 app.register_blueprint(homepage_blueprint, url_prefix="/")
 app.register_blueprint(simulation_blueprint, url_prefix="/simulation")
 app.register_blueprint(result_blueprint, url_prefix="/result")
-
+app.register_blueprint(homepageSimulation_blueprint, url_prefix="/homepageSimulation.html")
 #############
 # Resources #
 # (Models)  #
 #############
 
 api = Api(app)
-api.add_resource(ModelList, '/models')
+api.add_resource(ModelList, '/homepageSimulation.html/models')
 
 
 ##################

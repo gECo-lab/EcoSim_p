@@ -17,15 +17,13 @@
       {
 	"space_type": "IpdGame",
 	"space_name": "IpdGame",
-	"action_set": "ipd_action_set",
-	"action_class": "Strategy",
 	"space_variables": {
             "payoffs": 0.0
 	}
     }
   ],
-  "agents": {
-    "GoodPlayer": {
+  "agents": [
+    {
       "agent_type": "GoodPlayer",
       "agent_prefix": "GPl",
       "agent_spaces": [
@@ -33,7 +31,7 @@
       ],
 	"no_of_agents": 20
     },
-    "BadPlayer": {
+    {
       "agent_type": "BadPlayer",
       "agent_prefix": "BPl",
       "agent_spaces": [
@@ -41,7 +39,7 @@
       ],
       "no_of_agents": 20
     },
-    "RandomPlayer": {
+    {
       "agent_type": "RandomPlayer",
       "agent_prefix": "RPl",
       "agent_spaces": [
@@ -49,7 +47,7 @@
       ],
       "no_of_agents": 20
     },
-    "TitForTatPlayer":{
+    {
       "agent_type": "TitForTatPlayer",
       "agent_prefix": "TTPl",
       "agent_spaces": [
@@ -58,7 +56,7 @@
       "no_of_agents": 20
     }
 
-  },
+  ],
   "observers": [
     {
       "observer_type": "Observer",

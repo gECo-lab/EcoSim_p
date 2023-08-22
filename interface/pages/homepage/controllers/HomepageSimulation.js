@@ -10,6 +10,7 @@ class HomepageSimulation {
 
 		// Buttons
 
+		this._btnSelectModels = document.querySelector(".btn-slct-models");
 		this._btnModels = document.querySelector(".btn-models");
 		this._btnSimulate = document.querySelector(".btn-simulate");		
 		this._btnStop = document.querySelector(".btn-stop");
@@ -56,6 +57,9 @@ class HomepageSimulation {
 
 			});
 
+		this._btnSelectModels.addEventListener(["click"], event => {
+			this._btnSelectModels.style.display = 'block';
+		});	
 		this._btnModels.addEventListener(["click"], event => {
 			this._btnSimulate.style.display = 'block';			
 		});

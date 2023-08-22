@@ -88,14 +88,14 @@ content > result {
 
 .btn-menu {
     font-size: 22px;
-    background-color: #f1f1f1;
-    border-color: #f1f1f1;
+    background-color: black;
+    border-color: black;
 }
 
 .btn-models {
     border-radius: 0px;
-    background-color: #f1f1f1;
-    border-color: #f1f1f1;
+    background-color: black;
+    border-color: black;
 }
 
 .btn-stop {

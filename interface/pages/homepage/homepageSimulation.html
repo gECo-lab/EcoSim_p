@@ -32,7 +32,8 @@
                 <!-- https://stackoverflow.com/questions/28340054/bootstrap-keep-div-fixed-after-scrolling-to-it -->
                 <sidebar class="btn-group-vertical col-md-2 sticky-top" role="group" aria-label="Vertical button group">
 
-                    <button content-selector="models" type="button" class="btn btn-primary btn-menu btn-models">Select Model</button>
+                    <button content-selector="models" type="button" class="btn btn-primary btn-menu .btn-slct-models">Select Model</button> 
+                    <!--class="btn btn-primary btn-menu btn-models">Select Model</button> -->
 
                     <button type="submit" class="btn btn-primary btn-menu btn-simulate">Simulate</button>
 
@@ -49,9 +50,8 @@
                 <!-- https://getbootstrap.com/docs/5.0/components/button-group/ -->
                 <!-- https://getbootstrap.com/docs/5.0/utilities/overflow/ -->
                 <content class="col-md-10">
-                    
+
                     <models content class="container"></models>
-                    
                     <!-- https://www.w3schools.com/tags/tag_progress.asp -->
                     <!-- <label for="file">Simulation progress: </label> -->
                     <!-- <progress id="file" value="32" max="100"> 32% </progress> -->
@@ -88,7 +88,7 @@
 
         <script type="text/javascript" src="/pages/homepage/controllers/Result.js"></script>
 
-        <script type="text/javascript" src="/pages/homepage/homepage.js"></script>
+        <!-- <script type="text/javascript" src="/pages/homepage/homepage.js"></script>
 
     </footer>
 

@@ -8,15 +8,15 @@ from collections import OrderedDict
 class Space(object):
     """ The space class """
     def __init__(self, model, name,
-                 actions_set_file,
-                 action_class,
+                # actions_set_file,
+                # action_class,
                  variables = None):
         """ Initialize Space Class """
 
         self.model = model
         self.name = name
-        self.actions_set_file = actions_set_file
-        self.action_class = action_class
+        #self.actions_set_file = actions_set_file
+        #self.action_class = action_class
         self.variables = variables
         self.agents = OrderedDict()
 

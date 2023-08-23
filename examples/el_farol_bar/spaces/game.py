@@ -11,9 +11,14 @@ class EFBGame(Space):
 
     STRATEGY = ['GOING', 'NOT GOING']
 
-    def __init__(self, model, name, actions_set_file, action_class, variables):
+    def __init__(self, model, 
+                 name, 
+                 variables
+                 ):
         """ Intialize The el Farol Game """
-        super().__init__(model, name, actions_set_file, action_class, variables)
+        super().__init__(model, 
+                         name, 
+                         variables)
 
         self.number_of_agents = 0
         self.frequency = [random.randint(0, 100)]

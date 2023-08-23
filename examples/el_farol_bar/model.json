@@ -1,12 +1,5 @@
 {
-    "simulation_name": "elFarolClassic",
-  "simulation_model": "elFarolClassic",
-  "simulation_parameters": [
-    {
-      "parameter_name": "total_payoff",
-      "parameter_value": 0.0
-    }
-  ],
+  "simulation_name": "elFarolClassic",
   "model_name": "elFarolClassic",
   "schedule": [
     {
@@ -15,27 +8,24 @@
     }
   ],
   "spaces": [
-      {
-	"space_type": "EFBGame",
-	"space_name": "EFBGame",
-	"action_set": "el_farol_bar_action_set",
-	"action_class": "Strategy",
-	"space_variables": {
-            "payoffs": 0.0
-	}
+    {
+      "space_type": "EFBGame",
+      "space_name": "EFBGame",
+      "space_variables": {
+        "payoffs": 0.0
+      }
     }
   ],
-  "agents": {
-    "LikeSixtyPercentPlayer": {
+  "agents": [
+    {
       "agent_type": "LikeSixtyPercentPlayer",
       "agent_prefix": "L60p",
       "agent_spaces": [
-          "EFBGame"
+        "EFBGame"
       ],
-      "no_of_agents": 100
+      "no_of_agents": 10
     }
-
-  },
+  ],
   "observers": [
     {
       "observer_type": "Observer",
@@ -45,11 +35,11 @@
       ],
       "observer_agent": "LikeSixtyPercentPlayer",
       "observable_vars": [
-          "payoff",
-          "my_play",
-	  "selected_predictor",
-	  "predictor_fitness",
-	  "predictor_prediction"
+        "payoff",
+        "my_play",
+        "selected_predictor",
+        "predictor_fitness",
+        "predictor_prediction"
       ]
     }
   ]

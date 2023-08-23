@@ -34,8 +34,6 @@ class SpaceCreator(object):
         for space_def in spaces_def:
             self.space_type = space_def['space_type']
             self.space_name = space_def['space_name']
-            self.space_actions = space_def['action_set']
-            self.space_action_class = space_def['action_class']
             self.space_variables = space_def['space_variables']
             try:
                 a_space = "self.sps" + "." + self.space_type
@@ -46,8 +44,6 @@ class SpaceCreator(object):
             # refazer a interface da clase espaço - Retirar o action_set
             self.space_Factory.add_args(self.spaces_model,
                                         self.space_name,
-                                        self.space_actions,
-                                        self.space_action_class,
                                         self.space_variables)
             try:
                 self.new_space = self.space_Factory()

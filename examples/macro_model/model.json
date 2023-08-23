@@ -70,8 +70,8 @@
       }
     }
   ],
-  "agents": {
-    "Household": {
+  "agents": [
+    {
       "agent_type": "Household",
       "agent_prefix": "HH",
       "agent_spaces": [
@@ -79,7 +79,7 @@
       ],
       "no_of_agents": 500
     },
-    "CGFirm": {
+    {
       "agent_type": "CGFirm",
       "agent_prefix": "CG",
       "agent_spaces": [
@@ -89,7 +89,7 @@
       ],
       "no_of_agents": 10
     },
-    "KGFirm": {
+    {
       "agent_type": "KGFirm",
       "agent_prefix": "KG",
       "agent_spaces": [
@@ -98,7 +98,7 @@
       ],
       "no_of_agents": 5
     },
-    "Bank": {
+    {
       "agent_type": "Bank",
       "agent_prefix": "Ba",
       "agent_spaces": [
@@ -107,7 +107,7 @@
       ],
       "no_of_agents": 2
     },
-    "CentralBank": {
+    {
       "agent_type": "CentralBank",
       "agent_prefix": "CB",
       "agent_spaces": [
@@ -116,7 +116,7 @@
       ],
       "no_of_agents": 1
     },
-    "Government": {
+    {
       "agent_type": "Government",
       "agent_prefix": "Gov",
       "agent_spaces": [
@@ -126,7 +126,7 @@
       ],
       "no_of_agents": 1
     }
-  },
+  ],
   "observers": [
     {
       "observer_type": "Observer",

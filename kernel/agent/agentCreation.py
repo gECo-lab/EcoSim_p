@@ -28,7 +28,8 @@ class AgentPopulationCreator(object):
         self.agents_by_type = dict()
         self.agents_simulation = simulation
         self.agents_model = model
-        for agent_def in agents_def.values():
+#        for agent_def in agents_def.values():
+        for agent_def in agents_def:
             self.agent_type = agent_def['agent_type']
             self.agent_prefix = agent_def['agent_prefix']
             self.agent_population_size = int(agent_def['no_of_agents'])

@@ -6,7 +6,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 10
+          "parameter_value": 2
         },
         {
           "parameter_name": "reset_each_run",
@@ -33,28 +33,27 @@
         }
       ],
       "agents_init": {
-	  "LikeSixtyPercentPlayer": [
-	    {
-		"var_name": "selected_predictor",
-		"var_type": "str",
-		"var_dist": "none",
-		"var_value": ""
-            },
-      {
-		"var_name": "predictor_fitness",
-		"var_type": "str",
-		"var_dist": "none",
-		"var_value": ""
-            },
-      {
-    "var_name": "predictor_prediction",
-    "var_type": "str",
-    "var_dist": "none",
-    "var_value": ""
-            }
+        "LikeSixtyPercentPlayer": [
+          {
+            "var_name": "selected_predictor",
+            "var_type": "str",
+            "var_dist": "none",
+            "var_value": ""
+          },
+          {
+            "var_name": "predictor_fitness",
+            "var_type": "str",
+            "var_dist": "none",
+            "var_value": ""
+          },
+          {
+            "var_name": "predictor_prediction",
+            "var_type": "str",
+            "var_dist": "none",
+            "var_value": ""
+          }
         ]
       }
-	
     }
   ]
 }

@@ -9,9 +9,9 @@ class Market(Space):
     """ Abstract Market """
     BID_TYPE = ['O', 'D']
 
-    def __init__(self, model, name, actions_set_file, action_class, variables):
+    def __init__(self, model, name, variables):
         """ Intialize abstract market """
-        super().__init__(model, name, actions_set_file, action_class, variables)
+        super().__init__(model, name, variables)
         self.offers = SortedDict()
         self.demmand = SortedDict()
         self.contracts = {}

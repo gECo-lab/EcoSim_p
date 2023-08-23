@@ -48,13 +48,7 @@ class Simulation(object):
         # Create Model 
         self.model = Model(self, self.json_model_defs, 
                            self.path_to_results)
-
-        # Set Simulation Parameters
-        for parameter in self.json_model_defs['simulation_parameters']:
-            self.parameter_name = parameter['parameter_name']
-            self.parameter_value = parameter['parameter_value']
-            setattr(self, self.parameter_name, self.parameter_value)
-
+        
         # Create Scenarios
         self.create_scenarios()
 

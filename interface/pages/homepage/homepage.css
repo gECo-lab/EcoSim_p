@@ -53,7 +53,7 @@ nav {
 
 .container {
     margin: 0;
-    padding: 0;
+    padding: 10;
     height: 100%;
 }
 
@@ -63,7 +63,8 @@ container-row {
 }
 
 sidebar {    
-    max-height: 300px;
+    max-height: 380px;
+    
 }
 
 content {            
@@ -74,7 +75,7 @@ content {
 }
 
 content > models {
-    display: block;
+    display: none;
 }
 
 content > progress {
@@ -86,14 +87,15 @@ content > result {
 }
 
 .btn-menu {
-    background-color: #f1f1f1;
-    border-color: #f1f1f1;
+    font-size: 22px;
+    background-color: black;
+    border-color: black;
 }
 
 .btn-models {
     border-radius: 0px;
-    background-color: #f1f1f1;
-    border-color: #f1f1f1;
+    background-color: black;
+    border-color: black;
 }
 
 .btn-stop {
@@ -101,7 +103,6 @@ content > result {
 }
 
 .btn-simulate:hover {
-
     background-color:  rgb(200, 0, 50);
     border-color:  rgb(200, 0, 50);
 }
@@ -110,4 +111,9 @@ content > result {
 
     background-color:  rgb(0, 150, 100);
     border-color:  rgb(0, 150, 100);
+}
+
+label {
+    font-size: 17px;
+    padding: 1;
 }

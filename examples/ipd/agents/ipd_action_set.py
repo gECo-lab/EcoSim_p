@@ -34,19 +34,22 @@ class Strategy:
         self.last_game = copy.copy(self.game)
         self.game = aGame
 
+    def name(self):
+        return self.strategy_name
+
 
 class AlwaysCooperate(Strategy):
     """ Always Cooperate Strategy """
     def __init__(self):
         super().__init__()
-        self.strategy_name = "cooperate"
+        self.strategy_name = "always_cooperate"
         self.strategy = "C"
 
 
 class AlwaysDefect(Strategy):
     def __init__(self):
         super().__init__()
-        self.strategy_name = "defect"
+        self.strategy_name = "always_defect"
         self.strategy = "D"
 
 

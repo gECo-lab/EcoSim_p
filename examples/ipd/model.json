@@ -14,12 +14,12 @@
     }
   ],
   "spaces": [
-      {
-	"space_type": "IpdGame",
-	"space_name": "IpdGame",
-	"space_variables": {
-            "payoffs": 0.0
-	}
+    {
+      "space_type": "IpdGame",
+      "space_name": "IpdGame",
+      "space_variables": {
+        "payoffs": 0.0
+      }
     }
   ],
   "agents": [
@@ -27,35 +27,34 @@
       "agent_type": "GoodPlayer",
       "agent_prefix": "GPl",
       "agent_spaces": [
-          "IpdGame"
+        "IpdGame"
       ],
-	"no_of_agents": 20
+      "no_of_agents": 100
     },
     {
       "agent_type": "BadPlayer",
       "agent_prefix": "BPl",
       "agent_spaces": [
-          "IpdGame"
+        "IpdGame"
       ],
-      "no_of_agents": 20
+      "no_of_agents": 100
     },
     {
       "agent_type": "RandomPlayer",
       "agent_prefix": "RPl",
       "agent_spaces": [
-          "IpdGame"
+        "IpdGame"
       ],
-      "no_of_agents": 20
+      "no_of_agents": 100
     },
     {
       "agent_type": "TitForTatPlayer",
       "agent_prefix": "TTPl",
       "agent_spaces": [
-          "IpdGame"
+        "IpdGame"
       ],
-      "no_of_agents": 20
+      "no_of_agents": 100
     }
-
   ],
   "observers": [
     {
@@ -66,11 +65,12 @@
       ],
       "observer_agent": "GoodPlayer",
       "observable_vars": [
-          "my_payoff",
-          "my_play",
-	  "other_name",
-          "other_play",
-	  "other_payoff"
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
       ]
     },
     {
@@ -81,11 +81,12 @@
       ],
       "observer_agent": "BadPlayer",
       "observable_vars": [
-          "my_payoff",
-          "my_play",
-	  "other_name",
-          "other_play",
-	  "other_payoff"
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
       ]
     },
     {
@@ -96,11 +97,12 @@
       ],
       "observer_agent": "RandomPlayer",
       "observable_vars": [
-          "my_payoff",
-          "my_play",
-	  "other_name",
-          "other_play",
-	  "other_payoff"
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
       ]
     },
     {
@@ -111,13 +113,13 @@
       ],
       "observer_agent": "TitForTatPlayer",
       "observable_vars": [
-          "my_payoff",
-          "my_play",
-	  "other_name",
-          "other_play",
-	  "other_payoff"
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
       ]
     }
-
   ]
 }

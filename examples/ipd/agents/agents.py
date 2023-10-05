@@ -38,13 +38,14 @@ class Player(DiscreteEventAgent):
         self.game.other_payoff = other_payoff
         self.strategy.update_game(self.game)
         # print("ag name: ", self.name, "play: ", self.my_play, "payoff: ", self.my_payoff)
-
-
+    
+    
 class GoodPlayer(Player):
     """ A player that always cooperate """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = AlwaysCooperate()
+        self.strategy_name = self.strategy.name()
 
 
 class BadPlayer(Player):
@@ -52,17 +53,20 @@ class BadPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = AlwaysDefect()
+        self.strategy_name = self.strategy.name()
 
 
 class RandomPlayer(Player):
-    """ A player that always defect """
+    """ A player that randomly plays """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = RandomPlay()
+        self.strategy_name = self.strategy.name()
 
 
 class TitForTatPlayer(Player):
-    """ A player that always defect """
+    """ Tit for tat player """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = SimpleTitForTat()
+        self.strategy_name = self.strategy.name()

@@ -58,64 +58,9 @@ runs_df$diff_payoffs  <- runs_df$my_payoff - runs_df$other_payoff
 
 ```
 
+```{r}
+sum_runs <- runs_df %>% group_by(scenario, step, strategy_name) %>% 
+  summarise(payoff = mean(my_payoff, na.rm = T)) 
 
-```{r grafsFromRunDF}
-## Some Graphs
-
-ggplot(runs_df, aes(x = my_play, y = my_payoff, color = as.factor(other_play))) +
-    geom_boxplot()
-
-
-ggplot(runs_df, aes(x = my_play, y = diff_payoffs, color = as.factor(other_play))) +
-    geom_boxplot()
-
-```
-
-
-
-
-```{r generateMeansDF}
-### Generating Means
-
-means_df  <- runs_df %>% group_by(scenario, run, step) %>%
-    summarize(mean_my_payoff = mean(my_payoff),
-              mean_other_payoff = mean(other_payoff),
-              no_of_my_c = sum(my_play == "C"),
-              no_of_my_d = sum(my_play == "D"),
-              no_of_other_c = sum(other_play == "C"),
-              no_of_my_d = sum(other_play == "D"),
-              no_of_agents = n(),
-              prop_of_my_c = no_of_my_c / no_of_agents,
-              prop_of_other_c = no_of_other_c / no_of_agents,
-              mean_diff_payoffs = mean(diff_payoffs),
-              sum_diff_payoffs = sum(diff_payoffs)
-)
-
-
-
-```
-
-
-
-```{r graphsFromMeans}
-
-
-ggplot(means_df, aes(x = step, y = mean_my_payoff)) +
-    geom_line()
-
-ggplot(means_df, aes(x = step, y = mean_my_payoff)) +
-    geom_line() +
-    facet_grid(as.factor(run)~.)
-   
-
-ggplot(means_df, aes(x = prop_of_my_c, y = mean_my_payoff, color = as.factor(run))) +
-    geom_point()
-
-ggplot(means_df, aes(x = prop_of_my_c, y = prop_of_other_c, color = as.factor(run))) +
-    geom_point()
-
-
-ggplot(runs_df, aes(x = my_play, y = diff_payoffs, color = as.factor(other_play))) +
-    geom_boxplot()
-
+sum_runs %>%  ggplot(aes(x=step, y = payoff, color = strategy_name)) + geom_point() + geom_smooth()
 ```

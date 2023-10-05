@@ -6,7 +6,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 10
+          "parameter_value": 100
         },
         {
           "parameter_name": "reset_each_run",

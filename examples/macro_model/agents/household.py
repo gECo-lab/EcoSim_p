@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 """ Household Agents from the basic macroeconomic model """
 
 from .agents import EconomicAgent

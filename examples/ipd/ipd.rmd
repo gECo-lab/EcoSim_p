@@ -60,7 +60,39 @@ runs_df$diff_payoffs  <- runs_df$my_payoff - runs_df$other_payoff
 
 ```{r}
 sum_runs <- runs_df %>% group_by(scenario, step, strategy_name) %>% 
-  summarise(payoff = mean(my_payoff, na.rm = T)) 
+  summarise(payoff_mean = mean(my_payoff, na.rm = T),
+            payoff_sum = sum(my_payoff, na.rm = T)
+    )
 
-sum_runs %>%  ggplot(aes(x=step, y = payoff, color = strategy_name)) + geom_point() + geom_smooth()
+sum_cooperation <- runs_df %>% group_by(scenario, step) %>%
+  summarise(my_play_C = sum(ifelse(my_play == "C", 1,0), na.rm = T),
+            my_play_D = sum(ifelse(my_play == "D", 1,0), na.rm = T),
+            ot_play_C = sum(ifelse(other_play == "C", 1,0), na.rm = T),
+            ot_play_D = sum(ifelse(other_play == "D", 1,0), na.rm = T),
+            players = n()
+) %>%
+  mutate( cooperation = (my_play_C)/players,
+          defection = (my_play_D)/players)
+
 ```
+
+
+
+
+```{r}
+sum_runs %>%  ggplot(aes(x=step, y = payoff_mean, color = strategy_name))  + geom_point(alpha=0.5) + geom_smooth()
+```
+
+
+```{r}
+sum_runs %>%  ggplot(aes(x=step, y = payoff_sum, color = strategy_name)) + geom_point(alpha = 0.5) + geom_smooth()
+
+```
+
+
+
+```{r}
+sum_cooperation %>%  ggplot(aes(x=step, y = cooperation)) + geom_point(alpha = 0.5) + geom_smooth()
+
+```
+

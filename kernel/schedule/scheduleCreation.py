@@ -9,7 +9,7 @@ The definition of the schedule that will be used in the simulation is in the yam
 
 """
 
-import schedule.basicSchedule as schd
+import kernel.schedule.basicSchedule as schd
 import dependency_injector.errors as errors
 import dependency_injector.providers as providers
 

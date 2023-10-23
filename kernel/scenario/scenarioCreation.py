@@ -8,7 +8,7 @@ The definition of the Scenarios that will be used in the simulation are in the y
 """
 import dependency_injector.errors as errors
 import dependency_injector.providers as providers
-import scenario.basicScenarios as scn
+import kernel.scenario.basicScenarios as scn
 
 
 class ScenarioCreator(object):

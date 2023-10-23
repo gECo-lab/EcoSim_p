@@ -54,6 +54,23 @@
         "IpdGame"
       ],
       "no_of_agents": 100
+    },
+    {
+    "agent_type": "TitForTatWithRecallPlayer",
+    "agent_prefix": "TTRCLl",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 100
+  },
+
+    {
+      "agent_type": "RancorousPlayer",
+      "agent_prefix": "Rancl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 100
     }
   ],
   "observers": [
@@ -112,6 +129,38 @@
         "obs_bpl"
       ],
       "observer_agent": "TitForTatPlayer",
+      "observable_vars": [
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "TTRCLObs",
+      "observer_actions": [
+        "obs_bpl"
+      ],
+      "observer_agent": "TitForTatWithRecallPlayer",
+      "observable_vars": [
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "RancObs",
+      "observer_actions": [
+        "obs_bpl"
+      ],
+      "observer_agent": "RancorousPlayer",
       "observable_vars": [
         "my_payoff",
         "my_play",

@@ -10,7 +10,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": ["../models/ref_br/", "ref_br_config.json", "ref_br.json"],
+            "args": ["../examples/ipd/ config.json model.json scenarios.json"],
             "console": "integratedTerminal"
         }
     ]

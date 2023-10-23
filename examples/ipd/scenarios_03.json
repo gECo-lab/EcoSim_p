@@ -22,7 +22,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 5000
+          "parameter_value": 1000
         }
       ],
       "scenario_variables": [
@@ -33,32 +33,8 @@
         }
       ],
     "agents_init": {
-        "GoodPlayer": [
-                {
-            "var_name": "payoff",
-            "var_type": "integer",
-            "var_dist": "none",
-            "var_value": 1
-                }
-            ],
         "BadPlayer": [
                 {
-            "var_name": "payoff",
-            "var_type": "integer",
-            "var_dist": "none",
-            "var_value": 1
-                }
-            ],
-        "RandomPlayer": [
-            {
-            "var_name": "payoff",
-            "var_type": "integer",
-            "var_dist": "none",
-            "var_value": 1
-                }
-            ],
-        "TitForTatPlayer": [
-            {
             "var_name": "payoff",
             "var_type": "integer",
             "var_dist": "none",
@@ -72,16 +48,7 @@
               "var_dist": "none",
               "var_value": 1
                   }
-              ],  
-            "RancorousPlayer": [
-              {
-              "var_name": "payoff",
-              "var_type": "integer",
-              "var_dist": "none",
-              "var_value": 1
-                  }
               ]
-  
         }
     }
   ]

@@ -14,7 +14,7 @@ import concurrent.futures
 import numpy as np
 # import yappi #using to profile code
 
-from  agent.agentVars import AgentVarsCreator
+from  kernel.agent.agentVars import AgentVarsCreator
 
 
 class Scenario(object):

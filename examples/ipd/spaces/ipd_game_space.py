@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Basic IPD game space implementation """
 
-from space.basicSpaces import Space
+from kernel.space.basicSpaces import Space
 
 
 class IpdGame(Space):
@@ -22,26 +22,39 @@ class IpdGame(Space):
                          name, 
                          variables
                          )
+        self.players = []
 
+   
     def update(self):
-        """ here the players play the game """
-        agents = list(self.model.mixed_agents())
+        """ Update game space """
+        self.matching()
+        self.play()
+
+
+    def matching(self):
+        """ Match the agents in pairs"""
+        agents  = list(self.model.mixed_agents())
         half = len(agents) // 2
         players1 = agents[:half]
         players2 = agents[half:]
-        for player1 in players1:
-            if len(players2) > 0:
-                player2 = players2.pop()
-                p1 = player1.play()
-                p2 = player2.play()
-                game = p1 + p2
-                player1.game_payoff(player2.name, p2,
-                                    self.PAYOFFS[game][1],
-                                    self.PAYOFFS[game][0]
-                                    )
-                player2.game_payoff(player1.name,
-                                    p1, self.PAYOFFS[game][0],
-                                    self.PAYOFFS[game][1]
-                                    )
-            else:
-                player1.game_payoff("NA", 0)
+        self.players = zip(players1, players2)
+
+    def play(self):
+        """ Here the players play the game """
+        for player1, player2 in self.players:
+                    player1.select_game(player2)
+                    player2.select_game(player1)
+                    p1 = player1.play()
+                    p2 = player2.play()
+                    game = p1 + p2
+                    player1.game_payoff(player2.name, p2,
+                                        self.PAYOFFS[game][1],
+                                        self.PAYOFFS[game][0]
+                                        )
+                    player2.game_payoff(player1.name, p1, 
+                                        self.PAYOFFS[game][0],
+                                        self.PAYOFFS[game][1]
+                                        )
+ 
+  
+

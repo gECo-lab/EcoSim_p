@@ -7,6 +7,8 @@ Module model
 """
 import datetime
 
+from kernel.model import basicModels
+
 
 __title__ = 'model'
 __version__ = '0.0.5'

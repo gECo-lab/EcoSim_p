@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """ Agents for the iterated prisioners dilemma model """
 
-from agent.basicAgents import DiscreteEventAgent
-from .ipd_action_set import Strategy, AlwaysCooperate, AlwaysDefect, RandomPlay, SimpleTitForTat, Game
-
+from kernel.agent.basicAgents import DiscreteEventAgent
+from .ipd_action_set import *
 
 class Player(DiscreteEventAgent):
     """ A basic player in the Iterated Prisioners Dilemma """
@@ -17,10 +16,12 @@ class Player(DiscreteEventAgent):
         self.strategy = Strategy()
         self.game = Game(self.name, "C", 3, "", "C", 3)
         self.strategy.update_game(self.game)
+        self.mean_payoff = 0
 
     def step(self):
         """ The agent selects a play from a strategy """
-        self.my_play = self.strategy.select_game()
+#        self.select_game()
+        self.update_mean_payoff()
 
     def play(self):
         """ The agent plays a strategy """
@@ -39,6 +40,14 @@ class Player(DiscreteEventAgent):
         self.strategy.update_game(self.game)
         # print("ag name: ", self.name, "play: ", self.my_play, "payoff: ", self.my_payoff)
     
+    def select_game(self, other_player):
+        """ The player selects it's game"""
+        self.my_play = self.strategy.select_game(other_player)
+
+    def update_mean_payoff(self):
+        """ The player calculates it's average payoff """
+        self.mean_payoff = (self.mean_payoff + self.my_payoff)/2
+
     
 class GoodPlayer(Player):
     """ A player that always cooperate """
@@ -69,4 +78,19 @@ class TitForTatPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = SimpleTitForTat()
+        self.strategy_name = self.strategy.name()
+
+class TitForTatWithRecallPlayer(Player):
+    """ Tit for tat player """
+    def __init__(self, simulation, model, agent_number, agent_def):
+        super().__init__(simulation, model, agent_number, agent_def)
+        self.strategy = TitForTat()
+        self.strategy_name = self.strategy.name()
+
+
+class RancorousPlayer(Player):
+    """ Rancorous player """
+    def __init__(self, simulation, model, agent_number, agent_def):
+        super().__init__(simulation, model, agent_number, agent_def)
+        self.strategy = SimpleRancorous()
         self.strategy_name = self.strategy.name()

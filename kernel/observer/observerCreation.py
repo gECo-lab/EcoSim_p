@@ -6,7 +6,7 @@ Definition of the class Observer
 Inspired on datacollection.py from mesa abm
 https://mesa.readthedocs.io/en/master/
 """
-import observer.basicObservers as obs
+import kernel.observer.basicObservers as obs
 import dependency_injector.errors as errors
 import dependency_injector.providers as providers
 

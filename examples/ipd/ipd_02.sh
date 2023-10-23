@@ -1,8 +1,12 @@
+model=$1
+scenarios=$2
+
+
 rm runs/*.csv
 
 cd ../..
 
-python3 ecosimp.py examples/ipd/ config.json model.json scenarios.json
+python3 ecosimp.py examples/ipd/ config.json "$model" "$scenarios"
 
 cd examples/ipd
 

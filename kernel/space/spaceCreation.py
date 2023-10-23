@@ -7,7 +7,7 @@ The definition of the spaces that will be used in the simulation is in the yaml 
 """
 import importlib
 import sys
-import space.basicSpaces as sp
+import kernel.space.basicSpaces as sp
 import dependency_injector.errors as errors
 import dependency_injector.providers as providers
 

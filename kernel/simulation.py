@@ -7,8 +7,9 @@ Simulation Class (This implements a batch simulation)
 import json
 import sys
 import datetime as dt
-from model.model import Model
-from scenario.scenarioCreation import ScenarioCreator
+from kernel.scenario.scenarioCreation import *
+from kernel.model.basicModels import Model
+
 
 
 class Simulation(object):

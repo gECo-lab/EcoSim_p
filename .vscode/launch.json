@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": [" ../examples/ipd/ config.json model.json scenarios.json"],
+            "args": ["/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/src/main/EcoSim_p/examples/ipd/", "config.json", "model.json", "scenarios.json"],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"
         }

@@ -126,8 +126,6 @@ class TitForTat(Strategy):
  
 
 
-
-
 class SimpleRancorous(Strategy):
     """ Simple Rancorous Strategy
         Agente always defects after somebody defects """

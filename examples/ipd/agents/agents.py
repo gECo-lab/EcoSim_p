@@ -94,3 +94,11 @@ class RancorousPlayer(Player):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = SimpleRancorous()
         self.strategy_name = self.strategy.name()
+
+
+class RancorousWithRecallPlayer(Player):
+    """ Rancorous player - Impl: Lucas 2023-10-25 """
+    def __init__(self, simulation, model, agent_number, agent_def):
+        super().__init__(simulation, model, agent_number, agent_def)
+        self.strategy = Rancorous()
+        self.strategy_name = self.strategy.name()

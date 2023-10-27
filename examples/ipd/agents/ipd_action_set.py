@@ -143,3 +143,49 @@ class SimpleRancorous(Strategy):
 
         return self.selected_strategy
     
+
+class Rancorous(Strategy):
+    """ Simple Rancorous Strategy
+        Agent always defects after somebody defects 
+        Impl: Lucas 2023-10-25
+    """
+    def __init__(self):
+        super().__init__()
+        self.strategy_name = "Rancorous"
+        self.other_last_strategy = "C"
+        self.selected_strategy = "C"
+        self.others = {}
+        self.anyone_defected = False
+
+    def update_game(self, aGame):
+        """ Get a game """
+        self.last_game = copy.copy(self.game)
+        self.game = aGame
+        self.update_memory(aGame)
+
+    def select_game(self, other_player):
+        """ Rancorous Strategy """
+        self.recall_games(other_player)
+        
+        if self.anyone_defected:
+            self.selected_strategy = "D"
+        elif self.last_game.other_play == "D":
+            self.selected_strategy = "D"
+            self.anyone_defected = True
+        else:
+            self.selected_strategy = "C"
+        
+        return self.selected_strategy
+    
+    def recall_games(self, other_player):
+        """ Recall the last play from the opponent"""
+        
+        if other_player.name in self.others:
+            self.last_game.other_play = self.others[other_player.name]
+        else:
+            self.others[other_player.name] = "C"
+            self.last_game.other_play = "C"
+
+
+    def update_memory(self, aGame):
+        self.others[aGame.other_name] = aGame.other_play

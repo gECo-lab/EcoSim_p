@@ -22,7 +22,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 1000
+          "parameter_value": 500
         }
       ],
       "scenario_variables": [
@@ -32,24 +32,32 @@
           "var_type": "sharp"
         }
       ],
-    "agents_init": {
+      "agents_init": {
         "BadPlayer": [
-                {
+          {
             "var_name": "payoff",
             "var_type": "integer",
             "var_dist": "none",
             "var_value": 1
-                }
-            ],
-            "TitForTatWithRecallPlayer": [
-              {
-              "var_name": "payoff",
-              "var_type": "integer",
-              "var_dist": "none",
-              "var_value": 1
-                  }
-              ]
-        }
+          }
+        ],
+        "TitForTatWithRecallPlayer": [
+          {
+            "var_name": "payoff",
+            "var_type": "integer",
+            "var_dist": "none",
+            "var_value": 1
+          }
+        ],
+        "RancorousWithRecallPlayer": [
+          {
+            "var_name": "payoff",
+            "var_type": "integer",
+            "var_dist": "none",
+            "var_value": 1
+          }
+        ]
+      }
     }
   ]
 }

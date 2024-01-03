@@ -154,7 +154,7 @@ class Rancorous(Strategy):
         self.strategy_name = "Rancorous"
         self.other_last_strategy = "C"
         self.selected_strategy = "C"
-        self.others = {}
+        self.defectors = {}
         self.anyone_defected = False
 
     def update_game(self, aGame):
@@ -180,12 +180,13 @@ class Rancorous(Strategy):
     def recall_games(self, other_player):
         """ Recall the last play from the opponent"""
         
-        if other_player.name in self.others:
-            self.last_game.other_play = self.others[other_player.name]
+        if other_player.name in self.defectors:
+            self.last_game.other_play = "D"
         else:
-            self.others[other_player.name] = "C"
             self.last_game.other_play = "C"
 
 
     def update_memory(self, aGame):
-        self.others[aGame.other_name] = aGame.other_play
+
+        if aGame.other_play == "D":
+            self.defectors[aGame.other_name] = aGame.other_play

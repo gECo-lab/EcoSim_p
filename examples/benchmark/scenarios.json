@@ -1,0 +1,47 @@
+{
+  "scenarios": [
+    {
+      "scenario_type": "Scenario",
+      "scenario_name": "Scenario1",
+      "scenario_parameters": [
+        {
+          "parameter_name": "no_of_runs",
+          "parameter_value": 1
+        },
+        {
+          "parameter_name": "reset_each_run",
+          "parameter_value": true
+        },
+        {
+          "parameter_name": "step_unit",
+          "parameter_value": "step"
+        },
+        {
+          "parameter_name": "step_interval",
+          "parameter_value": 1
+        },
+        {
+          "parameter_name": "no_of_steps",
+          "parameter_value": 10
+        }
+      ],
+      "scenario_variables": [
+        {
+          "var_name": "GDP",
+          "var_init_value": 10.0,
+          "var_type": "sharp"
+        }
+      ],
+      "agents_init": {
+        "EconomicAgent": [
+          {
+            "var_name": "income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_value": 0.0
+          }
+        ]
+        }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "Description": "Configuration file for the macroeconomic model",
+  "paths":
+    {
+      "kernel": "kernel/",
+      "model": "examples/benchmark/",
+      "results": "examples/benchmark/runs/"
+    }
+}

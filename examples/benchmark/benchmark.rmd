@@ -1,0 +1,58 @@
+---
+title: "Macro Simulation (Caiani et. al., 2016)"
+author: "Sérgio Rivero"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE, eval = TRUE)
+
+### Generating the simulation Results
+rm(list=ls())
+```
+
+
+```{r loadLibs}
+
+### Getting the Libraries
+library(tidyverse)
+
+```
+
+
+```{r setupDirs}
+
+### Setting up the Directories
+i  <-  "runs"
+o  <-  "results"
+```
+
+
+
+```{r getFiles, eval=FALSE}
+
+### Getting the files 
+csv_files <- fs::dir_ls(i, regexp = "macro_Caiani_HH*")
+
+```
+
+
+
+```{r generatingDF, eval=FALSE}
+
+### Generating runs dataframe
+
+runs_df  <- csv_files %>%
+    map_dfr(read_csv)
+runs_df_or  <-  runs_df
+runs_df  <- runs_df[complete.cases(runs_df),]
+
+
+
+```
+

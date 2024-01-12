@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Python Economic ABM
+Python ABM
 Examples Module
 
 """

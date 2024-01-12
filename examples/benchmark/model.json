@@ -1,0 +1,47 @@
+{
+  "simulation_name": "macro_model",
+  "simulation_model": "macro_model",
+  "simulation_parameters": [
+  ],
+  "model_name": "macro_model",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "Market",
+      "space_name": "Market",
+      "action_set": "market_action_set",
+      "action_class": "Market_action_set",
+      "space_variables": {
+        "intensity_of_choice": 0.0
+      }
+    }
+  ],
+  "agents": [
+    {
+      "agent_type": "EconomicAgent",
+      "agent_prefix": "EA",
+      "agent_spaces": [
+        "Market"
+      ],
+      "no_of_agents": 500
+    }
+  ],
+  "observers": [
+    {
+      "observer_type": "Observer",
+      "observer_name": "EA_Obs",
+      "observer_actions": [
+        "obs_ea"
+      ],
+      "observer_agent": "EconomicAgent",
+      "observable_vars": [
+        "income"
+      ]
+    }
+  ]
+}

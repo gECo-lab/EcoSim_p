@@ -28,7 +28,7 @@
       "agent_spaces": [
         "Market"
       ],
-      "no_of_agents": 500
+      "no_of_agents": 8000
     }
   ],
   "observers": [

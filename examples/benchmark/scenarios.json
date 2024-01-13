@@ -6,7 +6,7 @@
       "scenario_parameters": [
         {
           "parameter_name": "no_of_runs",
-          "parameter_value": 1
+          "parameter_value": 3
         },
         {
           "parameter_name": "reset_each_run",
@@ -37,7 +37,7 @@
           {
             "var_name": "income",
             "var_type": "stochastic",
-            "var_dist": "np.random.normal(1.0,0.2)",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0
           }
         ]

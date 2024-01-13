@@ -1,0 +1,138 @@
+---
+title: "Macro Simulation (Caiani et. al., 2016)"
+author: "Sérgio Rivero"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE, eval = TRUE)
+
+### Generating the simulation Results
+rm(list=ls())
+```
+
+
+```{r loadLibs}
+
+### Getting the Libraries
+library(tidyverse)
+
+```
+
+
+```{r setupDirs}
+
+### Setting up the Directories
+i  <-  "runs"
+o  <-  "results"
+```
+
+
+
+```{r getFiles, eval=TRUE}
+
+### Getting the files 
+csv_files <- fs::dir_ls(i, regexp = "macro_model_EA*")
+
+```
+
+
+
+```{r generatingDF, eval=TRUE}
+
+### Generating runs dataframe
+
+model_runs  <- csv_files %>%
+    map_dfr(read_csv)
+
+model_runs <- model_runs[complete.cases(model_runs),]
+
+```
+
+
+## Data Analisys
+
+
+
+### Income distribution
+
+
+```{r}
+
+
+model_runs %>%
+  filter(run == 0 & step == 0) %>%
+  ggplot(aes(x=income)) +
+    geom_histogram() +
+    geom_vline(aes(xintercept = mean(income, na.rm=TRUE)),col='red',size=.5) +
+    geom_vline(aes(xintercept = median(income, na.rm=TRUE)),col='blue',size=.5) +
+    labs(title = "Income distribution (run 0, step 0)",
+         x = "Income (mean - red, median - blue)",
+         y = "count")
+    
+```
+
+
+
+
+```{r}
+
+last_line <- model_runs[nrow(model_runs),]
+
+this_title <- paste("Income distribution (run", 
+                      as.character(last_line$run), ", step", 
+                      as.character(last_line$step), ")"
+                      )
+model_runs %>%
+  filter( run == last_line$run & step == last_line$step) %>%
+  ggplot(aes(x=income)) +
+    geom_histogram() +
+    geom_vline(aes(xintercept = mean(income, na.rm=TRUE)),col='red',size=.5) +
+    geom_vline(aes(xintercept = median(income, na.rm=TRUE)),col='blue',size=.5) +
+    labs(title = this_title,
+         x = "Income (mean - red, median - blue)",
+         y = "count")
+    
+```
+
+
+### Time series
+
+All runs
+
+```{r}
+model_runs %>%
+  ggplot(aes(x=step, y = income, color = run))+
+    geom_point() +
+    geom_smooth()
+
+```
+
+
+```{r}
+
+average_model_runs <- model_runs %>%
+  group_by(step) %>%
+  summarise(
+    mean_income = mean(income, na.rm = TRUE)
+    )
+```
+
+
+```{r}
+average_model_runs %>%
+  ggplot(aes(x = step, y = mean_income)) +
+  geom_line() 
+
+```
+
+
+

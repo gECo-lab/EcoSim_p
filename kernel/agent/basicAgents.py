@@ -13,7 +13,7 @@ class Agent(object):
         self.name = agent_def['agent_prefix'] + '_' + str(agent_number)
         self.simulation = simulation
         self.model = model
-        self.scenario = None
+        self.active_scenario = self.simulation.active_scenario
         self.spaces = dict()
         self.alive = True
         self.model.enter_model(self.name, self)

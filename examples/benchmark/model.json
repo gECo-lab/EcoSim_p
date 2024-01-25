@@ -23,24 +23,27 @@
   ],
   "agents": [
     {
-      "agent_type": "EconomicAgent",
-      "agent_prefix": "EA",
+      "agent_type": "Household",
+      "agent_prefix": "HH",
       "agent_spaces": [
         "Market"
       ],
-      "no_of_agents": 8000
+      "no_of_agents": 100
     }
   ],
   "observers": [
     {
       "observer_type": "Observer",
-      "observer_name": "EA_Obs",
+      "observer_name": "HH_Obs",
       "observer_actions": [
-        "obs_ea"
+        "obs_hh"
       ],
-      "observer_agent": "EconomicAgent",
+      "observer_agent": "Household",
       "observable_vars": [
-        "income"
+        "income",
+        "zet",
+        "zet_1",
+        "zt"      
       ]
     }
   ]

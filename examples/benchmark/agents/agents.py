@@ -33,6 +33,7 @@ Todo:
 from kernel.agent.basicAgents import DiscreteEventAgent
 
 
+
 class EconomicAgent(DiscreteEventAgent):
     """ A basic economic agent"""
     def __init__(self, simulation, model, agent_number, agent_def):
@@ -62,3 +63,4 @@ class EconomicAgent(DiscreteEventAgent):
         """ Agent releases a demmand """
         # TODO: Implemented by subclass
         self.demmand_satisfied = False
+

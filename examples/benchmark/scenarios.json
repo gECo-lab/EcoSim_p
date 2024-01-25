@@ -27,15 +27,27 @@
       ],
       "scenario_variables": [
         {
-          "var_name": "GDP",
-          "var_init_value": 10.0,
+          "var_name": "expect_lambda",
+          "var_init_value": 0.58,
           "var_type": "sharp"
         }
       ],
       "agents_init": {
-        "EconomicAgent": [
+        "Household": [
           {
             "var_name": "income",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zet",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zt",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0

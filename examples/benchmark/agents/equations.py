@@ -1,12 +1,14 @@
 """Economic Agent Basic Equations
 
 This module implements the economic agent basic equations. 
-Each equation is maitained as an independent method inside the equations class.
-Subclasses will implement specific equations for different agents.
+Each equation is maitained as an independent method inside 
+the equations class.
+Subclasses will implement specific equations 
+for different agents.
 
 Example:
 
-from equations import HouseholdEquations
+from equations import Equations
 
 
 Todo:

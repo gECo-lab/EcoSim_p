@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
-""" Basic Market Class implementation """
+""" Basic Market Class implementation 
+
+This module implements the generic macthing process 
+in an economic market.
+
+Example:
+
+
+Todo: 
+"""
 
 from kernel.space.basicSpaces import Space
 from sortedcontainers import SortedDict
@@ -17,5 +26,21 @@ class Market(Space):
         self.contracts = {}
 
     def update(self):
-        """ Implemented by subclass - Testing update """
+        """ """
+        self.matching()
+        self.contract()
+        self.release_bids()
+
+
+    def matching(self):
+        """ Implements the maching in market """
+        pass
+
+
+    def contract(self):
+        """ Register the contracts """
+        pass
+
+    def release_bids(self):
+        """ Releases bids not matched """
         pass

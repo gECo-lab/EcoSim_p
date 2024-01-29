@@ -6,7 +6,8 @@ This module implements the Household agent
 
 Example:
 
-The agents are created by the AgentCreator class in the AgentCreation muodule
+The agents are created by the AgentCreator class 
+in the AgentCreation muodule
 T
 
       "agents_init": {
@@ -34,17 +35,23 @@ class Household(EconomicAgent):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.eq = Equations(self.active_scenario)
+        
 
         ## Household Variables:
 
     def step(self):
         """ Household Agent Step method """
         self.create_expectations()
+        self.compute_reservation_wages()
+
 
 
     def create_expectations(self):
         self.zet_1 = self.zet
         self.zt = self.zt * (1 + rnd.random())
         self.zet = self.eq.zet(self.zt, self.zet_1)
+
+    def compute_reservation_wages(self):
+        """ Workers Compute their reservation wages """
 
         

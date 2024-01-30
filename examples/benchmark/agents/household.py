@@ -46,6 +46,7 @@ class Household(EconomicAgent):
         if self.unemployed:
             self.offer_labor()
         self.consume()
+        self.pay_taxes()
 
 
     def create_expectations(self):

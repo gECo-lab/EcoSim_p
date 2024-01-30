@@ -64,3 +64,7 @@ class EconomicAgent(DiscreteEventAgent):
         # TODO: Implemented by subclass
         self.demmand_satisfied = False
 
+
+    def pay_taxes(self, revenue): 
+        """ Economic Agent pay taxes"""
+

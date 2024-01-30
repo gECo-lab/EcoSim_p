@@ -98,6 +98,7 @@ class CGFirm(Firm):
         self.select_lending_bank()
         self.produce()
         self.buy_K_goods()
+        self.pay_taxes()
 
         
         
@@ -133,6 +134,7 @@ class KGFirm(Firm):
         self.compute_credit_demand()
         self.select_lending_bank()
         self.produce()
+        self.pay_taxes()
 
 
 

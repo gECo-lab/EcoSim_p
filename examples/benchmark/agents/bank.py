@@ -1,8 +1,8 @@
  # -*- coding: utf-8 -*-
-""" Household Agents from the basic macroeconomic model 
+""" Bank Agent from the basic macroeconomic model 
 
 
-This module implements the Household agent
+This module implements the Bank agent
 
 Example:
 
@@ -11,9 +11,9 @@ in the AgentCreation muodule
 T
 
       "agents_init": {
-        "EconomicAgent": [
+        "Bank": [
           {
-            "var_name": "income",
+            "var_name": "credit",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0
@@ -22,7 +22,7 @@ T
         }
 
 Todo:
-    * Organize equations cals
+
 """
 
 from .agents import EconomicAgent
@@ -30,22 +30,22 @@ from .equations import Equations
 import random as rnd
 
 
-class Household(EconomicAgent):
-    """ Household Agent """
+class Bank(EconomicAgent):
+    """ Bank Agent """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.eq = Equations(self.active_scenario)
         
 
-        ## Household Variables:
+        ## Bank Variables:
 
     def step(self):
-        """ Household Agent Step method """
+        """ Bank Agent Step method """
         self.create_expectations()
-        self.compute_reservation_wages()
-        if self.unemployed:
-            self.offer_labor()
-        self.consume()
+        self.compute_interest_loans()
+        self.compute_interest_deposits()
+        self.evaluate_loan_requests()
+    
 
 
     def create_expectations(self):
@@ -53,16 +53,19 @@ class Household(EconomicAgent):
         self.zt = self.zt * (1 + rnd.random())
         self.zet = self.eq.zet(self.zt, self.zet_1)
 
-    def compute_reservation_wages(self):
-        """ Workers Compute their reservation wages """
+    def compute_interest_loans(self):
+        """ Bank Compute the interest on loans """
 
 
-    def offer_labor(self):
-        """ Worker offer labor in labor market """
+    def compute_interest_deposits(self):
+        """ Bank Compute the interest on deposits """
 
-    def consume(self):
-        """ Household consumes """
+    def evaluate_loan_requests():
+        """ Bank evaluate loan requests """    
 
+    def supply_credit(self):
+        """ Bank supply demanded credit """    
 
-
+    def pay_interest(self):
+        """ Bank pays interest on deposits """
         

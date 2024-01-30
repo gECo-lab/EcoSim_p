@@ -51,6 +51,12 @@
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0
+          },
+          {
+            "var_name": "unemployed",
+            "var_type": "stochastic",
+            "var_dist": " np.random.choice([True,False], size = 1, p = [.2,.8])",
+            "var_value": false
           }
         ]
         }

@@ -63,7 +63,17 @@ class Firm(EconomicAgent):
     def select_lending_bank(self):
         """ Firm selects lending bank in the credit market """
 
+    def produce(self):
+        """ Firm produces output """
 
+    def offer_goods(self):
+        """ Firm offer goods in a market"""
+
+    def pay_loans(self):
+        """ Firm pays interest and share of principal on loans """
+
+    def pay_wages(self):
+        """ Firm pays wages to households (workers) """
 
 
         
@@ -86,6 +96,10 @@ class CGFirm(Firm):
         self.choose_K_supplier()
         self.compute_credit_demand()
         self.select_lending_bank()
+        self.produce()
+        self.buy_K_goods()
+
+        
         
 
 
@@ -99,6 +113,9 @@ class CGFirm(Firm):
 
     def choose_K_supplier(self):
         """ CG firms choose their capital supplier in K market """
+
+    def buy_K_goods(self):
+        """ CG Firms buy capital goods"""
     
 
 class KGFirm(Firm):
@@ -115,4 +132,8 @@ class KGFirm(Firm):
         self.set_output_price()
         self.compute_credit_demand()
         self.select_lending_bank()
+        self.produce()
+
+
+
 

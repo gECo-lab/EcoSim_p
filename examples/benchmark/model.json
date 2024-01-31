@@ -29,6 +29,30 @@
         "Market"
       ],
       "no_of_agents": 100
+    },
+    {
+      "agent_type": "CGFirm",
+      "agent_prefix": "CG",
+      "agent_spaces": [
+        "Market"
+      ],
+      "no_of_agents": 10
+    },
+    {
+      "agent_type": "KGFirm",
+      "agent_prefix": "KG",
+      "agent_spaces": [
+        "Market"
+      ],
+      "no_of_agents": 5
+    },
+    {
+      "agent_type": "Bank",
+      "agent_prefix": "BA",
+      "agent_spaces": [
+        "Market"
+      ],
+      "no_of_agents": 3
     }
   ],
   "observers": [
@@ -41,6 +65,48 @@
       "observer_agent": "Household",
       "observable_vars": [
         "income",
+        "zet",
+        "zet_1",
+        "zt"      
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "CG_Obs",
+      "observer_actions": [
+        "obs_cg"
+      ],
+      "observer_agent": "CGFirm",
+      "observable_vars": [
+        "revenue",
+        "zet",
+        "zet_1",
+        "zt"      
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "KG_Obs",
+      "observer_actions": [
+        "obs_kg"
+      ],
+      "observer_agent": "KGFirm",
+      "observable_vars": [
+        "revenue",
+        "zet",
+        "zet_1",
+        "zt"      
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "BA_Obs",
+      "observer_actions": [
+        "obs_ba"
+      ],
+      "observer_agent": "Bank",
+      "observable_vars": [
+        "revenue",
         "zet",
         "zet_1",
         "zt"      

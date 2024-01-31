@@ -60,7 +60,7 @@ class Bank(EconomicAgent):
     def compute_interest_deposits(self):
         """ Bank Compute the interest on deposits """
 
-    def evaluate_loan_requests():
+    def evaluate_loan_requests(self):
         """ Bank evaluate loan requests """    
 
     def supply_credit(self):

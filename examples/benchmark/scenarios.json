@@ -58,6 +58,66 @@
             "var_dist": " np.random.choice([True,False], size = 1, p = [.2,.8])",
             "var_value": false
           }
+        ],
+        "CGFirm": [
+          {
+            "var_name": "revenue",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zet",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          }
+        ],
+        "KGFirm": [
+          {
+            "var_name": "revenue",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zet",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          }
+        ],
+        "Bank": [
+          {
+            "var_name": "revenue",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zet",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "zt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          }
         ]
         }
     }

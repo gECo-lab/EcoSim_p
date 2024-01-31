@@ -65,6 +65,6 @@ class EconomicAgent(DiscreteEventAgent):
         self.demmand_satisfied = False
 
 
-    def pay_taxes(self, revenue): 
+    def pay_taxes(self): 
         """ Economic Agent pay taxes"""
 

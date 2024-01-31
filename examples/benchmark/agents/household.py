@@ -27,6 +27,7 @@ Todo:
 
 from .agents import EconomicAgent
 from .equations import Equations
+from .goods import ConsumerGood, Labor
 import random as rnd
 
 
@@ -45,6 +46,7 @@ class Household(EconomicAgent):
         self.compute_reservation_wages()
         if self.unemployed:
             self.offer_labor()
+        self.demand_goods()
         self.consume()
         self.pay_taxes()
 
@@ -56,10 +58,26 @@ class Household(EconomicAgent):
 
     def compute_reservation_wages(self):
         """ Workers Compute their reservation wages """
+        self.hourly_wage = 1 + rnd.randint(1,10)
 
 
     def offer_labor(self):
         """ Worker offer labor in labor market """
+        self.labor_qnt = 40
+
+        self.offered_labor = Labor(c_quantity=self.labor_qnt,
+                                   c_price=self.hourly_wage,
+                                     c_owner = self,
+                                     c_producer=self)
+
+
+
+    def demand_goods(self):
+        """ Household demand goods """
+        self.demand_qnt = 1 + rnd.randint(1,10)
+
+        self.c_demand = ConsumerGood(c_quantity=self.demand_qnt,
+                                     c_owner = self)
 
     def consume(self):
         """ Household consumes """

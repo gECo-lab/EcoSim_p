@@ -31,7 +31,7 @@ Todo:
 """
 
 from kernel.agent.basicAgents import DiscreteEventAgent
-
+import random as rnd
 
 
 class EconomicAgent(DiscreteEventAgent):
@@ -42,6 +42,16 @@ class EconomicAgent(DiscreteEventAgent):
 
     def step(self):
         """ Implemented by subclass"""
+
+
+    def create_expectations(self):
+        """Household Creates Expectations
+        """
+
+        self.zet_1 = self.zet
+        self.zt = self.zt * (1 + rnd.random())
+        self.zet = self.eq.zet(self.zt, self.zet_1)
+    
       
 
     def get_contracted_offers(self, contracted_offers):

@@ -25,8 +25,9 @@ Todo:
     * Organize equations cals
 """
 
+from examples.benchmark.agents.goods import ConsumerGood
 from .agents import EconomicAgent
-from .equations import Equations
+from .equations import CGFirmEquations
 import random as rnd
 
 
@@ -34,25 +35,44 @@ class Firm(EconomicAgent):
     """ Generic Firm """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
-        self.eq = Equations(self.active_scenario)
+        self.eq = CGFirmEquations(self.active_scenario)
 
         ## Household Variables:
+
+        initial_inventory_qnt = rnd.randint(10,50)
+        initial_production_qnt = rnd.randint(70,100)
+
+        initial_production_price = rnd.randint(1,5)
+        initial_inventory_price = rnd.randint(1,5)
+
+        self.production = self.create_initial_production(initial_production_qnt,
+                                                         initial_production_price)
+
+        self.inventory = self.create_initial_inventory(initial_inventory_qnt,
+                                                       initial_inventory_price)
+
 
     def step(self):
         """ Firm Agent Step method """
         ## Implemented By Subclass
 
     def create_expectations(self):
-        """ Firm create expectations """
+        """ Firm create expectations 
+        """
         self.zet_1 = self.zet
         self.zt = self.zt * (1 + rnd.random())
         self.zet = self.eq.zet(self.zt, self.zet_1)
 
     def compute_desired_output(self):
-        """ Firms compute desired input levels """
+        """ Firms compute desired input levels 
+        """
+        inventory = self.inventory.c_quantity
+        self.y_c = self.eq.ydt(self.zet, inventory)
 
     def compute_labor_demand(self):
-        """ Firm compute their labor demand """
+        """ Firm compute their labor demand 
+        """
+        # implemented by subclass
 
     def set_output_price(self):
         """ Firm sets output price for product """
@@ -76,8 +96,39 @@ class Firm(EconomicAgent):
         """ Firm pays wages to households (workers) """
 
 
-        
+    def create_initial_production(self, quantity, price):
+        """Firm creates intitial production of goods
 
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumerGood: A consumer Good Stock
+        """
+
+        return ConsumerGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+
+
+
+    def create_initial_inventory(self, quantity, price):
+        """Firm creates intitial production of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumerGood: A consumer Good Stock
+        """
+
+        return ConsumerGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
 
 class CGFirm(Firm):
     """ Consumers Goods Firm """
@@ -85,8 +136,11 @@ class CGFirm(Firm):
         super().__init__(simulation, model, agent_number, agent_def)
 
 
+
+
     def step(self):
-        """ Consumers Good Step """
+        """ Consumer Goods Firm Step 
+        """
         self.create_expectations()
         self.compute_desired_output()
         self.compute_labor_demand()
@@ -101,11 +155,14 @@ class CGFirm(Firm):
         self.pay_taxes()
 
         
+    def compute_labor_demand(self):
+
+         self.ndt = self.eq.ndt(self.y_c)
         
 
-
     def compute_rate_of_capacity_growth(self):
-        """ CG Firms compute their rate of capacity growth """
+        """CG Firms compute their rate of capacity growth 
+        """
 
     def compute_demand_of_K_goods(self):
         """ With the expected rate of capacity growth CG firms
@@ -113,10 +170,12 @@ class CGFirm(Firm):
         """
 
     def choose_K_supplier(self):
-        """ CG firms choose their capital supplier in K market """
+        """ CG firms choose their capital supplier in K market 
+        """
 
     def buy_K_goods(self):
-        """ CG Firms buy capital goods"""
+        """ CG Firms buy capital goods
+        """
     
 
 class KGFirm(Firm):
@@ -126,7 +185,8 @@ class KGFirm(Firm):
 
 
     def step(self):
-        """ Consumers Good Step """
+        """ Capital Goods Firm Step 
+        """
         self.create_expectations()
         self.compute_desired_output()
         self.compute_labor_demand()

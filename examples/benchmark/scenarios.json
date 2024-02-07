@@ -30,6 +30,21 @@
           "var_name": "expect_lambda",
           "var_init_value": 0.58,
           "var_type": "sharp"
+        },
+        {
+          "var_name": "nu",
+          "var_init_value": 0.1,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "l_k",
+          "var_init_value": 0.1,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "mu_k",
+          "var_init_value": 1,
+          "var_type": "sharp"
         }
       ],
       "agents_init": {
@@ -77,6 +92,18 @@
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "ndt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
           }
         ],
         "KGFirm": [
@@ -94,6 +121,12 @@
           },
           {
             "var_name": "zt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "desired_output",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0

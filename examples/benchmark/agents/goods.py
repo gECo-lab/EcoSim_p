@@ -80,7 +80,9 @@ class Good(object):
         self.c_owner = c_owner
         self.c_producer = c_producer
 
-
+    def c_value(self):
+        "Return the value of good - c_price * c_quantity"
+        return self.c_price * self.c_quantity
 
 
 class ConsumerGood(Good):

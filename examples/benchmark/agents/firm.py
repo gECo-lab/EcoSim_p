@@ -1,8 +1,5 @@
  # -*- coding: utf-8 -*-
-""" Household Agents from the basic macroeconomic model 
-
-
-This module implements the Household agent
+""" Generic Firm from the basic macroeconomic model 
 
 Example:
 
@@ -40,17 +37,18 @@ class Firm(EconomicAgent):
         ## Household Variables:
 
         initial_inventory_qnt = rnd.randint(10,50)
-        initial_production_qnt = rnd.randint(70,100)
-
         initial_production_price = rnd.randint(1,5)
+
+        initial_production_qnt = rnd.randint(70,100)
         initial_inventory_price = rnd.randint(1,5)
 
-        self.production = self.create_initial_production(initial_production_qnt,
+        self.y_c = self.create_initial_production(initial_production_qnt,
                                                          initial_production_price)
 
-        self.inventory = self.create_initial_inventory(initial_inventory_qnt,
+        self.inv = self.create_initial_inventory(initial_inventory_qnt,
                                                        initial_inventory_price)
-
+        
+ 
 
     def step(self):
         """ Firm Agent Step method """
@@ -66,8 +64,8 @@ class Firm(EconomicAgent):
     def compute_desired_output(self):
         """ Firms compute desired input levels 
         """
-        inventory = self.inventory.c_quantity
-        self.y_c = self.eq.ydt(self.zet, inventory)
+        inv = self.inv.c_quantity
+        self.y_c = self.eq.ydt(self.zet, inv)
 
     def compute_labor_demand(self):
         """ Firm compute their labor demand 
@@ -77,20 +75,27 @@ class Firm(EconomicAgent):
     def set_output_price(self):
         """ Firm sets output price for product """
 
+
+
     def compute_credit_demand(self):
         """ Firm computes demand for credit """
+
 
     def select_lending_bank(self):
         """ Firm selects lending bank in the credit market """
 
+
     def produce(self):
         """ Firm produces output """
+
 
     def offer_goods(self):
         """ Firm offer goods in a market"""
 
+
     def pay_loans(self):
         """ Firm pays interest and share of principal on loans """
+
 
     def pay_wages(self):
         """ Firm pays wages to households (workers) """
@@ -129,73 +134,5 @@ class Firm(EconomicAgent):
                             c_price=price,
                             c_owner=self,
                             c_producer=self)
-
-class CGFirm(Firm):
-    """ Consumers Goods Firm """
-    def __init__(self, simulation, model, agent_number, agent_def):
-        super().__init__(simulation, model, agent_number, agent_def)
-
-
-
-
-    def step(self):
-        """ Consumer Goods Firm Step 
-        """
-        self.create_expectations()
-        self.compute_desired_output()
-        self.compute_labor_demand()
-        self.set_output_price()
-        self.compute_rate_of_capacity_growth()
-        self.compute_demand_of_K_goods()
-        self.choose_K_supplier()
-        self.compute_credit_demand()
-        self.select_lending_bank()
-        self.produce()
-        self.buy_K_goods()
-        self.pay_taxes()
-
-        
-    def compute_labor_demand(self):
-
-         self.ndt = self.eq.ndt(self.y_c)
-        
-
-    def compute_rate_of_capacity_growth(self):
-        """CG Firms compute their rate of capacity growth 
-        """
-
-    def compute_demand_of_K_goods(self):
-        """ With the expected rate of capacity growth CG firms
-            Compute their demand for K goods 
-        """
-
-    def choose_K_supplier(self):
-        """ CG firms choose their capital supplier in K market 
-        """
-
-    def buy_K_goods(self):
-        """ CG Firms buy capital goods
-        """
-    
-
-class KGFirm(Firm):
-    """ Capital Goods Firm """
-    def __init__(self, simulation, model, agent_number, agent_def):
-        super().__init__(simulation, model, agent_number, agent_def)
-
-
-    def step(self):
-        """ Capital Goods Firm Step 
-        """
-        self.create_expectations()
-        self.compute_desired_output()
-        self.compute_labor_demand()
-        self.set_output_price()
-        self.compute_credit_demand()
-        self.select_lending_bank()
-        self.produce()
-        self.pay_taxes()
-
-
 
 

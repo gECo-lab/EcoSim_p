@@ -24,7 +24,6 @@ Todo:
     * Organize equations cals
 """
 
-from re import S
 from .agents import EconomicAgent
 from .equations import Equations
 from .goods import ConsumerGood, Labor

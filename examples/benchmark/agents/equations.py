@@ -16,8 +16,9 @@ Todo:
 
 """
 
-import numpy as np
-import random as rnd
+from scipy.stats import foldnorm
+
+
 
 class Equations():
     """ The equations class for the benchmark model implementation"""
@@ -29,18 +30,93 @@ class Equations():
         self.nu = self.active_scenario.nu
         self.l_k = self.active_scenario.l_k
         self.mu_k = self.active_scenario.mu_k
+        self.mu_n = self.active_scenario.mu_n
 
 
 
 ## General Equations  
 
     def zet(self, zt, zet_1):
+        """Compute expectations in t
+
+        Args:
+            zt (number): Value in t (production, income, revenue)
+            zet_1 (number): Value in t - 1 (production, income, revenue)
+
+        Returns:
+            number: expectations in T
+        """
+
         return zet_1 + self.expect_lambda*(zt - zet_1) 
     
 
     def ydt(self, s_et, inv_t_1):
+        """Compute production in T
+
+        Args:
+            s_et (number): Expected sales in t
+            inv_t_1 (number): Inventory in t - 1
+
+        Returns:
+            number: Production in t
+        """
 
         return s_et * (1 + self.nu * inv_t_1)
+    
+    def udt(self, yd_t, kc_t):
+        """Calculates rate of utilization of capital stock
+
+        Args:
+            yd_t (number): production in t
+            kc_t (number): capital stock in t
+
+        Returns:
+            float: rate of utilization (0 < udt <= 1)
+        """
+
+        return min(1, yd_t/(kc_t*self.mu_k))
+    
+    def uvc(self, We_xt, Nd_xt, yd_xt):
+
+        return (We_xt * Nd_xt)/yd_xt
+    
+
+    def pt(self, mu_xt, We_xt, Nd_xt, yd_xt):
+        """Calculates production prices
+
+        Args:
+            mu_xt (number): markup for firms in t
+            We_xt (number): unity price of labor in t
+            Nd_xt (number): quantity of labor in t
+            yd_xt (number): production in t
+
+        Returns:
+            number: unitary price of good in t
+        """
+
+        return (1 + mu_xt)*(We_xt * Nd_xt)/yd_xt
+    
+
+    def muxt(self, mu_xt, inv_t_1, s_et):
+        """Updates mark-up
+
+        Args:
+            mu_xt (number): Mark-up
+            inv_t_1 (number): Inventories in t
+            s_et (number): Sales in t
+            self.nu (number): desired inventory proportion
+
+        Returns:
+            number: new mark-up
+        """
+
+        FN = foldnorm.rvs(self.nu, size=1)
+
+        if inv_t_1/s_et <= self.nu:
+            return mu_xt + (1 + FN)
+        else:
+            return mu_xt + (1 - FN)
+
     
  
 
@@ -51,7 +127,7 @@ class CGFirmEquations(Equations):
         Equations (Object): Specific equations for consumer goods firm
     """
 
-    def ndt(self, y_c):
+    def ndct(self, y_c):
         """Calculates the labor demmand for CG firms
 
         Args:
@@ -62,4 +138,25 @@ class CGFirmEquations(Equations):
         Returns:
             N_ct: Number of workers needed
         """
+
         return y_c/self.mu_k*self.l_k
+    
+
+class KGFirmEquations(Equations):
+    """Capital goods firm specific equations
+
+    Args:
+        Equations (Object): Equations for capital goods firm
+    """
+
+    def ndkt(self, y_c):
+        """Calculates Labor demand for capital firms
+
+        Args:
+            y_c (number): desired output
+
+        Returns:
+            ndkt: Labor demand for capital firms
+        """
+
+        return y_c/self.mu_n

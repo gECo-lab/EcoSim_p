@@ -45,6 +45,11 @@
           "var_name": "mu_k",
           "var_init_value": 1,
           "var_type": "sharp"
+        },
+        {
+          "var_name": "mu_n",
+          "var_init_value": 1,
+          "var_type": "sharp"
         }
       ],
       "agents_init": {
@@ -100,9 +105,27 @@
             "var_value": 0.0
           },
           {
-            "var_name": "ndt",
+            "var_name": "ndct",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "kc_t",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "We_t",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "mu_ct",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(1.0,0.03)",
             "var_value": 0.0
           }
         ],
@@ -129,6 +152,24 @@
             "var_name": "desired_output",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "ndkt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "We_t",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(6.0,1.0)",
+            "var_value": 0.0
+          },
+          {
+            "var_name": "mu_kt",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(1.0,0.03)",
             "var_value": 0.0
           }
         ],

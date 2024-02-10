@@ -117,6 +117,38 @@ class ConsumerGood(Good):
         self.c_producer = c_producer
 
 
+class CapitalGood(Good):
+    """A Capital Good
+    
+       TYPE :"real"
+
+       c_CATEGORY: kg Capital_Good
+
+       CONSUME: depreciable
+    """
+
+    def __init__(self, 
+                 c_name = None,
+                 c_type = None,  
+                 c_category = None,
+                 c_consume = None,  
+                 c_quantity = None,
+                 c_price = None,
+                 c_owner=None,
+                 c_producer=None):
+        
+        """" Init method for a consumption good """
+
+        self.c_name = "capital good"
+        self.c_type = "real"
+        self.c_category = "kg"
+        self.c_consume = "depreciable"
+        self.c_quantity = c_quantity
+        self.c_price = c_price
+        self.c_owner = c_owner
+        self.c_producer = c_producer
+
+
 
 
 class Labor(Good):

@@ -144,14 +144,8 @@ cython_debug/
 
 # Simulation Results
 *.csv
-examples/el_farol_bar/results/El_Farol.html
-examples/ipd/results/ipd.html
-examples/macro_model/results/macro_model.html
-examples/ipd/results/ipd.html
+*.html
 
 # React Forms
 
 interface/json_forms
-examples/ipd/results/ipd.html
-
-examples/ipd/results/ipd.html

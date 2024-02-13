@@ -41,7 +41,7 @@ o  <-  "results"
 ```{r getFiles, eval=TRUE}
 
 ### Getting the files 
-csv_files <- fs::dir_ls(i, regexp = "macro_model_EA*")
+csv_files <- fs::dir_ls(i, regexp = "macro_model*")
 
 ```
 
@@ -111,7 +111,7 @@ All runs
 
 ```{r}
 model_runs %>%
-  ggplot(aes(x=step, y = income, color = run))+
+  ggplot(aes(x=step, y = zt, color = as.factor(run)))+
     geom_point() +
     geom_smooth()
 
@@ -123,14 +123,14 @@ model_runs %>%
 average_model_runs <- model_runs %>%
   group_by(step) %>%
   summarise(
-    mean_income = mean(income, na.rm = TRUE)
+    mean_zt = mean(zt, na.rm = TRUE)
     )
 ```
 
 
 ```{r}
 average_model_runs %>%
-  ggplot(aes(x = step, y = mean_income)) +
+  ggplot(aes(x = step, y = mean_zt)) +
   geom_line() 
 
 ```

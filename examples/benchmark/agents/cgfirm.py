@@ -25,6 +25,7 @@ Todo:
     * Organize equations cals
 """
 
+from venv import create
 from .firm import Firm
 from .equations import CGFirmEquations
 from .goods import CapitalGood, ConsumerGood
@@ -38,13 +39,26 @@ class CGFirm(Firm):
         
         self.eq = CGFirmEquations(self.active_scenario)
 
+        initial_inventory_qnt = rnd.randint(10,50)
+        initial_production_price = rnd.randint(1,5)
+
+        initial_production_qnt = rnd.randint(70,100)
+        initial_inventory_price = rnd.randint(1,5)
+
+     
+
+        self.y_c = self.create_initial_production(initial_production_qnt,
+                                                         initial_production_price)
+
+        self.inv = self.create_initial_inventory(initial_inventory_qnt,
+                                                       initial_inventory_price)
+        
+
         initial_K_stock_qnt = rnd.randint(2,5)
         initial_K_stock_price = rnd.randint(2,5)
 
         initial_sales_qnt = rnd.randint(50,90)
         initial_sales_price = rnd.randint(1,5)
-
-
 
         self.K = self.create_initial_K_stock(initial_K_stock_qnt,
                                                        initial_K_stock_price)
@@ -70,6 +84,19 @@ class CGFirm(Firm):
         self.buy_K_goods()
         self.pay_taxes()
 
+
+    def create_expectations(self):
+        """ Firm create expectations 
+        """
+        self.zet_1 = self.zet
+        self.zt = self.zt * (1 + rnd.random())
+        self.zet = self.eq.zet(self.zt, self.zet_1)
+
+    def compute_desired_output(self):
+        """ Firms compute desired input levels 
+        """
+        inv = self.inv.c_quantity
+        self.y_c.c_quantity = self.eq.ydt(self.zet, inv)
         
     def compute_labor_demand(self):
         """Consumer good firm computes labor demand
@@ -106,6 +133,40 @@ class CGFirm(Firm):
     def buy_K_goods(self):
         """ CG Firms buy capital goods
         """
+
+    def create_initial_production(self, quantity, price):
+        """Firm creates intitial production of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumerGood: A consumer Good Stock
+        """
+
+        return ConsumerGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+    
+
+    def create_initial_inventory(self, quantity, price):
+        """Firm creates intitial production of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumerGood: A consumer Good Stock
+        """
+
+        return ConsumerGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+    
 
     def create_initial_K_stock(self, quantity, price):
             """Firm creates intitial Capital Stock

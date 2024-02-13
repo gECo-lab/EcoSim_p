@@ -50,6 +50,26 @@
           "var_name": "mu_n",
           "var_init_value": 1,
           "var_type": "sharp"
+        },
+        {
+          "var_name": "r_bar",
+          "var_init_value": 0.4345,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "u_bar",
+          "var_init_value": 0.8,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "gamma_1",
+          "var_init_value": 0.01,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "gamma_2",
+          "var_init_value": 0.02,
+          "var_type": "sharp"
         }
       ],
       "agents_init": {
@@ -105,7 +125,7 @@
             "var_value": 0.0
           },
           {
-            "var_name": "ndct",
+            "var_name": "Ndc_t",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0
@@ -155,7 +175,7 @@
             "var_value": 0.0
           },
           {
-            "var_name": "ndkt",
+            "var_name": "Ndk_t",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0

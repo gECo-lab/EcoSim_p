@@ -33,9 +33,6 @@ class Equations():
         self.mu_n = self.active_scenario.mu_n
 
 
-
-## General Equations  
-
     def zet(self, zt, zet_1):
         """Compute expectations in t
 
@@ -116,6 +113,38 @@ class Equations():
             return mu_xt + (1 + FN)
         else:
             return mu_xt + (1 - FN)
+        
+    def sales(self, s_ct):
+        """Calculate sales value
+
+        Args:
+            s_ct (consumerGood): _description_
+
+        Returns:
+            number: Total value of sales
+        """
+
+        return s_ct.c_quantity * s_ct.c_price
+    
+
+    def interest(self, i_d):
+
+        return i_d.c_quantity * i_d.c_price
+    
+
+    def inventory(self, inv):
+
+        return inv.c_quantity * inv.c_price
+    
+
+    def revenue(self, s_ct, i_d, inv):
+        
+        sales = self.sales(s_ct)
+        interest = self.interest
+        inv_costs = self.inventory()
+
+        return sales + interest + inv_costs
+
 
     
  

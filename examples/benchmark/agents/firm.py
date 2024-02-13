@@ -42,12 +42,18 @@ class Firm(EconomicAgent):
         initial_production_qnt = rnd.randint(70,100)
         initial_inventory_price = rnd.randint(1,5)
 
+     
+
         self.y_c = self.create_initial_production(initial_production_qnt,
                                                          initial_production_price)
 
         self.inv = self.create_initial_inventory(initial_inventory_qnt,
                                                        initial_inventory_price)
         
+       
+        self.workforce = {}
+
+              
  
 
     def step(self):
@@ -65,16 +71,7 @@ class Firm(EconomicAgent):
         """ Firms compute desired input levels 
         """
         inv = self.inv.c_quantity
-        self.y_c = self.eq.ydt(self.zet, inv)
-
-    def compute_labor_demand(self):
-        """ Firm compute their labor demand 
-        """
-        # implemented by subclass
-
-    def set_output_price(self):
-        """ Firm sets output price for product """
-
+        self.y_c.c_quantity = self.eq.ydt(self.zet, inv)
 
 
     def compute_credit_demand(self):
@@ -117,22 +114,5 @@ class Firm(EconomicAgent):
                             c_owner=self,
                             c_producer=self)
 
-
-
-    def create_initial_inventory(self, quantity, price):
-        """Firm creates intitial production of goods
-
-        Args:
-            quantity (number): Initial quantity
-            price (number): Initial price
-
-        Returns:
-            ConsumerGood: A consumer Good Stock
-        """
-
-        return ConsumerGood(c_quantity=quantity,
-                            c_price=price,
-                            c_owner=self,
-                            c_producer=self)
 
 

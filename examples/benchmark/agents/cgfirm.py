@@ -27,7 +27,7 @@ Todo:
 
 from .firm import Firm
 from .equations import CGFirmEquations
-from .goods import CapitalGood
+from .goods import CapitalGood, ConsumerGood
 import random as rnd
 
 
@@ -41,9 +41,16 @@ class CGFirm(Firm):
         initial_K_stock_qnt = rnd.randint(2,5)
         initial_K_stock_price = rnd.randint(2,5)
 
+        initial_sales_qnt = rnd.randint(50,90)
+        initial_sales_price = rnd.randint(1,5)
+
+
 
         self.K = self.create_initial_K_stock(initial_K_stock_qnt,
                                                        initial_K_stock_price)
+        
+        self.s_c = self.create_initial_sales(initial_sales_qnt, 
+                                             initial_sales_price)
 
 
     def step(self):
@@ -68,14 +75,19 @@ class CGFirm(Firm):
         """Consumer good firm computes labor demand
         """
 
-        self.ndct = self.eq.ndct(self.y_c)
+        self.Ndc_t = self.eq.ndct(self.y_c.c_quantity)
 
 
     def compute_capacity_utilization(self):
         """CG Firm computes capacity utilization
         """
 
-        self.ud_t = self.eq.udt(self.y_c, self.kc_t)
+        self.ud_t = self.eq.udt(self.y_c.c_quantity, self.kc_t)
+
+    def set_output_price(self):
+        """ Firm sets output price for product """
+
+        self.y_c.c_price =self.eq.pt(self.mu_ct, self.We_t, self.Ndc_t, self.y_c.c_quantity)
 
 
     def compute_rate_of_capacity_growth(self):
@@ -110,4 +122,22 @@ class CGFirm(Firm):
                                 c_price=price,
                                 c_owner=self,
                                 c_producer=None)
+    
+
+    def create_initial_sales(self, quantity, price):
+        """Firm creates intitial sales of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumerGood: A consumer Good (sold)
+        """
+
+        return ConsumerGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+
         

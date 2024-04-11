@@ -42,10 +42,25 @@ class Market(Space):
         pass
 
     def set_demand(self, an_owner, a_good):
-        "Set the demand for a good"
+        """
+        Set the demand for a good.
+
+        Parameters:
+        - an_owner: The owner of the demand.
+        - a_good: The good for which the demand is being set.
+        """
         self.demand[an_owner] = a_good
 
     def set_offer(self, an_owner, a_good):
-        "Set the offer for a good"
+        """
+        Set the offer for a good.
+
+        Parameters:
+        - an_owner (str): The owner of the offer.
+        - a_good (str): The good being offered.
+
+        Returns:
+        None
+        """
         self.offers[an_owner] = a_good
 

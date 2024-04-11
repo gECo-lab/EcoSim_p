@@ -22,10 +22,8 @@ Todo:
     * Organize equations cals
 """
 
-from examples.benchmark.agents.goods import ConsumerGood
 from .agents import EconomicAgent
 from .equations import CGFirmEquations
-import random as rnd
 
 
 class Firm(EconomicAgent):

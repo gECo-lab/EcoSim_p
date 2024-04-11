@@ -127,6 +127,7 @@ class Household(EconomicAgent):
                      c_price=hourly_wage, 
                      c_owner=self, 
                      c_producer=self)
+        
 
 
     

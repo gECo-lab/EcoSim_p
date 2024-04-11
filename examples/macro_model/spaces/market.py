@@ -99,7 +99,12 @@ class Market(Space):
             print('The input is not a sorted dictionary')
 
     def offer_gs(self, offered_good):
-        """ include an  offer in the market """
+        """Include an offer in the market.
+
+        Parameters:
+        offered_good (Good): The offered good to be included in the market.
+
+        """
         self.offers[offered_good.value_of_g] = offered_good
 
     def has_offers(self):

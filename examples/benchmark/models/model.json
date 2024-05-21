@@ -17,7 +17,8 @@
       "action_set": "market_action_set",
       "action_class": "Market_action_set",
       "space_variables": {
-        "intensity_of_choice": 0.0
+        "intensity_of_choice": 0.0,
+        "market_type": "random"
       }
     }
   ],

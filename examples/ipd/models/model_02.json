@@ -1,5 +1,5 @@
 {
-  "simulation_name": "ipd_03",
+  "simulation_name": "ipd_02",
   "simulation_parameters": [
     {
       "parameter_name": "total_payoff",
@@ -24,12 +24,12 @@
   ],
   "agents": [
     {
-      "agent_type": "BadPlayer",
-      "agent_prefix": "BPl",
+      "agent_type": "GoodPlayer",
+      "agent_prefix": "GPl",
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 10
+      "no_of_agents": 100
     },
     {
     "agent_type": "TitForTatWithRecallPlayer",
@@ -37,25 +37,41 @@
     "agent_spaces": [
       "IpdGame"
     ],
-    "no_of_agents": 10
+    "no_of_agents": 100
   },
   {
-    "agent_type": "RancorousWithRecallPlayer",
-    "agent_prefix": "RancRCLl",
+    "agent_type": "RandomPlayer",
+    "agent_prefix": "RPl",
     "agent_spaces": [
       "IpdGame"
     ],
-    "no_of_agents": 10
+    "no_of_agents": 100
   }
   ],
   "observers": [
     {
       "observer_type": "Observer",
-      "observer_name": "BPObs",
+      "observer_name": "GPObs",
       "observer_actions": [
         "obs_gpl"
       ],
-      "observer_agent": "BadPlayer",
+      "observer_agent": "GoodPlayer",
+      "observable_vars": [
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "RObs",
+      "observer_actions": [
+        "obs_bpl"
+      ],
+      "observer_agent": "RandomPlayer",
       "observable_vars": [
         "my_payoff",
         "my_play",
@@ -72,22 +88,6 @@
         "obs_bpl"
       ],
       "observer_agent": "TitForTatWithRecallPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "RancRCLObs",
-      "observer_actions": [
-        "obs_ranc"
-      ],
-      "observer_agent": "RancorousWithRecallPlayer",
       "observable_vars": [
         "my_payoff",
         "my_play",

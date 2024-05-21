@@ -87,20 +87,12 @@ class KGFirm(Firm):
         self.produce()
         self.pay_taxes()
 
-    def create_expectations(self):
-        """ Firm create expectations 
-        """
-        self.zet_1 = self.zet
-        self.zt = self.zt * (1 + rnd.random())
-        self.zet = self.eq.zet(self.zt, self.zet_1)
 
     def compute_desired_output(self):
         """ Firms compute desired input levels 
         """
         inv = self.inv.c_quantity
         self.y_c.c_quantity = self.eq.ydt(self.zet, inv)
-
-
 
 
     def compute_labor_demand(self):
@@ -162,6 +154,7 @@ class KGFirm(Firm):
                             c_price=price,
                             c_owner=self,
                             c_producer=self)
+
 
       
 

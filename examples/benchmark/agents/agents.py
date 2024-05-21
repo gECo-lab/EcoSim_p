@@ -45,7 +45,7 @@ class EconomicAgent(DiscreteEventAgent):
 
 
     def create_expectations(self):
-        """Household Creates Expectations
+        """Agent Creates Expectations
         """
 
         self.zet_1 = self.zet
@@ -77,4 +77,10 @@ class EconomicAgent(DiscreteEventAgent):
 
     def pay_taxes(self): 
         """ Economic Agent pay taxes"""
+
+    
+    def select_deposit_bank(self):
+        """Economic Agent select deposit bank"""
+
+
 

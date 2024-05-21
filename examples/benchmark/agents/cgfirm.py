@@ -25,7 +25,6 @@ Todo:
     * Organize equations cals
 """
 
-from venv import create
 from .firm import Firm
 from .equations import CGFirmEquations
 from .goods import CapitalGood, ConsumerGood
@@ -82,15 +81,12 @@ class CGFirm(Firm):
         self.select_lending_bank()
         self.produce()
         self.buy_K_goods()
+        self.pay_loans()
+        self.pay_wages()
+        self.distribute_dividends()
+        self.select_deposit_bank()
         self.pay_taxes()
 
-
-    def create_expectations(self):
-        """ Firm create expectations 
-        """
-        self.zet_1 = self.zet
-        self.zt = self.zt * (1 + rnd.random())
-        self.zet = self.eq.zet(self.zt, self.zet_1)
 
     def compute_desired_output(self):
         """ Firms compute desired input levels 

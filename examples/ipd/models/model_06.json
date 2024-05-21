@@ -1,0 +1,77 @@
+{
+  "simulation_name": "ipd_03",
+  "simulation_parameters": [
+    {
+      "parameter_name": "total_payoff",
+      "parameter_value": 0.0
+    }
+  ],
+  "model_name": "ipd_02",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "IpdGame",
+      "space_name": "IpdGame",
+      "space_variables": {
+        "payoffs": 0.0
+      }
+    }
+  ],
+  "agents": [
+    {
+    "agent_type": "TitForTatWithRecallPlayer",
+    "agent_prefix": "TTRCLl",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 100
+  },
+  {
+    "agent_type": "RancorousWithRecallPlayer",
+    "agent_prefix": "RancRCLl",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 100
+  }
+  ],
+  "observers": [
+    {
+      "observer_type": "Observer",
+      "observer_name": "TTRCLObs",
+      "observer_actions": [
+        "obs_bpl"
+      ],
+      "observer_agent": "TitForTatWithRecallPlayer",
+      "observable_vars": [
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
+      ]
+    },
+    {
+      "observer_type": "Observer",
+      "observer_name": "RancRCLObs",
+      "observer_actions": [
+        "obs_ranc"
+      ],
+      "observer_agent": "RancorousWithRecallPlayer",
+      "observable_vars": [
+        "my_payoff",
+        "my_play",
+        "other_name",
+        "other_play",
+        "other_payoff",
+        "strategy_name"
+      ]
+    }
+  ]
+}

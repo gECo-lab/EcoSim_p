@@ -1,10 +1,19 @@
+# Basic execution of benchmark model
+# usage: benchmark.sh <model> <scenarios>
+# model: models/model.json
+# scenarios: scenarios/scenarios.json
+# example: ,/benchmark.sh models/model.json scenarios/scenarios.json
+model=$1
+scenarios=$2
+
+. venv
 
 
 rm runs/*.csv
 
 cd ../..
 
-python3 ecosimp.py examples/benchmark/ config.json model.json scenarios.json
+python3 ecosimp.py examples/benchmark/ config.json $model $scenarios
 
 cd examples/benchmark
 

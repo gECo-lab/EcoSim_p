@@ -32,8 +32,8 @@ library(tidyverse)
 ```{r setupDirs}
 
 ### Setting up the Directories
-i  <-  "runs"
-o  <-  "results"
+i  <-  "../runs"
+o  <-  "../results"
 ```
 
 
@@ -67,7 +67,6 @@ model_runs <- model_runs[complete.cases(model_runs),]
 
 
 ```{r}
-
 
 model_runs %>%
   filter(run == 0 & step == 0) %>%

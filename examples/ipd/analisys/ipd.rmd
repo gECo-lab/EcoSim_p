@@ -29,8 +29,8 @@ library(tidyverse)
 ```{r setupDirs}
 
 ### Setting up the Directories
-i  <-  "runs"
-o  <-  "results"
+i  <-  "../runs"
+o  <-  "../results"
 ```
 
 
@@ -75,11 +75,6 @@ sum_cooperation <- runs_df %>% group_by(scenario, step) %>%
           defection = (my_play_D)/players)
 
 
-count_strategies <- runs_df %>% group_by(scenario, step, strategy_name) %>% 
-  summarise(count = n())
-
-
-
 ```
 
 
@@ -101,7 +96,4 @@ sum_runs %>%  ggplot(aes(x=step, y = payoff_sum, color = strategy_name)) + geom_
 sum_cooperation %>%  ggplot(aes(x=step, y = cooperation)) + geom_point(alpha = 0.5) + geom_smooth()
 
 ```
-
-```{r}
-count_strategies %>% ggplot(aes(x =step  strategy_name, y = count)) + geom_point(alpha=0.5) + geom_smooth()
 

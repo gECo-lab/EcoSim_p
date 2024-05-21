@@ -57,6 +57,7 @@ class Household(EconomicAgent):
         self.compute_reservation_wages()
         if self.unemployed:
             self.offer_labor()
+            self.receive_dole()
         self.demand_goods()
         self.consume()
         self.pay_taxes()
@@ -80,6 +81,12 @@ class Household(EconomicAgent):
         self.labor.c_quantity =  rnd.randint(20,60)
         self.labor.c_price = self.compute_reservation_wages()
         self.market.set_offer(self, self.labor)
+
+    def receive_dole(self):
+        """ Unemployed worker receive dole from government
+
+        Todo: Rewrite
+        """
 
 
     def demand_goods(self):

@@ -86,8 +86,10 @@ class TitForTat(Strategy):
     def __init__(self):
         super().__init__()
         self.strategy_name = "TitForTat"
-        self.other_last_strategy = "C"
-        self.selected_strategy = "C"
+        self.strategy = ["D", "C"]
+
+        self.other_last_strategy = random.choice(self.strategy)
+        self.selected_strategy = random.choice(self.strategy)
         self.others = {}
 
     def update_game(self, aGame):
@@ -113,7 +115,8 @@ class TitForTat(Strategy):
         if other_player.name in self.others:
             self.last_game.other_play = self.others[other_player.name]
         else:
-            game = random.choice(["D","C"])
+            #game = random.choice(["D","C"])
+            game = "C"
             self.others[other_player.name] = game
             self.last_game.other_play = game
     

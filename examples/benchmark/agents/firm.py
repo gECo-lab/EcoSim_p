@@ -23,22 +23,19 @@ Todo:
 """
 
 from .agents import EconomicAgent
-from .equations import CGFirmEquations
 
 
 class Firm(EconomicAgent):
     """ Generic Firm """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
-        self.eq = CGFirmEquations(self.active_scenario)
+    
 
         ## Household Variables:
-
        
         self.workforce = {}
 
-              
- 
+    
 
     def step(self):
         """ Firm Agent Step method """
@@ -68,6 +65,9 @@ class Firm(EconomicAgent):
     def pay_wages(self):
         """ Firm pays wages to households (workers) """
 
+    def distribute_dividends(self):
+        """Firm distributes dividends to households
+        """
 
 
 

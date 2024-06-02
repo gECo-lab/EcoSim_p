@@ -5,7 +5,7 @@
 Schedule Creation
 
 The schedule is created using dependency injection
-The definition of the schedule that will be used in the simulation is in the yaml file
+The definition of the schedule that will be used in the simulation is in the json file
 
 """
 

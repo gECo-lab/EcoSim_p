@@ -10,6 +10,7 @@ Example:
 Todo: 
 """
 
+from copy import deepcopy
 from kernel.space.basicSpaces import Space
 
 class Market(Space):
@@ -19,13 +20,11 @@ class Market(Space):
         super().__init__(model, name, variables)
         self.offers = {}
         self.demand = {}
-        self.contracts = {}
+        self.macthed_offers = []
 
     def update(self):
         """ """
         self.matching()
-        self.contract()
-        self.release_bids()
 
 
     def matching(self):
@@ -35,56 +34,32 @@ class Market(Space):
 
         while self.has_demand:
             self.a_demand = self.get_demand()
+            self.this_remaining_demand = self.a_demand.c_quantity
             self.have_unmet_demand = True
             self.total_contracted_value = 0.0
 
             while self.have_unmet_demand:
                 if self.has_offers():
-                    self.an_offer = self.get_offer_at_random()
-                    self.an_offer.c_owner = self.a_demand.c_owner
-                    self.contracts[self.an_offer.c_producter] = self.an_offer
-                    self.total_contracted_value += self.an_offer.c_price
-                    if self.total_contracted_value >= self.an_offer.c_price:
-                        self.have_unmet_demand = False
-                else:
-                    
-                    self.release_offers()
-                    self.offers.clear()
-                
-            self.release_demand()
-            self.clear_demand()
-                    
-
-
-# continua daqui
-                        self.an_offer.owner_of_g = self.demmand_owner
-                        self.contracted_offers[self.an_offer.producer_of_g] = self.an_offer
-                        self.total_contracted_value += self.an_offer.value_of_g
-                        if self.total_contracted_value >= self.an_offer.value_of_g:
-                            self.demmand_not_satisfied = False
+                    self.an_offer = self.get_offer()
+                    if self.an_offer.ammount() <= self.this_remaining_demand:
+                        self.this_remaining_demand -= self.an_offer.c_quantity
+                        self.an_offer.c_owner = self.a_demand.c_owner
+                        self.total_contracted_value += self.an_offer.total_ammount()
+                        self.macthed_offers.append(self.an_offer)
                     else:
-                        self.demmand_not_satisfied = False
-                        self.release_demmand()
-                        self.demmand.clear()
+                        self.partial_offer = deepcopy(self.an_offer)
+                        self.partial_offer.c_quantity = self.this_remaining_demand
+                        self.an_offer.c_quantity -= self.this_remaining_demand
+                        self.this_remaining_demand = 0.0
+                        self.have_unmet_demand = False
+                
+                if self.this_remaining_demand == 0:
+                    self.have_unmet_demand = False
+                    self.release_offers()
+                else:
+                    self.market_has_no_offers()
+                    self.have_unmet_demand = False
 
-                self.notify_match(self.a_demmand, self.contracted_offers)
-                self.register_contract(self.a_demmand, self.contracted_offers)
-            else:
-                self.bids_not_matched = False
-                self.release_offers()
-                self.offers.clear()
-
-       
-            
-
-
-    def contract(self):
-        """ Register the contracts """
-        pass
-
-    def release_bids(self):
-        """ Releases bids not matched """
-        pass
 
     def set_demand(self, an_owner, a_good):
         """
@@ -114,36 +89,52 @@ class Market(Space):
     def get_demand(self):
          """ Implements the maching in market """
          if(self.market_type == "random"):
-             self.random_matching()
+             self.random_demand_matching()
          elif(self.market_type == "hop"):
-             self.hop_matching()
+             self.hop_demand_matching()
          elif(self.market_type == "lop"):
-             self.lop_matching()
+             self.lop_demand_matching()
          elif(self.market_type == "bhop"):
-             self.bhop_matching()
+             self.bhop_demand_matching()
          elif(self.market_type == "blop"):
-             self.blop_matching()
+             self.blop_demand_matching()
+         else:
+             # Add error treatment here
+             raise ValueError("Invalid market matching type")
+         
+    def get_offer(self):
+         """ Implements the maching in market """
+         if(self.market_type == "random"):
+             self.random_offer_macthing()
+         elif(self.market_type == "hop"):
+             self.hop_offer_matching()
+         elif(self.market_type == "lop"):
+             self.lop_offer_matching()
+         elif(self.market_type == "bhop"):
+             self.bhop_offer_matching()
+         elif(self.market_type == "blop"):
+             self.blop__offer_matching()
          else:
              # Add error treatment here
              raise ValueError("Invalid market matching type")
 
-    def random_matching(self):
+    def random_demand_matching(self):
          """ Randomly pop a demand from the demand dictionary and return it """
                 
          owner = next(iter(self.demand.keys()))
          demand = self.demand.pop(owner)
          return demand
 
-    def hop_matching(self):
+    def hop_demand_matching(self):
         pass
 
-    def lop_matching(self):
+    def lop_demand_matching(self):
         pass
 
-    def bhop_matching(self):
+    def bhop_demand_matching(self):
         pass
 
-    def blop_matching(self):
+    def blop_demand_matching(self):
         pass
 
     def has_offers(self):
@@ -163,30 +154,47 @@ class Market(Space):
     def no_of_offers(self):
         """ A market answers the number of offers it has """
         return self.offers.__len__()
-
         
-    def get_offer_at_random(self):
+    def random_offer_macthing(self):
         """ Randomly pop an offer from the offers dictionary and return it """
         owner = next(iter(self.offers.keys()))
         offer = self.offers.pop(owner)
         return offer
-    
+
+    def hop_offer_matching(self):
+        pass
+
+    def lop_offer_matching(self):
+        pass
+
+    def bhop_offer_matching(self):
+        pass
+
+    def blop_offer_matching(self):
+        pass
+
+    def market_has_no_offers(self):
+        pass
+
     def release_demand(self):
         pass
 
     def clear_demand(self):
         pass
 
+    def release_offers():
+        pass
+
     def notify_match(self, a_demmand, contracted_offers):
         """ Notify the agents that their bids where matched """
-        self.contractor = a_demmand.owner_of_g
+        self.contractor = a_demmand.c_owner
         self.contractor.get_contracted_offers(contracted_offers)
         for offer in contracted_offers.values():
             offer.producer_of_g.got_contract()
 
     def register_contract(self, a_demmand, contracted_offers):
         """ The matched bids become contracts """
-        self.contractor = a_demmand.owner_of_g
+        self.contractor = a_demmand.c_owner
         self.contracts[self.contractor] = contracted_offers
         self.contractor.get_contracted_offers(contracted_offers)
 

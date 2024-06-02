@@ -63,22 +63,39 @@ class Commodity(object):
         if c_type in self.TYPE:
             self.c_type = c_type
         else:
-            raise Exception("Type of ", c_name, " not valid - type: ", c_type)
+            raise Exception("Type of ",
+                            c_name,
+                             " not valid - type: ",
+                              c_type
+                              )
 
         if c_category in self.c_CATEGORY:
             self.c_category = c_category
         else:
-            raise Exception("Type of asset of :  ", c_name, "  not valid - type: ", c_category)
+            raise Exception("Type of asset of :  ", 
+                            c_name, 
+                            "  not valid - type: ", 
+                            c_category
+                            )
 
         if c_consume in self.CONSUME:
             self.c_consume = c_consume
         else:
-            raise Exception("Type of consume from ", c_name, " not valid - consume: ", c_consume)
+            raise Exception("Type of consume from ",
+                            c_name,
+                            " not valid - consume: ",
+                            c_consume
+                            )
 
         self.c_quantity = c_quantity
         self.c_price = c_price
         self.c_owner = c_owner
         self.c_producer = c_producer
+
+    def total_ammount(self):
+        return self.c_quantity * self.c_price
+
+
 
 
 
@@ -114,8 +131,7 @@ class ConsumerGood(Commodity):
         self.c_owner = c_owner
         self.c_producer = c_producer
 
-
-
+  
 
 class Labor(Commodity):
     """A Consumer Good

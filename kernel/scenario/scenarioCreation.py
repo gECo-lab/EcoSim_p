@@ -4,7 +4,7 @@
 Scenario Creation
 
 The Scenarios are created using dependency injection
-The definition of the Scenarios that will be used in the simulation are in the yaml file
+The definition of the Scenarios that will be used in the simulation are in the json file
 """
 import dependency_injector.errors as errors
 import dependency_injector.providers as providers
@@ -28,6 +28,7 @@ class ScenarioCreator(object):
                 self.scenario_class = eval(a_scenario)
             except NameError:
                 print("class ", self.scenario_type, " is not defined")
+                
             self.scenario_Factory = ScenarioProvider(self.scenario_class)
             self.scenario_Factory.add_args(self.simulation,
                                            self.model,

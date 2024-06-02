@@ -47,10 +47,10 @@ class CGFirm(Firm):
      
 
         self.y_c = self.create_initial_production(initial_production_qnt,
-                                                         initial_production_price)
+                                                  initial_production_price)
 
         self.inv = self.create_initial_inventory(initial_inventory_qnt,
-                                                       initial_inventory_price)
+                                                 initial_inventory_price)
         
 
         initial_K_stock_qnt = rnd.randint(2,5)
@@ -60,7 +60,7 @@ class CGFirm(Firm):
         initial_sales_price = rnd.randint(1,5)
 
         self.K = self.create_initial_K_stock(initial_K_stock_qnt,
-                                                       initial_K_stock_price)
+                                             initial_K_stock_price)
         
         self.s_c = self.create_initial_sales(initial_sales_qnt, 
                                              initial_sales_price)
@@ -92,7 +92,9 @@ class CGFirm(Firm):
         """ Firms compute desired input levels 
         """
         inv = self.inv.c_quantity
-        self.y_c.c_quantity = self.eq.ydt(self.zet, inv)
+        self.y_c.c_quantity = self.eq.ydt(self.zet, 
+                                          inv
+                                         )
         
     def compute_labor_demand(self):
         """Consumer good firm computes labor demand
@@ -105,12 +107,19 @@ class CGFirm(Firm):
         """CG Firm computes capacity utilization
         """
 
-        self.ud_t = self.eq.udt(self.y_c.c_quantity, self.kc_t)
+        self.ud_t = self.eq.udt(self.y_c.
+                                c_quantity,
+                                self.kc_t
+                               )
 
     def set_output_price(self):
         """ Firm sets output price for product """
 
-        self.y_c.c_price =self.eq.pt(self.mu_ct, self.We_t, self.Ndc_t, self.y_c.c_quantity)
+        self.y_c.c_price =self.eq.pt(self.mu_ct,
+                                     self.We_t,
+                                     self.Ndc_t,
+                                     self.y_c.c_quantity
+                                    )
 
 
     def compute_rate_of_capacity_growth(self):

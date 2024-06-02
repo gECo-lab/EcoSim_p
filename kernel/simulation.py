@@ -4,10 +4,14 @@
 Simulation Class (This implements a batch simulation)
 
 """
+
+
+## TODO: Reimplement depebdency injection
+
 import json
 import sys
 import datetime as dt
-from kernel.scenario.scenarioCreation import *
+from kernel.scenario.scenarioCreation import ScenarioCreator
 from kernel.model.basicModels import Model
 
 

@@ -39,6 +39,13 @@ class EconomicAgent(DiscreteEventAgent):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         
+        # note: these variables need to go to some
+        # bookeeping object (that will deal with them) 
+        self.income = 0.0
+        self.expenses = 0.0
+        self.assets = {}
+        self.liabilities = {}
+
 
     def step(self):
         """ Implemented by subclass"""

@@ -7,8 +7,6 @@ Inspired on datacollection.py from mesa abm
 https://mesa.readthedocs.io/en/master/
 """
 import kernel.observer.basicObservers as obs
-import dependency_injector.errors as errors
-import dependency_injector.providers as providers
 
 
 class ObserverCreator(object):
@@ -31,22 +29,13 @@ class ObserverCreator(object):
                 self.observer_class = eval(an_observer)
             except NameError:
                 print("class ", self.observer_type, " is not defined")
-            self.observer_Factory = ObserverProvider(self.observer_class)
-            self.observer_Factory.add_args(self.observer_name,
-                                           self.observer_model,
-                                           self.observer_simulation,
-                                           self.observer_agent,
-                                           self.observable_vars,
-                                           self.path_to_results)
             try:
-                self.new_observer = self.observer_Factory()
+                self.new_observer = self.observer_class(self.observer_name,
+                                            self.observer_model,
+                                            self.observer_simulation,
+                                            self.observer_agent,
+                                            self.observable_vars,
+                                            self.path_to_results)
                 self.observers[self.observer_name] = self.new_observer
-            except errors.Error as exception:
-                print(exception)
-                # <class '__main__.observer_Factory'>
-                # does not know <'__main__.self.observer_name'>
-
-
-class ObserverProvider(providers.Factory):
-    """ Observer Provider Class"""
-    provided_type = obs.Observer
+            except NameError:
+                print("Class ", obs, " does not know ", self.observer_class)

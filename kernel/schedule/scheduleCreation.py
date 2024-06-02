@@ -10,8 +10,6 @@ The definition of the schedule that will be used in the simulation is in the jso
 """
 
 import kernel.schedule.basicSchedule as schd
-import dependency_injector.errors as errors
-import dependency_injector.providers as providers
 
 
 class ScheduleCreator(object):
@@ -27,18 +25,9 @@ class ScheduleCreator(object):
                 self.schedule_class = eval(a_schedule)
             except NameError:
                 print("class ", self.schedule_type, " is not defined")
-            self.schedule_Factory = ScheduleProvider(self.schedule_class)
-            self.schedule_Factory.add_args(self.schedule_name,
-                                           self.schedule_model)
             try:
-                self.new_schedule = self.schedule_Factory()
-            except errors.Error as exception:
-                print(exception)
-                # <class '__main__.schedule_Factory'>
-                # does not know <'__main__.self.schedule_name'>
+                self.new_schedule = self.schedule_class(self.schedule_name,
+                                                        self.schedule_model)
+            except NameError:
+                print("Class ", schd, " does not know ", self.schedule_class)
             self.provided_schedule = self.new_schedule
-
-
-class ScheduleProvider(providers.Factory):
-    """ Schedule Provider Class"""
-    provided_type = schd.Schedule

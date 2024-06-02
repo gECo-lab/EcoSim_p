@@ -6,8 +6,6 @@ Scenario Creation
 The Scenarios are created using dependency injection
 The definition of the Scenarios that will be used in the simulation are in the json file
 """
-import dependency_injector.errors as errors
-import dependency_injector.providers as providers
 import kernel.scenario.basicScenarios as scn
 
 
@@ -28,24 +26,14 @@ class ScenarioCreator(object):
                 self.scenario_class = eval(a_scenario)
             except NameError:
                 print("class ", self.scenario_type, " is not defined")
-                
-            self.scenario_Factory = ScenarioProvider(self.scenario_class)
-            self.scenario_Factory.add_args(self.simulation,
-                                           self.model,
-                                           self.scenario_name,
-                                           self.scenario_parameters,
-                                           self.scenario_variables,
-                                           self.agents_init)
+
             try:
-                self.new_scenario = self.scenario_Factory()
+                self.new_scenario = self.scenario_class(self.simulation,
+                                                        self.model,
+                                                        self.scenario_name,
+                                                        self.scenario_parameters,
+                                                        self.scenario_variables,
+                                                        self.agents_init)            
                 self.scenarios[self.scenario_name] = self.new_scenario
-            except errors.Error as exception:
-                print(exception)
-                # <class '__main__.scenario_Factory'>
-                # does not know <'__main__.self.scenario_name'>
-
-
-class ScenarioProvider(providers.Factory):
-    """ Scenario Provider Class"""
-    provided_type = scn.Scenario
-
+            except NameError:
+                print("Class ", scn, " does not know ", self.scenario_name)

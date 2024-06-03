@@ -7,7 +7,7 @@ This module implements the Household agent
 Example:
 
 The agents are created by the AgentCreator class 
-in the AgentCreation muodule
+in the AgentCreation module
 
       "agents_init": {
         "EconomicAgent": [

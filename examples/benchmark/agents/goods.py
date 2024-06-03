@@ -83,9 +83,16 @@ class Good(object):
     def c_value(self):
         "Return the value of good - c_price * c_quantity"
         return self.c_price * self.c_quantity
+    
+    def copy_attributes(self, a_good):
+        """Copy attributes from self to a_good if they are of the same class."""
+        if isinstance(a_good, self.__class__):
+            for attr in self.__dict__:
+                setattr(a_good, attr, getattr(self, attr))
+        return a_good
 
 
-class ConsumerGood(Good):
+class ConsumptionGood(Good):
     """A Consumer Good
     
        TYPE :"real"

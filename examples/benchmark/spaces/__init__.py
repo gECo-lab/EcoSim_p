@@ -1,3 +1,3 @@
-from .market import Market
+from .market import Market, CGMarket, LaborMarket
 
-__all__ = ["Market"]
+__all__ = ["Market", "CGMarket", "LaborMarket"]

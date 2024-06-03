@@ -12,8 +12,18 @@
   ],
   "spaces": [
     {
-      "space_type": "Market",
-      "space_name": "Market",
+      "space_type": "CGMarket",
+      "space_name": "CG_Market",
+      "action_set": "market_action_set",
+      "action_class": "Market_action_set",
+      "space_variables": {
+        "intensity_of_choice": 0.0,
+        "market_type": "random"
+      }
+    },
+    {
+      "space_type": "LaborMarket",
+      "space_name": "Labor_Market",
       "action_set": "market_action_set",
       "action_class": "Market_action_set",
       "space_variables": {
@@ -27,7 +37,8 @@
       "agent_type": "Household",
       "agent_prefix": "HH",
       "agent_spaces": [
-        "Market"
+        "Labor_Market",
+        "CG_Market"
       ],
       "no_of_agents": 100
     },
@@ -35,7 +46,8 @@
       "agent_type": "CGFirm",
       "agent_prefix": "CG",
       "agent_spaces": [
-        "Market"
+        "Labor_Market",
+        "CG_Market"
       ],
       "no_of_agents": 10
     }

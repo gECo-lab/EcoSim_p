@@ -25,8 +25,8 @@ Todo:
 """
 
 from .agents import EconomicAgent
+from .goods import Labor, ConsumptionGood
 from .equations import Equations
-from .goods import ConsumerGood, Labor
 import random as rnd
 
 
@@ -34,16 +34,20 @@ class Household(EconomicAgent):
     """ Household Agent """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
+       
         self.eq = Equations(self.active_scenario)
-        self.market = self.spaces['Market']
+
+        self.Labor_Market = self.get_a_space('Labor_Market')
+        self.CG_Market = self.get_a_space("CG_Market")
+
 
         ## Household Variables:
-        demand_qnt = 1 + rnd.randint(1,10)
+        demand_qnt = 1 + rnd.randint(100,10000)
         labor_qnt = rnd.randint(20,60)
         hourly_wage = self.compute_reservation_wages()
 
         ## Create Initial consumer demand
-        self.consumer_good = self.create_consumer_demand(demand_qnt)
+        self.consumption_good = self.create_consumer_demand(demand_qnt)
       
         ## Create Labor Offer
         self.labor = self.create_labor_offer(labor_qnt, hourly_wage)
@@ -80,7 +84,7 @@ class Household(EconomicAgent):
         
         self.labor.c_quantity =  rnd.randint(20,60)
         self.labor.c_price = self.compute_reservation_wages()
-        self.market.set_offer(self, self.labor)
+        self.Labor_Market.set_offer(self, self.labor)
 
     def receive_dole(self):
         """ Unemployed worker receive dole from government
@@ -94,13 +98,13 @@ class Household(EconomicAgent):
         """
 
        ## Make good offer
-        self.market.set_demand(self, self.consumer_good)
+        self.Labor_Market.set_demand(self, self.consumption_good)
                      
 
     def consume(self):
         """ Household consumes 
         """
-        self.consumer_good.c_quantity = 1 + rnd.randint(1,10)
+        self.consumption_good.c_quantity = 1 + rnd.randint(1,10)
 
 
   
@@ -114,7 +118,7 @@ class Household(EconomicAgent):
             CosumerGood (Good): returns a ConsumerGood object
         """
             
-        return ConsumerGood(c_quantity=demand_qnt,
+        return ConsumptionGood(c_quantity=demand_qnt,
                                      c_owner = self)
     
 

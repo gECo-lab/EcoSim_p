@@ -32,7 +32,7 @@ class Market(Space):
 
         self.market_not_empty = True
 
-        while self.has_demand:
+        while self.has_demand():
             self.a_demand = self.get_demand()
             self.this_remaining_demand = self.a_demand.c_quantity
             self.have_unmet_demand = True
@@ -41,15 +41,17 @@ class Market(Space):
             while self.have_unmet_demand:
                 if self.has_offers():
                     self.an_offer = self.get_offer()
-                    if self.an_offer.ammount() <= self.this_remaining_demand:
+                    if self.an_offer.c_quantity <= self.this_remaining_demand:
                         self.this_remaining_demand -= self.an_offer.c_quantity
                         self.an_offer.c_owner = self.a_demand.c_owner
                         self.total_contracted_value += self.an_offer.total_ammount()
                         self.macthed_offers.append(self.an_offer)
                     else:
-                        self.partial_offer = deepcopy(self.an_offer)
+                        self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
+                        self.partial_offer.c_owner = self.a_demand.c_owner
                         self.an_offer.c_quantity -= self.this_remaining_demand
+                        self.macthed_offers.append(self.partial_offer)
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
                 
@@ -89,41 +91,44 @@ class Market(Space):
     def get_demand(self):
          """ Implements the maching in market """
          if(self.market_type == "random"):
-             self.random_demand_matching()
+             a_demand = self.random_demand_matching()
          elif(self.market_type == "hop"):
-             self.hop_demand_matching()
+             a_demand = self.hop_demand_matching()
          elif(self.market_type == "lop"):
-             self.lop_demand_matching()
+             a_demand = self.lop_demand_matching()
          elif(self.market_type == "bhop"):
-             self.bhop_demand_matching()
+             a_demand = self.bhop_demand_matching()
          elif(self.market_type == "blop"):
-             self.blop_demand_matching()
+             a_demand = self.blop_demand_matching()
          else:
              # Add error treatment here
              raise ValueError("Invalid market matching type")
-         
+         return a_demand
+    
     def get_offer(self):
          """ Implements the maching in market """
          if(self.market_type == "random"):
-             self.random_offer_macthing()
+             an_offer = self.random_offer_macthing()
          elif(self.market_type == "hop"):
-             self.hop_offer_matching()
+             an_offer = self.hop_offer_matching()
          elif(self.market_type == "lop"):
-             self.lop_offer_matching()
+             an_offer = self.lop_offer_matching()
          elif(self.market_type == "bhop"):
-             self.bhop_offer_matching()
+             an_offer = self.bhop_offer_matching()
          elif(self.market_type == "blop"):
-             self.blop__offer_matching()
+             an_offer = self.blop__offer_matching()
          else:
              # Add error treatment here
              raise ValueError("Invalid market matching type")
+         return an_offer
 
     def random_demand_matching(self):
-         """ Randomly pop a demand from the demand dictionary and return it """
-                
-         owner = next(iter(self.demand.keys()))
-         demand = self.demand.pop(owner)
-         return demand
+        """ Randomly pop a demand from the demand dictionary and return it """
+        if not self.demand:
+            raise ValueError("No demand available in market ", self.name)
+        else:
+            a_demand = self.demand.popitem()[1]
+            return a_demand
 
     def hop_demand_matching(self):
         pass
@@ -139,17 +144,17 @@ class Market(Space):
 
     def has_offers(self):
         """ A market answers if is has offers (True or False) """
-        if self.offers.__len__() > 0:
-            return True
-        else:
+        if not self.offers:
             return False
+        else:
+            return True
 
     def has_demand(self):
         """ A market answers if is has demand (True or False) """
-        if self.demand.__len__() > 0:
-            return True
-        else:
+        if not self.demand:
             return False
+        else:
+            return True
 
     def no_of_offers(self):
         """ A market answers the number of offers it has """
@@ -157,8 +162,7 @@ class Market(Space):
         
     def random_offer_macthing(self):
         """ Randomly pop an offer from the offers dictionary and return it """
-        owner = next(iter(self.offers.keys()))
-        offer = self.offers.pop(owner)
+        offer = self.offers.popitem()[1]
         return offer
 
     def hop_offer_matching(self):
@@ -177,13 +181,24 @@ class Market(Space):
         pass
 
     def release_demand(self):
-        pass
+        """Inform the bider that their demand was not satisfied
+        """
+        for demand in self.demand.values():
+            demand.c_owner.release_demand()
+            self.demand = {}
 
-    def clear_demand(self):
-        pass
+    def release_offers(self):
+        """Inform the producers/household that their offer was not bought
+        """
+        for offer in self.offers.values():
+            offer.c_producer.release_offer()
+            self.offers = {}
 
-    def release_offers():
-        pass
+    def set_partial_offer(self, an_offer):
+        partial_offer = type(an_offer)()
+        partial_offer = an_offer.copy_attributes(partial_offer)
+        return partial_offer
+        
 
     def notify_match(self, a_demmand, contracted_offers):
         """ Notify the agents that their bids where matched """
@@ -198,3 +213,27 @@ class Market(Space):
         self.contracts[self.contractor] = contracted_offers
         self.contractor.get_contracted_offers(contracted_offers)
 
+
+
+
+class CGMarket(Market):
+    """Consumers Goods Market
+
+    Args:
+        Market (_type_): _description_
+    """
+    def __init__(self, model, name, variables):
+        super().__init__(model, name, variables)
+
+
+class LaborMarket(Market):
+    """Labor Market
+
+    Args:
+        Market (_type_): _description_
+    """
+
+    def __init__(self, model, name, variables):
+        super().__init__(model, name, variables)
+
+        

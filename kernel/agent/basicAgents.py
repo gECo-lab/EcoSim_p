@@ -30,6 +30,15 @@ class Agent(object):
         self.spaces[space_name] = self.model.spaces[space_name]
         self.spaces[space_name].enter(self.name, self)
 
+    def get_a_space(self, space_name):
+        """If space_name exists in spaces dictionary
+           return space
+        """
+        try:
+            return self.spaces[space_name]
+        except KeyError:
+            raise KeyError("There is no space called " + space_name + " in this agent's spaces dictionary")
+        
     def get_attribute(self, attribute_name):
         """ Get an agent attribute"""
         try:

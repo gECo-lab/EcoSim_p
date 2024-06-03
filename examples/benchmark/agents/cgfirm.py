@@ -27,7 +27,7 @@ Todo:
 
 from .firm import Firm
 from .equations import CGFirmEquations
-from .goods import CapitalGood, ConsumerGood
+from .goods import CapitalGood, ConsumptionGood
 import random as rnd
 
 
@@ -37,6 +37,11 @@ class CGFirm(Firm):
         super().__init__(simulation, model, agent_number, agent_def)
         
         self.eq = CGFirmEquations(self.active_scenario)
+        
+        self.Labor_Market = self.get_a_space('Labor_Market')
+        self.CG_Market = self.get_a_space("CG_Market")
+
+        ## TODO: This will be changed to calibration in initialization.
 
         initial_inventory_qnt = rnd.randint(10,50)
         initial_production_price = rnd.randint(1,5)
@@ -80,6 +85,7 @@ class CGFirm(Firm):
         self.compute_credit_demand()
         self.select_lending_bank()
         self.produce()
+        self.offer_goods()
         self.buy_K_goods()
         self.pay_loans()
         self.pay_wages()
@@ -147,10 +153,10 @@ class CGFirm(Firm):
             price (number): Initial price
 
         Returns:
-            ConsumerGood: A consumer Good Stock
+            ConsumptionGood: A consumer Good Stock
         """
 
-        return ConsumerGood(c_quantity=quantity,
+        return ConsumptionGood(c_quantity=quantity,
                             c_price=price,
                             c_owner=self,
                             c_producer=self)
@@ -164,10 +170,10 @@ class CGFirm(Firm):
             price (number): Initial price
 
         Returns:
-            ConsumerGood: A consumer Good Stock
+            ConsumptionGood: A consumer Good Stock
         """
 
-        return ConsumerGood(c_quantity=quantity,
+        return ConsumptionGood(c_quantity=quantity,
                             c_price=price,
                             c_owner=self,
                             c_producer=self)
@@ -198,11 +204,21 @@ class CGFirm(Firm):
             price (number): Initial price
 
         Returns:
-            ConsumerGood: A consumer Good (sold)
+            ConsumptionGood: A consumption Good (sold)
         """
 
-        return ConsumerGood(c_quantity=quantity,
+        return ConsumptionGood(c_quantity=quantity,
                             c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+    
+
+    def produce(self):
+        """CG firm produce consumption goods"""
+        # NOTE: This method is just to test the market. Needs developing
+    
+        self.y_ct = ConsumptionGood(c_quantity=self.y_c.c_quantity,
+                            c_price=self.y_c.c_price,
                             c_owner=self,
                             c_producer=self)
 

@@ -28,6 +28,7 @@ class Good(object):
         ib - Interests on bonds
         gw - Government wages
         gt - Government transfers (to households)
+        csh - Cash 
     """
 
     c_CATEGORY = ['w', 
@@ -41,10 +42,11 @@ class Good(object):
                   'b', 
                   'ib', 
                   'gw', 
-                  'gt']
+                  'gt',
+                  'csh']
     
 
-    CONSUME = ["immediate", "depreciable", "debt", "continuous"]
+    CONSUME = ["immediate", "depreciable", "debt", "continuous", "cash"]
 
     def __init__(self, 
                  c_name,
@@ -83,6 +85,11 @@ class Good(object):
     def c_value(self):
         "Return the value of good - c_price * c_quantity"
         return self.c_price * self.c_quantity
+ 
+    def ammount(self):
+        "Return the value of good - c_price * c_quantity"
+        return self.c_price * self.c_quantity
+
     
     def copy_attributes(self, a_good):
         """Copy attributes from self to a_good if they are of the same class."""
@@ -188,6 +195,57 @@ class Labor(Good):
         self.c_price = c_price
         self.c_owner = c_owner
         self.c_producer = c_producer
+
+
+class Loan(Good):
+
+      def __init__(self, 
+                 c_name = None,
+                 c_type = None,  
+                 c_category = None,
+                 c_consume = None,  
+                 c_quantity = None,
+                 c_price = None,
+                 c_owner=None,
+                 c_producer=None):
+        
+        """" Init method for Loans """
+
+        self.c_name = "loan"
+        self.c_type = "financial"
+        self.c_category = "l"
+        self.c_consume = "debt"
+        self.c_quantity = c_quantity
+        self.c_price = c_price
+        self.c_owner = c_owner
+        self.c_producer = c_producer
+
+class Cash(Good):
+
+      def __init__(self, 
+                 c_name = None,
+                 c_type = None,  
+                 c_category = None,
+                 c_consume = None,  
+                 c_quantity = None,
+                 c_price = 1,
+                 c_owner=None,
+                 c_producer=None):
+        
+        """" Init method for Workers Labor """
+
+        self.c_name = "cash"
+        self.c_type = "financial"
+        self.c_category = "csh"
+        self.c_consume = "cash"
+        self.c_quantity = c_quantity
+        self.c_price = 1
+        self.c_owner = c_owner
+        self.c_producer = None
+
+
+
+
 
 
 

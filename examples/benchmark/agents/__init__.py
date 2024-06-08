@@ -15,6 +15,7 @@ from .bank import Bank
 from .household import Household
 
 
+
 __title__ = 'benchmark_model'
 __version__ = '0.0.0'
 __license__ = 'GPL-3.0'

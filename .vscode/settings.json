@@ -1,0 +1,6 @@
+{
+    "editor.suggest.showFolders": true,
+    "workbench.editor.customLabels.patterns": {
+        "${dirname}": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/"
+    }
+}

@@ -10,7 +10,6 @@ Example:
 Todo: 
 """
 
-from copy import deepcopy
 from kernel.space.basicSpaces import Space
 
 class Market(Space):

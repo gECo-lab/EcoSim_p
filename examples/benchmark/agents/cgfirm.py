@@ -27,7 +27,7 @@ Todo:
 
 from .firm import Firm
 from .equations import CGFirmEquations
-from .goods import CapitalGood, ConsumptionGood
+from .goods import CapitalGood, ConsumptionGood, Labor
 import random as rnd
 
 
@@ -49,6 +49,9 @@ class CGFirm(Firm):
         initial_production_qnt = rnd.randint(70,100)
         initial_inventory_price = rnd.randint(1,5)
 
+        ## Generate initial salaries (We_xt)
+        self.We_xt = rnd.randint(10, 50)
+
      
 
         self.y_c = self.create_initial_production(initial_production_qnt,
@@ -56,6 +59,7 @@ class CGFirm(Firm):
 
         self.inv = self.create_initial_inventory(initial_inventory_qnt,
                                                  initial_inventory_price)
+
         
 
         initial_K_stock_qnt = rnd.randint(2,5)
@@ -69,6 +73,10 @@ class CGFirm(Firm):
         
         self.s_c = self.create_initial_sales(initial_sales_qnt, 
                                              initial_sales_price)
+        
+        self.compute_labor_demand()
+        self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, self.We_xt)
+        
 
 
     def step(self):
@@ -77,6 +85,7 @@ class CGFirm(Firm):
         self.create_expectations()
         self.compute_desired_output()
         self.compute_labor_demand()
+        self.demand_labor()
         self.compute_capacity_utilization()
         self.set_output_price()
         self.compute_rate_of_capacity_growth()
@@ -105,8 +114,17 @@ class CGFirm(Firm):
     def compute_labor_demand(self):
         """Consumer good firm computes labor demand
         """
+        #Todo: Needs to recalculate unity price of labor (We_xt)
+
+        # self.We_xt
 
         self.Ndc_t = self.eq.ndct(self.y_c.c_quantity)
+
+
+    def demand_labor(self):
+
+
+        self.Labor_Market.set_demand(self, self.labor_demand)
 
 
     def compute_capacity_utilization(self):
@@ -122,11 +140,10 @@ class CGFirm(Firm):
         """ Firm sets output price for product """
 
         self.y_c.c_price =self.eq.pt(self.mu_ct,
-                                     self.We_t,
-                                     self.Ndc_t,
-                                     self.y_c.c_quantity
-                                    )
-
+                                      self.We_t,
+                                      self.Ndc_t,
+                                      self.y_c.c_quantity
+                                     )
 
     def compute_rate_of_capacity_growth(self):
         """CG Firms compute their rate of capacity growth 
@@ -156,10 +173,11 @@ class CGFirm(Firm):
             ConsumptionGood: A consumer Good Stock
         """
 
-        return ConsumptionGood(c_quantity=quantity,
+        self.y_ct =  ConsumptionGood(c_quantity=quantity,
                             c_price=price,
                             c_owner=self,
                             c_producer=self)
+        return self.y_ct
     
 
     def create_initial_inventory(self, quantity, price):
@@ -213,13 +231,36 @@ class CGFirm(Firm):
                             c_producer=self)
     
 
+    def create_initial_labor_demand(self, Ndc_t, We_xt):
+
+        return Labor(c_quantity = Ndc_t,
+                     c_price=We_xt,
+                     c_owner=self,
+                     c_producer=self)
+    
+
     def produce(self):
         """CG firm produce consumption goods"""
         # NOTE: This method is just to test the market. Needs developing
     
-        self.y_ct = ConsumptionGood(c_quantity=self.y_c.c_quantity,
-                            c_price=self.y_c.c_price,
-                            c_owner=self,
-                            c_producer=self)
+        self.y_ct.c_quantity=self.y_c.c_quantity
+        self.y_ct.c_price=self.y_c.c_price
+        
+
+    def offer_goods(self):
+        """
+        Sets the offer of goods for the CG Market.
+
+        This method sets the offer of goods for the CG Market
+        by calling the `set_offer` method of the `CG_Market` object.
+
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
+        self.CG_Market.set_offer(self, self.y_ct)
+
 
         

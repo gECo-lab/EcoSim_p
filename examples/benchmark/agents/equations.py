@@ -58,7 +58,8 @@ class Equations():
             number: Production in t
         """
 
-        return s_et * (1 + self.nu * inv_t_1)
+        self.yd_t =  s_et * (1 + self.nu * inv_t_1)
+        return self.yd_t
     
     def udt(self, yd_t, kc_t):
         """Calculates rate of utilization of capital stock
@@ -91,7 +92,9 @@ class Equations():
             number: unitary price of good in t
         """
 
-        return (1 + mu_xt)*(We_xt * Nd_xt)/yd_xt
+        self.p_t =  (1 + mu_xt)*(We_xt * Nd_xt)/yd_xt
+        return self.p_t
+
     
 
     def muxt(self, mu_xt, inv_t_1, s_et):

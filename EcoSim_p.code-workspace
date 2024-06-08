@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.html": true
+		},
+		"workbench.editor.limit.enabled": false,
+		"explorer.expandSingleFolderWorkspaces": false
+	}
+}

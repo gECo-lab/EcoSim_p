@@ -42,15 +42,18 @@ class Household(EconomicAgent):
 
 
         ## Household Variables:
-        demand_qnt = 1 + rnd.randint(100,10000)
-        labor_qnt = rnd.randint(20,60)
-        hourly_wage = self.compute_reservation_wages()
+        self.demand_qnt = 1 + rnd.randint(100,10000)
+        self.demand_expected_price = rnd.randint(10,50)
+        self.labor_qnt = rnd.randint(20,60)
+        self.hourly_wage = self.compute_reservation_wages()
 
         ## Create Initial consumer demand
-        self.consumption_good = self.create_consumer_demand(demand_qnt)
+        self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
+                                                            self.demand_qnt)
       
         ## Create Labor Offer
-        self.labor = self.create_labor_offer(labor_qnt, hourly_wage)
+        self.labor = self.create_labor_offer(self.labor_qnt, 
+                                             self.hourly_wage)
  
 
     def step(self):
@@ -79,9 +82,8 @@ class Household(EconomicAgent):
     def offer_labor(self):
         """ Worker offer labor in labor market
 
-        Todo: Rewrite 
+        # Todo: Rewrite 
         """
-        
         self.labor.c_quantity =  rnd.randint(20,60)
         self.labor.c_price = self.compute_reservation_wages()
         self.Labor_Market.set_offer(self, self.labor)
@@ -96,31 +98,42 @@ class Household(EconomicAgent):
     def demand_goods(self):
         """ Household demand goods 
         """
+        self.calculate_consumer_demand()
+        self.update_consumer_demand()
 
-       ## Make good offer
-        self.Labor_Market.set_demand(self, self.consumption_good)
+        ## Make good offer
+        self.CG_Market.set_demand(self, self.consumption_good)
                      
 
     def consume(self):
         """ Household consumes 
         """
-        self.consumption_good.c_quantity = 1 + rnd.randint(1,10)
+        self.consumption_good.c_quantity = 0
 
 
   
-    def create_consumer_demand(self, demand_qnt):
+    def create_consumer_demand(self, expected_price, demand_qnt):
         """Household creates ConsumerGood object
 
         Args:
             demand_qnt (number): the quantity of demand 
 
         Returns:
-            CosumerGood (Good): returns a ConsumerGood object
+            Consumption (Good): returns a ConsumerGood object
         """
             
-        return ConsumptionGood(c_quantity=demand_qnt,
+        return ConsumptionGood(c_quantity = demand_qnt,
+                               c_price = expected_price,
                                      c_owner = self)
     
+    def update_consumer_demand(self):  
+        self.consumption_good.c_quantity = self.demand_qnt
+
+    def calculate_consumer_demand(self):
+
+        self.demand_qnt = 1 + rnd.randint(100,10000)
+        return self.demand_qnt
+
 
 
     def create_labor_offer(self, labor_qnt, hourly_wage):
@@ -138,7 +151,8 @@ class Household(EconomicAgent):
                      c_price=hourly_wage, 
                      c_owner=self, 
                      c_producer=self)
-        
+    
+
 
 
     

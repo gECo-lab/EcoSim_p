@@ -1,4 +1,4 @@
-""" Commodities
+""" Goods
 
 This module implements the commodities traded in an economy.
 Subclasses will implement specific goods if necessary.

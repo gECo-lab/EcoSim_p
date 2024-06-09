@@ -52,7 +52,8 @@ class Market(Space):
                         # include payment
                         self.buyer.pay(self.seller, self.an_offer.ammount())
                         # transfer goods_services
-                        # notify macht
+                        self.buyer.get_good(self.an_offer)
+                        # notify match
                     else:
                         self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
@@ -64,8 +65,10 @@ class Market(Space):
                         self.have_unmet_demand = False
                         # include contract
                         # include payment
-                        self.buyer.pay(self.seller, self.an_offer.ammount())
-                        # notify macth                
+                        self.buyer.pay(self.seller, self.partial_offer.ammount())
+                        # transfer goods_services
+                        self.buyer.get_good(self.partial_offer)
+                        # notify match                
                 if self.this_remaining_demand == 0:
                     self.have_unmet_demand = False
                     self.release_offers()

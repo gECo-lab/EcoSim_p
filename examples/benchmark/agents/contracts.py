@@ -39,9 +39,9 @@ class Contract:
 
     """
 
-    def __init__(self, seller, buyer, amount, time, price, qt_payments, type):
-        self.seller = seller
-        self.buyer = buyer
+    def __init__(self, supplier, contractor, amount, time, price, qt_payments, type):
+        self.seller = supplier
+        self.contractor = contractor
         self.amount = amount
         self.time = time
         self.price = price
@@ -69,5 +69,3 @@ class Contract:
         self.paid += value
         self.current_debt -= value
         self.due_payments -= no_of_payments
-  
-

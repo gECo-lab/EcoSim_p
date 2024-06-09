@@ -93,10 +93,20 @@ class EconomicAgent(DiscreteEventAgent):
 
 
     def pay(self, seller, quantity):
-        self.balance_sheet.pay(seller.balance_sheet, quantity)
+        self.balance_sheet.pay(seller, quantity)
 
     def receive(self, quantity):
         self.balance_sheet.receive(quantity)
+
+
+    def get_good(self, a_good):
+
+      result = self.balance_sheet.get_good(a_good)
+      return result
+
+  
+
+
 
 
 

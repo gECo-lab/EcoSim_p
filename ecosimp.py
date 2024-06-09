@@ -13,7 +13,8 @@ executed (all scenarios, and all runs in each scenario)
 The results of the scenarios are writen in files in the 
 folder runs
 """
-# TODO: Generalize the location specs for the simulation results files (actually in the folder runs)
+# TODO: Generalize the location specs for the simulation 
+#       results files (actually in the folder runs)
 import sys
 from kernel.simulation import *
 
@@ -23,7 +24,8 @@ def new_simulation(path_to_model, model_config, model_defs, scenarios_defs):
         without a graphical interface.
         This method receives 4 parameters:
          - path_to_model - The path to the model that is executing
-         - model_config - The configuration file for the model that is executing
+         - model_config - The configuration file for the model tha
+           is executing
          - model_defs - The model definition file
          - scenario_defs - The scenarios definition file
     """

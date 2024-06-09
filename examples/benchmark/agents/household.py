@@ -1,40 +1,41 @@
  # -*- coding: utf-8 -*-
-""" Household Agents from the basic macroeconomic model 
-
-
-This module implements the Household agent
-
-Example:
-
-The agents are created by the AgentCreator class 
-in the AgentCreation module
-
-      "agents_init": {
-        "EconomicAgent": [
-          {
-            "var_name": "income",
-            "var_type": "stochastic",
-            "var_dist": "np.random.lognormal(6.0,1.0)",
-            "var_value": 0.0
-          }
-        ]
-        }
-
-Todo:
-    * Organize equations cals
-"""
-
+from examples.benchmark.agents.accounting import HHBalanceSheet
 from .agents import EconomicAgent
-from .goods import Labor, ConsumptionGood
+from .goods import Labor
 from .equations import Equations
 import random as rnd
 
 
 class Household(EconomicAgent):
-    """ Household Agent """
+    """ Household Agents from the basic macroeconomic model 
+
+
+    This module implements the Household agent
+
+    Example:
+
+    The agents are created by the AgentCreator class 
+    in the AgentCreation module
+
+        "agents_init": {
+            "EconomicAgent": [
+            {
+                "var_name": "income",
+                "var_type": "stochastic",
+                "var_dist": "np.random.lognormal(6.0,1.0)",
+                "var_value": 0.0
+            }
+            ]
+            }
+
+    Todo:
+        * Organize equations cals
+    """
+
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
        
+        self.balance_sheet = HHBalanceSheet(self)
         self.eq = Equations(self.active_scenario)
 
         self.Labor_Market = self.get_a_space('Labor_Market')
@@ -48,10 +49,12 @@ class Household(EconomicAgent):
         self.hourly_wage = self.compute_reservation_wages()
 
         ## Create Initial consumer demand
+        ## Transfer to Balance Sheet??
         self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
                                                             self.demand_qnt)
       
         ## Create Labor Offer
+        ## Transfer to Balance Sheet??
         self.labor = self.create_labor_offer(self.labor_qnt, 
                                              self.hourly_wage)
  
@@ -108,6 +111,8 @@ class Household(EconomicAgent):
     def consume(self):
         """ Household consumes 
         """
+
+        # include payment
         self.consumption_good.c_quantity = 0
 
 
@@ -121,11 +126,12 @@ class Household(EconomicAgent):
         Returns:
             Consumption (Good): returns a ConsumerGood object
         """
+
+        ## Transfer to Balance Sheet?
             
-        return ConsumptionGood(c_quantity = demand_qnt,
-                               c_price = expected_price,
-                                     c_owner = self)
+        return self.balance_sheet.consumption
     
+
     def update_consumer_demand(self):  
         self.consumption_good.c_quantity = self.demand_qnt
 

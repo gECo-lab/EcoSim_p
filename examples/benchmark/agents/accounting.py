@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from numpy import  number
-from .goods import CapitalGood, Loan, Cash
+from .goods import CapitalGood, ConsumptionGood, Loan, Cash, Labor
 import random as rnd
 
 class BalanceSheet:
@@ -154,7 +154,7 @@ class BalanceSheet:
             return False
 
 
-    def pay(self, an_agent_balance_sheet, quantity):
+    def pay(self, an_agent, quantity):
         """
         Pays a specified amount to another agent.
 
@@ -167,7 +167,7 @@ class BalanceSheet:
         """
         if self.have_money(quantity):
             self.cash.c_quantity =- quantity
-            an_agent_balance_sheet.receive(quantity)
+            an_agent.balance_sheet.receive(quantity)
             return True
         else:
             return False
@@ -183,4 +183,57 @@ class BalanceSheet:
         self.cash.c_quantity =+ quantity
 
 
+    def get_good(self, a_good):
+
+        if isinstance(a_good, CapitalGood):
+            self.assets.append(a_good)
+            return True
+        elif isinstance(a_good, Loan):
+            self.liabilities.append(a_good)
+            return True
+        elif isinstance(a_good, Labor):
+            self.liabilities.append(a_good)
+            return True
+
+
+
+
+
+
+class HHBalanceSheet(BalanceSheet):
+
+    def __init__(self, owner, assets=None, liabilities=None, 
+                 cash_flow=None, cash=None, consumption=None):
+        super().__init__(owner, assets, liabilities, cash_flow, cash)
+
+        if consumption is not None:
+            if isinstance(consumption, list):
+                self.consumption = consumption
+            else:
+                raise ValueError("consumption must be a list.")
+        else:
+            self.consumption = ConsumptionGood(c_name=owner.name,
+                                               c_owner=self.owner)
+
+    def get_good(self, a_good):
+
+        if isinstance(a_good, CapitalGood):
+            self.assets.append(a_good)
+        elif isinstance(a_good, Loan):
+            self.liabilities.append(a_good)
+        elif isinstance(a_good, ConsumptionGood):
+            self.add_consumption_goods(a_good)
     
+
+    def add_consumption_goods(self, consumption):
+        
+        self.consumption.c_quantity = consumption.c_quantity
+        self.consumption.c_price = (self.consumption.c_price +
+                                    consumption.c_price)/2
+        
+            
+
+
+
+
+

@@ -37,7 +37,7 @@ class Household(EconomicAgent):
        
         self.balance_sheet = HHBalanceSheet(self)
         self.eq = Equations(self.active_scenario)
-    
+
 
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
@@ -56,7 +56,7 @@ class Household(EconomicAgent):
       
         ## Create Labor Offer
         ## Transfer to Balance Sheet??
-        self.labor = self.create_labor_offer(self.labor_qnt, 
+        self.offered_labor = self.create_labor_offer(self.labor_qnt, 
                                              self.hourly_wage)
  
 
@@ -88,9 +88,9 @@ class Household(EconomicAgent):
 
         # Todo: Rewrite 
         """
-        self.labor.c_quantity =  rnd.randint(20,60)
-        self.labor.c_price = self.compute_reservation_wages()
-        self.get_a_space(self.labor_mkt_name).set_offer(self, self.labor)
+        self.offered_labor.c_quantity =  rnd.randint(20,60)
+        self.offered_labor.c_price = self.compute_reservation_wages()
+        self.get_a_space(self.labor_mkt_name).set_offer(self, self.offered_labor)
 
     def receive_dole(self):
         """ Unemployed worker receive dole from government
@@ -163,9 +163,13 @@ class Household(EconomicAgent):
 
         if a_market.name == self.labor_mkt_name:
             self.unemployed = False
-            self.labor.c_quantity -= an_offer.c_quantity
-            self.labor.c_price = (self.labor.c_price + an_offer.c_price)/2
+            self.offered_labor.c_quantity -= an_offer.c_quantity
+            self.offered_labor.c_price = (self.offered_labor.c_price + an_offer.c_price)/2
             self.hourly_wage = an_offer.c_price
+
+    def is_unemployed(self):
+        self.unemployed = True
+        self.balance_sheet.is_unemployed()
             
 
 

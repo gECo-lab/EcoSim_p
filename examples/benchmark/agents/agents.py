@@ -100,8 +100,8 @@ class EconomicAgent(DiscreteEventAgent):
         self.balance_sheet.receive(quantity)
 
 
-    def get_good(self, a_good):
-        self.balance_sheet.get_good(a_good)
+    def got_good(self, a_good):
+        self.balance_sheet.got_good(a_good)
     
     def offer_accepted(self, a_market, an_offer):
         # implemented by subclass

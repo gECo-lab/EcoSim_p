@@ -122,8 +122,18 @@ class CGFirm(Firm):
 
 
     def demand_labor(self):
+        """
+        Sets the labor demand for the firm in the labor market.
 
+        This method sets the labor demand for the firm in the specified labor market.
+        It calls the `set_demand` method of the labor market object to update the demand.
 
+        Parameters:
+        - self: The current instance of the CGFirm class.
+
+        Returns:
+        - None
+        """
         self.get_a_space(self.labor_mkt_name).set_demand(self, self.labor_demand)
 
 
@@ -261,6 +271,11 @@ class CGFirm(Firm):
         - None
         """
         self.get_a_space(self.cg_mkt_name).set_offer(self, self.y_ct)
+
+
+    def offer_accepted(self, a_market, an_offer):
+        ## TODO: Here we need to go back to the model equations
+        ##       and see wich variable is the sales revenue.
 
 
         

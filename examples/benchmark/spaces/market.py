@@ -52,7 +52,7 @@ class Market(Space):
                         # include payment
                         self.buyer.pay(self.seller, self.an_offer.ammount())
                         # transfer goods_services
-                        self.buyer.get_good(self.an_offer)
+                        self.buyer.got_good(self.an_offer)
                         # notify match
                         self.buyer.offer_accepted(self, self.an_offer)
                     else:
@@ -68,7 +68,7 @@ class Market(Space):
                         # include payment
                         self.buyer.pay(self.seller, self.partial_offer.ammount())
                         # transfer goods_services
-                        self.buyer.get_good(self.partial_offer)
+                        self.buyer.got_good(self.partial_offer)
                         # notify match                
                         self.buyer.offer_accepted(self, self.partial_offer)
                 if self.this_remaining_demand == 0:

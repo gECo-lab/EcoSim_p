@@ -97,8 +97,8 @@ class BalanceSheet:
             ValueError: If the liability is not an instance of the Loan class.
         """
         if isinstance(liability, Good):
-            if liability.c_name in self.liabilitys:
-                existing_liability = self.liabilitys[liability.c_name]
+            if liability.c_name in self.liabilities:
+                existing_liability = self.liabilities[liability.c_name]
                 existing_liability.c_quantity += liability.c_quantity
                 existing_liability.c_price = (existing_liability.c_price + liability.c_price) / 2
             else:
@@ -164,7 +164,7 @@ class BalanceSheet:
         """
         self.assets["cash"].c_quantity += quantity
 
-    def get_good(self, a_good):
+    def got_good(self, a_good):
 
         self.include_asset(a_good)
 
@@ -189,7 +189,7 @@ class HHBalanceSheet(BalanceSheet):
                                                c_owner=self.owner)
         
 
-    def get_good(self, a_good):
+    def got_good(self, a_good):
 
         if isinstance(a_good, Good):
             self.assets.append(a_good)
@@ -197,6 +197,8 @@ class HHBalanceSheet(BalanceSheet):
             self.liabilities.append(a_good)
         elif isinstance(a_good, ConsumptionGood):
             self.add_consumption_goods(a_good)
+        elif isinstance(a_good, Labor):
+            self.add_labor(a_good)
     
 
     def add_consumption_goods(self, consumption):
@@ -204,6 +206,33 @@ class HHBalanceSheet(BalanceSheet):
         self.consumption.c_quantity = consumption.c_quantity
         self.consumption.c_price = (self.consumption.c_price +
                                     consumption.c_price)/2
+
+
+    def create_labor_capacity(self, labor):
+
+        if isinstance(labor, Labor):
+            self.assets['labor'] = labor
+        else:
+            raise ValueError("object needs to be from Labor class")
+        
+
+    def add_labor(self, labor):
+
+        if labor.c_name in self.assets:
+            contracted_labor = self.assets[labor.c_name]
+            contracted_labor.c_quantity =+ labor.c_quantity
+            contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
+
+            
+
+    def is_unemployed(self):
+
+        self.assets["labor"].c_quantity = 0.0
+
+
+
+
+
         
             
 

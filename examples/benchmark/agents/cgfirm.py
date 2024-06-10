@@ -38,8 +38,8 @@ class CGFirm(Firm):
         
         self.eq = CGFirmEquations(self.active_scenario)
         
-        self.Labor_Market = self.get_a_space('Labor_Market')
-        self.CG_Market = self.get_a_space("CG_Market")
+        self.labor_mkt_name = "Labor_Market"
+        self.cg_mkt_name = "CG_Market"
 
         ## TODO: This will be changed to calibration in initialization.
 
@@ -124,7 +124,7 @@ class CGFirm(Firm):
     def demand_labor(self):
 
 
-        self.Labor_Market.set_demand(self, self.labor_demand)
+        self.get_a_space(self.labor_mkt_name).set_demand(self, self.labor_demand)
 
 
     def compute_capacity_utilization(self):
@@ -260,7 +260,7 @@ class CGFirm(Firm):
         Returns:
         - None
         """
-        self.CG_Market.set_offer(self, self.y_ct)
+        self.get_a_space(self.cg_mkt_name).set_offer(self, self.y_ct)
 
 
         

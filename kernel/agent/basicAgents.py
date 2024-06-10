@@ -69,8 +69,8 @@ class Agent(object):
             self.step()
 
     def step(self):
-        """ Agent standard step - can be specialized by subclass """
-        pass
+         """ Agent standard step - can be specialized by subclass """
+         pass
 
 
 class DiscreteEventAgent(Agent):

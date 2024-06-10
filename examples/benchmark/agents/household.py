@@ -37,9 +37,12 @@ class Household(EconomicAgent):
        
         self.balance_sheet = HHBalanceSheet(self)
         self.eq = Equations(self.active_scenario)
+        self.hh_spaces = {}
 
-        self.Labor_Market = self.get_a_space('Labor_Market')
-        self.CG_Market = self.get_a_space("CG_Market")
+        self.labor_mkt_name = "Labor_Market"
+        self.cg_mkt_name = "CG_Market"
+        self.hh_spaces[self.labor_mkt_name] = self.get_a_space(self.labor_mkt_name)
+        self.hh_spaces[ self.cg_mkt_name] = self.get_a_space(self.cg_mkt_name)
 
 
         ## Household Variables:
@@ -89,7 +92,7 @@ class Household(EconomicAgent):
         """
         self.labor.c_quantity =  rnd.randint(20,60)
         self.labor.c_price = self.compute_reservation_wages()
-        self.Labor_Market.set_offer(self, self.labor)
+        self.hh_spaces[self.labor_mkt_name].set_offer(self, self.labor)
 
     def receive_dole(self):
         """ Unemployed worker receive dole from government
@@ -105,7 +108,7 @@ class Household(EconomicAgent):
         self.update_consumer_demand()
 
         ## Make good offer
-        self.CG_Market.set_demand(self, self.consumption_good)
+        self.hh_spaces[self.cg_mkt_name].set_demand(self, self.consumption_good)
                      
 
     def consume(self):
@@ -157,6 +160,21 @@ class Household(EconomicAgent):
                      c_price=hourly_wage, 
                      c_owner=self, 
                      c_producer=self)
+    
+    def offer_accepted(self, a_market, an_offer):
+
+        if a_market.name == self.labor_mkt_name:
+            self.unemployed = False
+            self.labor.c_quantity -= an_offer.c_quantity
+            self.labor.c_price = (self.labor.c_price + an_offer.c_price)/2
+            self.hourly_wage = an_offer.c_price
+            
+
+
+
+
+        
+
     
 
 

@@ -16,7 +16,7 @@ class Good(object):
     TYPE = ["real", "financial"]
 
     """
-        w  - wages (from Workers Labor)
+        w  - Labor (wages are the payment for labor)
         cg - Consumer_Good
         k  - Capital
         ph - Dividends

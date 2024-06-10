@@ -54,6 +54,7 @@ class Market(Space):
                         # transfer goods_services
                         self.buyer.get_good(self.an_offer)
                         # notify match
+                        self.buyer.offer_accepted(self, self.an_offer)
                     else:
                         self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
@@ -69,6 +70,7 @@ class Market(Space):
                         # transfer goods_services
                         self.buyer.get_good(self.partial_offer)
                         # notify match                
+                        self.buyer.offer_accepted(self, self.partial_offer)
                 if self.this_remaining_demand == 0:
                     self.have_unmet_demand = False
                     self.release_offers()

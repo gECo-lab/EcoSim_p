@@ -71,12 +71,13 @@ class EconomicAgent(DiscreteEventAgent):
     def got_contract(self):
         """ the agent got a contract for an offer """
         # TODO: define better - Implemented by subclass
-        self.offer_accepted = True
+        pass
+
 
     def release_offer(self):
         """ Agent releases an offer """
         # TODO: Implemented by subclass
-        self.offer_accepted = False
+        pass
 
     def release_demmand(self):
         """ Agent releases a demmand """
@@ -100,10 +101,12 @@ class EconomicAgent(DiscreteEventAgent):
 
 
     def get_good(self, a_good):
-
-      result = self.balance_sheet.get_good(a_good)
-      return result
-
+        self.balance_sheet.get_good(a_good)
+    
+    def offer_accepted(self, a_market, an_offer):
+        # implemented by subclass
+        pass
+      
   
 
 

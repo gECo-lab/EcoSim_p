@@ -55,9 +55,10 @@ class Market(Space):
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
                         self.seller.offer_partially_accepted(self.buyer, self.partial_offer)
-                if self.this_remaining_demand == 0:
-                    self.have_unmet_demand = False
-                    self.release_offers()
+                    if self.this_remaining_demand == 0:
+                        self.have_unmet_demand = False
+                        self.release_offers()
+                        self.buyer.demand_is_met()
                 else:
                     self.market_has_no_offers()
                     self.have_unmet_demand = False
@@ -85,7 +86,6 @@ class Market(Space):
         None
         """
         self.offers[an_owner] = a_good
-    
 
 
     def get_demand(self):
@@ -142,6 +142,22 @@ class Market(Space):
     def blop_demand_matching(self):
         pass
 
+    def hop_offer_matching(self):
+        pass
+
+    def lop_offer_matching(self):
+        pass
+
+    def bhop_offer_matching(self):
+        pass
+
+    def blop_offer_matching(self):
+        pass
+
+
+    def market_has_no_offers(self):
+        self.demand = {}
+        
     def has_offers(self):
         """ A market answers if is has offers (True or False) """
         if not self.offers:
@@ -165,21 +181,6 @@ class Market(Space):
         offer = self.offers.popitem()[1]
         return offer
 
-    def hop_offer_matching(self):
-        pass
-
-    def lop_offer_matching(self):
-        pass
-
-    def bhop_offer_matching(self):
-        pass
-
-    def blop_offer_matching(self):
-        pass
-
-    def market_has_no_offers(self):
-        pass
-
     def release_demand(self):
         """Inform the bider that their demand was not satisfied
         """
@@ -199,21 +200,6 @@ class Market(Space):
         return partial_offer
   
    
-    def notify_match(self, a_demmand, contracted_offers):
-        """ Notify the agents that their bids where matched """
-        self.contractor = a_demmand.c_owner
-        self.contractor.get_contracted_offers(contracted_offers)
-        for offer in contracted_offers.values():
-            offer.producer_of_g.got_contract()
-
-    def register_contract(self, a_demmand, contracted_offers):
-        """ The matched bids become contracts """
-        self.contractor = a_demmand.c_owner
-        self.contracts[self.contractor] = contracted_offers
-        self.contractor.get_contracted_offers(contracted_offers)
-
-
-
 
 class CGMarket(Market):
     """Consumers Goods Market

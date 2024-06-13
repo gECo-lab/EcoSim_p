@@ -47,6 +47,7 @@ class EconomicAgent(DiscreteEventAgent):
         self.expenses = rnd.randint(10,1000)
         self.bookkeeper = Bookkeeper(self)
         self.has_offer = False
+        self.demand_satisfied = False
         
 
 
@@ -80,10 +81,14 @@ class EconomicAgent(DiscreteEventAgent):
         # TODO: Implemented by subclass
         pass
 
-    def release_demmand(self):
+    def release_demand(self):
         """ Agent releases a demmand """
         # TODO: Implemented by subclass
-        self.demmand_satisfied = False
+        self.demand_satisfied = False
+
+
+    def demand_is_met(self):
+        self.demand_satisfied = True
 
 
     def pay_taxes(self): 

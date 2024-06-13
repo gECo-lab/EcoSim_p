@@ -51,6 +51,7 @@ class Bookkeeper:
         self.assets[my_cash.c_name] = my_cash
 
         self.offer = None
+        self.workforce = {}
 
     
 
@@ -171,7 +172,7 @@ class Bookkeeper:
     def got_good(self, a_good):
             # TODO: Este métodoo precisa de revisão
             # É ncessário lidar com ativo e passivo para os bens.
-            
+
             self.include_asset(a_good)
 
       
@@ -251,6 +252,8 @@ class HHBookkeeper(Bookkeeper):
             contracted_labor = self.assets[labor.c_name]
             contracted_labor.c_quantity =+ labor.c_quantity
             contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
+            self.workforce[labor.c_producer] = labor
+
 
 
 

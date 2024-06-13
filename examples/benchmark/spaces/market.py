@@ -44,33 +44,17 @@ class Market(Space):
                     self.seller = self.an_offer.c_owner
                     if self.an_offer.c_quantity <= self.this_remaining_demand:
                         self.this_remaining_demand -= self.an_offer.c_quantity
-                        # transfer ownership
-                        self.an_offer.c_owner = self.a_demand.c_owner
                         self.total_contracted_value += self.an_offer.ammount()
                         self.macthed_offers.append(self.an_offer)
-                        # include contract
-                        # include payment
-                        self.buyer.pay(self.seller, self.an_offer.ammount())
-                        # transfer goods_services
-                        self.buyer.got_good(self.an_offer)
-                        # notify match
-                        self.buyer.offer_accepted(self, self.an_offer)
+                        self.seller.offer_accepted(self.buyer)
                     else:
                         self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
-                        # transfer ownership
-                        self.partial_offer.c_owner = self.a_demand.c_owner
                         self.an_offer.c_quantity -= self.this_remaining_demand
                         self.macthed_offers.append(self.partial_offer)
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
-                        # include contract
-                        # include payment
-                        self.buyer.pay(self.seller, self.partial_offer.ammount())
-                        # transfer goods_services
-                        self.buyer.got_good(self.partial_offer)
-                        # notify match                
-                        self.buyer.offer_accepted(self, self.partial_offer)
+                        self.seller.offer_partially_accepted(self.buyer, self.partial_offer)
                 if self.this_remaining_demand == 0:
                     self.have_unmet_demand = False
                     self.release_offers()
@@ -207,15 +191,14 @@ class Market(Space):
         """Inform the producers/household that their offer was not bought
         """
         for offer in self.offers.values():
-            offer.c_producer.release_offer()
             self.offers = {}
 
     def set_partial_offer(self, an_offer):
         partial_offer = type(an_offer)()
         partial_offer = an_offer.copy_attributes(partial_offer)
         return partial_offer
-        
-
+  
+   
     def notify_match(self, a_demmand, contracted_offers):
         """ Notify the agents that their bids where matched """
         self.contractor = a_demmand.c_owner

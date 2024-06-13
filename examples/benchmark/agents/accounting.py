@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from .goods import Good, CapitalGood, ConsumptionGood, Loan, Cash, Labor
+from .goods import Good, ConsumptionGood, Loan, Cash, Labor
 
-class BalanceSheet:
+class Bookkeeper:
     """
     Represents a balance sheet for an agent in an economic simulation.
 
@@ -14,7 +14,7 @@ class BalanceSheet:
 
     Methods:
         __init__(self, owner, assets=None, liabilities=None, cash_flow=None, cash=None): 
-            Initializes a new instance of the BalanceSheet class.
+            Initializes a new instance of the Bookkeeper class.
         include_asset(self, asset): Includes an asset in the balance sheet.
         exclude_asset(self, asset): Excludes an asset from the balance sheet.
         include_liability(self, liability): Includes a liability in the balance sheet.
@@ -26,7 +26,7 @@ class BalanceSheet:
         receive(self, quantity): Receives a specified amount of money.
     """
 
-    # TODO: include consumption (deal with this for firms)
+
     def __init__(self, owner, assets=None, liabilities=None, cash=None):
         self.owner = owner
         if assets is not None:
@@ -49,6 +49,8 @@ class BalanceSheet:
         else:
            my_cash = Cash(c_quantity=0.0)
         self.assets[my_cash.c_name] = my_cash
+
+        self.offer = None
 
     
 
@@ -142,7 +144,7 @@ class BalanceSheet:
         Pays a specified amount to another agent.
 
         Args:
-            an_agent_balance_sheet (BalanceSheet): The balance sheet of the agent to pay.
+            an_agent_balance_sheet (Bookkeeper): The balance sheet of the agent to pay.
             quantity: The amount of money to pay.
 
         Returns:
@@ -150,7 +152,7 @@ class BalanceSheet:
         """
         if self.have_money(quantity):
             self.assets["cash"].c_quantity -= quantity
-            an_agent.balance_sheet.receive(quantity)
+            an_agent.bookkeeper.receive(quantity)
             return True
         else:
             return False        
@@ -163,17 +165,42 @@ class BalanceSheet:
             quantity: The amount of money to receive.
         """
         self.assets["cash"].c_quantity += quantity
+        # TODO: If the agent is a firm, needs to update sales.
+
 
     def got_good(self, a_good):
+            # TODO: Este métodoo precisa de revisão
+            # É ncessário lidar com ativo e passivo para os bens.
+            
+            self.include_asset(a_good)
 
-        self.include_asset(a_good)
+      
+    def set_offer(self, space, offer):
+        self.offer = offer
+        space.set_offer(self.owner, self.offer)
 
 
+    def offer_accepted(self, 
+                       buyer, 
+                       ):
+        
+        buyer.bookkeeper.pay(self.owner, self.offer.ammount())
+        self.offer.c_owner = buyer
+        buyer.bookkeeper.got_good(self.offer)
+        self.owner.release_offer(self.offer)
+
+    def offer_partially_accepted(self, 
+                                 buyer,
+                                 an_offer 
+                       ):
+        
+        buyer.bookkeeper.pay(self.owner, an_offer.ammount())
+        an_offer.c_owner = buyer
+        buyer.bookkeeper.got_good(an_offer)
+        self.offer.c_quantity -= an_offer.c_quantity
 
 
-
-
-class HHBalanceSheet(BalanceSheet):
+class HHBookkeeper(Bookkeeper):
 
     def __init__(self, owner, assets=None, liabilities=None, 
                  cash=None, consumption=None):
@@ -191,14 +218,16 @@ class HHBalanceSheet(BalanceSheet):
 
     def got_good(self, a_good):
 
-        if isinstance(a_good, Good):
-            self.assets.append(a_good)
-        elif isinstance(a_good, Loan):
-            self.liabilities.append(a_good)
-        elif isinstance(a_good, ConsumptionGood):
+        if a_good.c_category == "l":
+            self.include_liability(a_good)
+        elif a_good.c_category == "cg":
             self.add_consumption_goods(a_good)
-        elif isinstance(a_good, Labor):
+        elif a_good.c_category == "w":
             self.add_labor(a_good)
+        elif a_good.c_category == "k":
+            self.include_asset(a_good)
+        else: 
+            raise ValueError("Asset must be a Good")
     
 
     def add_consumption_goods(self, consumption):
@@ -223,7 +252,7 @@ class HHBalanceSheet(BalanceSheet):
             contracted_labor.c_quantity =+ labor.c_quantity
             contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
 
-            
+
 
     def is_unemployed(self):
 

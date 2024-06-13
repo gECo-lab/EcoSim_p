@@ -1,6 +1,6 @@
 
 from kernel.agent.basicAgents import DiscreteEventAgent
-from .accounting import BalanceSheet
+from .accounting import Bookkeeper
 import random as rnd
 
 
@@ -45,7 +45,8 @@ class EconomicAgent(DiscreteEventAgent):
 
         self.income = rnd.randint(10,1000)
         self.expenses = rnd.randint(10,1000)
-        self.balance_sheet = BalanceSheet(self)
+        self.bookkeeper = Bookkeeper(self)
+        self.has_offer = False
         
 
 
@@ -74,7 +75,7 @@ class EconomicAgent(DiscreteEventAgent):
         pass
 
 
-    def release_offer(self):
+    def release_offer(self, an_offer):
         """ Agent releases an offer """
         # TODO: Implemented by subclass
         pass
@@ -94,25 +95,21 @@ class EconomicAgent(DiscreteEventAgent):
 
 
     def pay(self, seller, quantity):
-        self.balance_sheet.pay(seller, quantity)
+        self.bookkeeper.pay(seller, quantity)
 
     def receive(self, quantity):
-        self.balance_sheet.receive(quantity)
+        self.bookkeeper.receive(quantity)
 
 
-    def got_good(self, a_good):
-        self.balance_sheet.got_good(a_good)
+    # def got_good(self, a_good):
+    #     self.bookkeeper.got_good(a_good)
     
-    def offer_accepted(self, a_market, an_offer):
-        # implemented by subclass
-        pass
-      
-  
+    def offer_accepted(self, buyer, an_offer):
+        
+        self.bookkeeper.offer_accepted(buyer, an_offer)
+        self.has_offer = False
+        
+    def offer_partially_accepted(self, buyer, an_offer):
 
-
-
-
-
-
-
-
+        self.bookkeeper.offer_partially_accepted(buyer, an_offer)
+   

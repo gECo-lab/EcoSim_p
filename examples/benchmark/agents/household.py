@@ -1,5 +1,5 @@
  # -*- coding: utf-8 -*-
-from examples.benchmark.agents.accounting import HHBalanceSheet
+from examples.benchmark.agents.accounting import HHBookkeeper
 from .agents import EconomicAgent
 from .goods import Labor
 from .equations import Equations
@@ -35,7 +35,7 @@ class Household(EconomicAgent):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
        
-        self.balance_sheet = HHBalanceSheet(self)
+        self.bookkeeper = HHBookkeeper(self)
         self.eq = Equations(self.active_scenario)
 
 
@@ -90,7 +90,9 @@ class Household(EconomicAgent):
         """
         self.offered_labor.c_quantity =  rnd.randint(20,60)
         self.offered_labor.c_price = self.compute_reservation_wages()
-        self.get_a_space(self.labor_mkt_name).set_offer(self, self.offered_labor)
+        self.has_offer = True
+        space = self.get_a_space(self.labor_mkt_name)
+        self.bookkeeper.set_offer(space, self.offered_labor)
 
     def receive_dole(self):
         """ Unemployed worker receive dole from government
@@ -130,7 +132,7 @@ class Household(EconomicAgent):
 
         ## Transfer to Balance Sheet?
             
-        return self.balance_sheet.consumption
+        return self.bookkeeper.consumption
     
 
     def update_consumer_demand(self):  
@@ -159,7 +161,7 @@ class Household(EconomicAgent):
                      c_owner=self, 
                      c_producer=self)
     
-    def offer_accepted(self, a_market, an_offer):
+    def got_job(self, a_market, an_offer):
 
         if a_market.name == self.labor_mkt_name:
             self.unemployed = False
@@ -169,7 +171,7 @@ class Household(EconomicAgent):
 
     def is_unemployed(self):
         self.unemployed = True
-        self.balance_sheet.is_unemployed()
+        self.bookkeeper.is_unemployed()
             
 
 

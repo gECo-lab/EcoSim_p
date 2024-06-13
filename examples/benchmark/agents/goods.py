@@ -114,8 +114,8 @@ class ConsumptionGood(Good):
                  c_type = None,  
                  c_category = None,
                  c_consume = None,  
-                 c_quantity = None,
-                 c_price = None,
+                 c_quantity = 0.0,
+                 c_price = 0.0,
                  c_owner=None,
                  c_producer=None):
         

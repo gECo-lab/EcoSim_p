@@ -89,6 +89,10 @@ class EconomicAgent(DiscreteEventAgent):
 
     def demand_is_met(self):
         self.demand_satisfied = True
+    
+    def demand_not_met(self):
+        self.demand_satisfied = False
+
 
 
     def pay_taxes(self): 

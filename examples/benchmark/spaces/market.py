@@ -19,7 +19,6 @@ class Market(Space):
         super().__init__(model, name, variables)
         self.offers = {}
         self.demand = {}
-        self.macthed_offers = []
 
     def update(self):
         """ """
@@ -36,7 +35,6 @@ class Market(Space):
             self.this_remaining_demand = self.a_demand.c_quantity
             self.buyer = self.a_demand.c_owner
             self.have_unmet_demand = True
-            self.total_contracted_value = 0.0
 
             while self.have_unmet_demand:
                 if self.has_offers():
@@ -44,14 +42,11 @@ class Market(Space):
                     self.seller = self.an_offer.c_owner
                     if self.an_offer.c_quantity <= self.this_remaining_demand:
                         self.this_remaining_demand -= self.an_offer.c_quantity
-                        self.total_contracted_value += self.an_offer.ammount()
-                        self.macthed_offers.append(self.an_offer)
                         self.seller.offer_accepted(self.buyer)
                     else:
                         self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
                         self.an_offer.c_quantity -= self.this_remaining_demand
-                        self.macthed_offers.append(self.partial_offer)
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
                         self.seller.offer_partially_accepted(self.buyer, self.partial_offer)

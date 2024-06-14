@@ -258,6 +258,8 @@ class CGFirm(Firm):
     
         self.y_ct.c_quantity=self.y_c.c_quantity
         self.y_ct.c_price=self.y_c.c_price
+        self.inv.c_quantity = self.y_ct.c_quantity
+        self.inv.c_price = (self.inv.c_price + self.y_ct.c_price)/2
         
 
     def offer_goods(self):
@@ -275,4 +277,4 @@ class CGFirm(Firm):
         """
         self.has_offer = True
         space = self.get_a_space(self.cg_mkt_name)
-        self.bookkeeper.set_offer(space, self.y_ct)
+        self.bookkeeper.set_offer(space, self.inv)

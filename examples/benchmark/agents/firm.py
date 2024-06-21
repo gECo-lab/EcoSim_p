@@ -25,16 +25,13 @@ Todo:
 from .agents import EconomicAgent
 
 
+
 class Firm(EconomicAgent):
     """ Generic Firm """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
 
-        ## Household Variables:
        
-        self.workforce = {}
-
-    
 
     def step(self):
         """ Firm Agent Step method """

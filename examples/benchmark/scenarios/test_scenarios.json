@@ -22,7 +22,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 10
+          "parameter_value": 20
         }
       ],
       "scenario_variables": [
@@ -101,7 +101,7 @@
         ],
         "CGFirm": [
           {
-            "var_name": "revenue",
+            "var_name": "ud_ct",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(6.0,1.0)",
             "var_value": 0.0

@@ -53,17 +53,7 @@ class EconomicAgent(DiscreteEventAgent):
 
     def step(self):
         """ Implemented by subclass"""
-
-
-    def create_expectations(self):
-        """Agent Creates Expectations
-        """
-
-        self.zet_1 = self.zet
-        self.zt = self.zt * (1 + rnd.random())
-        self.zet = self.eq.zet(self.zt, self.zet_1)
     
-      
 
     def get_contracted_offers(self, contracted_offers):
         """ The agent get the contracted_offers """
@@ -113,9 +103,9 @@ class EconomicAgent(DiscreteEventAgent):
     # def got_good(self, a_good):
     #     self.bookkeeper.got_good(a_good)
     
-    def offer_accepted(self, buyer, an_offer):
+    def offer_accepted(self, buyer):
         
-        self.bookkeeper.offer_accepted(buyer, an_offer)
+        self.bookkeeper.offer_accepted(buyer)
         self.has_offer = False
         
     def offer_partially_accepted(self, buyer, an_offer):

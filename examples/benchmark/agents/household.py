@@ -38,27 +38,13 @@ class Household(EconomicAgent):
         self.bookkeeper = HHBookkeeper(self)
         self.eq = Equations(self.active_scenario)
 
-
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
 
+        self.create_initial_values()
 
-        ## Household Variables:
-        self.demand_qnt = 1 + rnd.randint(100,10000)
-        self.demand_expected_price = rnd.randint(10,50)
-        self.labor_qnt = rnd.randint(20,60)
-        self.hourly_wage = self.compute_reservation_wages()
 
-        ## Create Initial consumer demand
-        ## Transfer to Balance Sheet??
-        self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
-                                                            self.demand_qnt)
-      
-        ## Create Labor Offer
-        ## Transfer to Balance Sheet??
-        self.offered_labor = self.create_labor_offer(self.labor_qnt, 
-                                             self.hourly_wage)
- 
+
 
     def step(self):
         """Household Agent Step method
@@ -73,6 +59,41 @@ class Household(EconomicAgent):
         self.consume()
         self.pay_taxes()
 
+
+
+    def create_initial_values(self):
+
+        ## Household Variables:
+        self.demand_qnt = 1 + rnd.randint(100,10000)
+        self.demand_expected_price = rnd.randint(10,50)
+        self.labor_qnt = rnd.randint(20,60)
+        self.hourly_wage = self.compute_reservation_wages()
+
+        ## Create Initial consumer demand
+        ## Transfer to Balance Sheet??
+        self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
+                                                            self.demand_qnt)
+        
+        ## Expected prices
+
+        self.pe_ht = rnd.randint(1,5)
+        self.pe_ht_1 = rnd.randint(1,5)
+      
+        ## Create Labor Offer
+        ## Transfer to Balance Sheet??
+        self.offered_labor = self.create_labor_offer(self.labor_qnt, 
+                                             self.hourly_wage)
+ 
+
+
+
+    def create_expectations(self):
+        """Agent Creates Expectations
+        """
+        pht_1 = self.consumption_good.c_price
+        self.pe_ht = self.eq.zet(pht_1,
+                               self.pe_ht_1)
+    
 
     def compute_reservation_wages(self):
         """ Workers Compute their reservation wages
@@ -116,6 +137,7 @@ class Household(EconomicAgent):
         """
 
         # include payment
+        self.w_ht = self.offered_labor.ammount()
         self.consumption_good.c_quantity = 0
 
 

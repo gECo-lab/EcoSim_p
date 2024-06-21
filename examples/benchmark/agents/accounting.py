@@ -52,6 +52,8 @@ class Bookkeeper:
 
         self.offer = None
         self.workforce = {}
+        self.capital_stock = {}
+        
 
     
 
@@ -250,7 +252,7 @@ class HHBookkeeper(Bookkeeper):
 
         if labor.c_name in self.assets:
             contracted_labor = self.assets[labor.c_name]
-            contracted_labor.c_quantity =+ labor.c_quantity
+            contracted_labor.c_quantity += labor.c_quantity
             contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
             self.workforce[labor.c_producer] = labor
 

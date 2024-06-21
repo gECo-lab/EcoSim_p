@@ -25,12 +25,29 @@ class Equations():
     def __init__(self, active_scenario):
         self.active_scenario = active_scenario
 
-        ## Constants
+        self.get_constants()
+
+
+    def get_constants(self):
+        """Get the constants of the model
+        """
+
+        # lambda - prevision error ajustment
         self.expect_lambda = self.active_scenario.expect_lambda
+
+        # nu - share of expected sales held in inventories
         self.nu = self.active_scenario.nu
+
+        # l_k - capital/labor ratio
         self.l_k = self.active_scenario.l_k
+
+        # capital productivity
         self.mu_k = self.active_scenario.mu_k
+
+        # labor productivity
         self.mu_n = self.active_scenario.mu_n
+
+
 
 
     def zet(self, zt, zet_1):
@@ -47,7 +64,7 @@ class Equations():
         return zet_1 + self.expect_lambda*(zt - zet_1) 
     
 
-    def ydt(self, s_et, inv_t_1):
+    def ydt(self, se_ct, inv_t_1):
         """Compute production in T
 
         Args:
@@ -58,22 +75,13 @@ class Equations():
             number: Production in t
         """
 
-        self.yd_t =  s_et * (1 + self.nu * inv_t_1)
+        self.yd_t =  se_ct * (1 + self.nu) - inv_t_1
         return self.yd_t
     
-    def udt(self, yd_t, kc_t):
-        """Calculates rate of utilization of capital stock
+ 
 
-        Args:
-            yd_t (number): production in t
-            kc_t (number): capital stock in t
 
-        Returns:
-            float: rate of utilization (0 < udt <= 1)
-        """
 
-        return min(1, yd_t/(kc_t*self.mu_k))
-    
     def uvc(self, We_xt, Nd_xt, yd_xt):
 
         return (We_xt * Nd_xt)/yd_xt
@@ -159,7 +167,21 @@ class CGFirmEquations(Equations):
         Equations (Object): Specific equations for consumer goods firm
     """
 
-    def ndct(self, y_c):
+    def udct(self, yd_ct, kc_t):
+        """Calculates rate of utilization of capital stock
+
+        Args:
+            yd_t (number): production in t
+            kc_t (number): capital stock in t
+
+        Returns:
+            float: rate of utilization (0 < udt <= 1)
+        """
+
+        return min(1, yd_ct/(kc_t*self.mu_k))
+    
+
+    def ndct(self, k_ct, ud_ct):
         """Calculates the labor demmand for CG firms
 
         Args:
@@ -171,7 +193,7 @@ class CGFirmEquations(Equations):
             N_ct: Number of workers needed
         """
 
-        return y_c/self.mu_k*self.l_k
+        return ud_ct*(k_ct/self.l_k)
     
 
 class KGFirmEquations(Equations):

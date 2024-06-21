@@ -27,7 +27,6 @@ class Market(Space):
 
     def matching(self):
 
-
         self.market_not_empty = True
 
         while self.has_demand():

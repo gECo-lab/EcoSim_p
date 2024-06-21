@@ -41,42 +41,9 @@ class CGFirm(Firm):
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
 
-        ## TODO: This will be changed to calibration in initialization.
 
-        initial_inventory_qnt = rnd.randint(10,50)
-        initial_production_price = rnd.randint(1,5)
-
-        initial_production_qnt = rnd.randint(70,100)
-        initial_inventory_price = rnd.randint(1,5)
-
-        ## Generate initial salaries (We_xt)
-        self.We_xt = rnd.randint(10, 50)
-
+        self.create_initial_values()
      
-
-        self.y_c = self.create_initial_production(initial_production_qnt,
-                                                  initial_production_price)
-
-        self.inv = self.create_initial_inventory(initial_inventory_qnt,
-                                                 initial_inventory_price)
-
-        
-
-        initial_K_stock_qnt = rnd.randint(2,5)
-        initial_K_stock_price = rnd.randint(2,5)
-
-        initial_sales_qnt = rnd.randint(50,90)
-        initial_sales_price = rnd.randint(1,5)
-
-        self.K = self.create_initial_K_stock(initial_K_stock_qnt,
-                                             initial_K_stock_price)
-        
-        self.s_c = self.create_initial_sales(initial_sales_qnt, 
-                                             initial_sales_price)
-        
-        self.compute_labor_demand()
-        self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, self.We_xt)
-        
 
 
     def step(self):
@@ -84,9 +51,9 @@ class CGFirm(Firm):
         """
         self.create_expectations()
         self.compute_desired_output()
+        self.compute_capacity_utilization()
         self.compute_labor_demand()
         self.demand_labor()
-        self.compute_capacity_utilization()
         self.set_output_price()
         self.compute_rate_of_capacity_growth()
         self.compute_demand_of_K_goods()
@@ -103,23 +70,60 @@ class CGFirm(Firm):
         self.pay_taxes()
 
 
+    def create_expectations(self):
+        """Agent Creates Expectations
+        """
+        self.Se_ct = self.eq.zet(self.Se_ct, 
+                                          self.Se_ct_1)
+        # Expected sales
+        self.Se_ct_1 = self.Se_ct
+
     def compute_desired_output(self):
         """ Firms compute desired input levels 
         """
-        inv = self.inv.c_quantity
-        self.y_c.c_quantity = self.eq.ydt(self.zet, 
-                                          inv
-                                         )
+        self.yd_ct.c_quantity = self.eq.ydt(self.Se_ct, 
+                                           self.inv_ct_1.c_quantity
+                                           )
         
+        self.yd_ct_q = self.yd_ct.c_quantity
+
+
+
+    def compute_capacity_utilization(self):
+        """CG Firm computes capacity utilization
+        """
+
+        self.ud_ct = self.eq.udct(self.yd_ct.c_quantity,
+                                self.K_ct.c_quantity
+                               )
+
+
     def compute_labor_demand(self):
         """Consumer good firm computes labor demand
         """
-        #Todo: Needs to recalculate unity price of labor (We_xt)
 
-        # self.We_xt
+        self.lay_off_from_turnover()
 
-        self.Ndc_t = self.eq.ndct(self.y_c.c_quantity)
+        self.Ndc_t_1 = self.Ndc_t_1    
+        self.Ndc_t = self.eq.ndct(self.K_ct.c_quantity, self.ud_ct)
 
+        self.N_ct = self.Ndc_t - self.Ndc_t_1
+
+        if self.N_ct > 0:
+            self.labor_demand.c_quantity = self.N_ct
+        elif self.N_ct < 0:
+            self.N_ct *= -1
+            self.lay_off(self.N_ct)
+
+    def lay_off(self, N_ct):
+        """ Lay of the employees"""
+        pass    
+
+    def lay_off_from_turnover(self):
+        """ Lay of the employees"""
+        pass    
+
+        
 
     def demand_labor(self):
         """
@@ -137,25 +141,18 @@ class CGFirm(Firm):
         Returns:
         - None
         """
+
+
         self.get_a_space(self.labor_mkt_name).set_demand(self, self.labor_demand)
 
-
-    def compute_capacity_utilization(self):
-        """CG Firm computes capacity utilization
-        """
-
-        self.ud_t = self.eq.udt(self.y_c.
-                                c_quantity,
-                                self.kc_t
-                               )
 
     def set_output_price(self):
         """ Firm sets output price for product """
 
-        self.y_c.c_price =self.eq.pt(self.mu_ct,
+        self.y_ct.c_price =self.eq.pt(self.mu_ct,
                                       self.We_t,
                                       self.Ndc_t,
-                                      self.y_c.c_quantity
+                                      self.y_ct.c_quantity+1
                                      )
 
     def compute_rate_of_capacity_growth(self):
@@ -256,10 +253,9 @@ class CGFirm(Firm):
         """CG firm produce consumption goods"""
         # NOTE: This method is just to test the market. Needs developing
     
-        self.y_ct.c_quantity=self.y_c.c_quantity
-        self.y_ct.c_price=self.y_c.c_price
-        self.inv.c_quantity = self.y_ct.c_quantity
-        self.inv.c_price = (self.inv.c_price + self.y_ct.c_price)/2
+        self.y_ct.c_quantity=self.yd_ct.c_quantity
+        self.y_ct.c_price=self.yd_ct.c_price
+        self.update_inventory(self.y_ct)
         
 
     def offer_goods(self):
@@ -277,4 +273,90 @@ class CGFirm(Firm):
         """
         self.has_offer = True
         space = self.get_a_space(self.cg_mkt_name)
-        self.bookkeeper.set_offer(space, self.inv)
+        self.bookkeeper.set_offer(space, self.inv_ct)
+
+    def update_inventory(self, y):
+
+        self.inv_ct_1 = self.inv_ct
+
+        self.inv_ct.c_price = (self.inv_ct.c_price + y.c_price)/2
+        self.inv_ct.c_quantity += y.c_quantity
+
+
+
+    def create_initial_values(self):
+        """
+        Creates the initial values for various attributes of the CGFirm class.
+
+        This method initializes the following attributes:
+        - inv_ct: Inventory quantity and price
+        - yd_ct: Desired production quantity and price
+        - y_ct: Actual production quantity and price
+        - Se_ct: Expected sales quantity and price
+        - K: Capital stock quantity and price
+        - s_ct: Sales quantity and price
+        - We_xt: Initial salaries
+        - labor_demand: Initial labor demand
+
+        Returns:
+        None
+
+        TODO: This will be changed to calibration in initialization.
+        """
+        # Inventory (inv_ct)
+        initial_inventory_qnt = rnd.randint(10,50)
+        initial_inventory_price = rnd.randint(1,5)
+        self.inv_ct= self.create_initial_inventory(initial_inventory_qnt,
+                                            initial_inventory_price)
+
+        # Inventory t-1 (inv_ct_1)
+        initial_inventory_t_1_qnt = rnd.randint(10,50)
+        initial_inventory_t_1_price = rnd.randint(1,5)
+        self.inv_ct_1= self.create_initial_inventory(initial_inventory_t_1_qnt,
+                                            initial_inventory_t_1_price)
+
+
+        # Desired output (yd_ct)
+        initial_desired_production_qnt = rnd.randint(70,100)
+        initial_desired_production_price = rnd.randint(1,5)
+        self.yd_ct = self.create_initial_production(initial_desired_production_qnt,
+                                                  initial_desired_production_price)
+
+
+        # Production (output) (y_ct)
+        initial_production_qnt = rnd.randint(70,100)
+        initial_production_price = rnd.randint(1,5)
+        self.y_ct = self.create_initial_production(initial_production_qnt,
+                                                  initial_production_price)
+        
+        # Expected Sales
+        self.Se_ct = rnd.randint(70,100)
+        self.Se_ct_1 = rnd.randint(70,100)
+        
+
+        # Capital
+        # Capital Stock need to be  actually a dict. 
+        # With different machines
+        # TODO: Implement capital stock as a dict
+        initial_K_stock_qnt = rnd.randint(2,5)
+        initial_K_stock_price = rnd.randint(2,5)
+        self.K_ct = self.create_initial_K_stock(initial_K_stock_qnt,
+                                             initial_K_stock_price)
+
+
+        # Sales
+        initial_sales_qnt = rnd.randint(50,90)
+        initial_sales_price = rnd.randint(1,5)
+        self.s_ct = self.create_initial_sales(initial_sales_qnt, 
+                                             initial_sales_price)
+        
+        ## Generate initial salaries (We_xt)
+        self.ud_ct = rnd.random()
+        self.We_xt = rnd.randint(10, 50)
+        self.Ndc_t = rnd.randint(10, 50)
+        self.Ndc_t_1 = rnd.randint(10, 50)
+        self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, 
+                                                             self.We_xt)
+   
+
+       

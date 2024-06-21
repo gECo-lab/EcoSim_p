@@ -88,6 +88,15 @@ class KGFirm(Firm):
         self.pay_taxes()
 
 
+    def create_expectations(self):
+        """Agent Creates Expectations
+        """
+        self.Se_ct = self.eq.zet(self.Se_ct, 
+                                          self.Se_ct_1)
+        # Expected sales
+        self.Se_ct_1 = self.Se_ct
+
+
     def compute_desired_output(self):
         """ Firms compute desired input levels 
         """

@@ -96,6 +96,8 @@ class CGFirm(Firm):
         self.ud_ct = self.eq.udct(self.yd_ct.c_quantity,
                                 self.K_ct.c_quantity
                                )
+    
+ 
 
 
     def compute_labor_demand(self):
@@ -106,7 +108,7 @@ class CGFirm(Firm):
 
         self.Ndc_t_1 = self.Ndc_t_1    
         self.Ndc_t = self.eq.ndct(self.K_ct.c_quantity, self.ud_ct)
-
+  
         self.N_ct = self.Ndc_t - self.Ndc_t_1
 
         if self.N_ct > 0:
@@ -117,11 +119,11 @@ class CGFirm(Firm):
 
     def lay_off(self, N_ct):
         """ Lay of the employees"""
-        pass    
+        self.bookkeeper.lay_off(N_ct) 
 
     def lay_off_from_turnover(self):
         """ Lay of the employees"""
-        pass    
+        self.bookkeeper.lay_off_from_turnover(self.eq.upsilon)    
 
         
 
@@ -357,6 +359,7 @@ class CGFirm(Firm):
         self.Ndc_t_1 = rnd.randint(10, 50)
         self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, 
                                                              self.We_xt)
+        self.bookkeeper.include_asset(self.labor_demand)
    
 
        

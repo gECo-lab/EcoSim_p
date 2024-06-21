@@ -111,4 +111,8 @@ class EconomicAgent(DiscreteEventAgent):
     def offer_partially_accepted(self, buyer, an_offer):
 
         self.bookkeeper.offer_partially_accepted(buyer, an_offer)
+
+    def get_accepted_offers(self, accepted_offers):
+
+        self.bookkeeper.get_accepted_offers(accepted_offers)
    

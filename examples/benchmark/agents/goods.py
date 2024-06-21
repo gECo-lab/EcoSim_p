@@ -157,6 +157,7 @@ class CapitalGood(Good):
         self.c_type = "real"
         self.c_category = "kg"
         self.c_consume = "depreciable"
+        self.c_id = 0
         self.c_quantity = c_quantity
         self.c_price = c_price
         self.c_owner = c_owner

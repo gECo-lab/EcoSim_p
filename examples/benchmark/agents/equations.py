@@ -47,6 +47,9 @@ class Equations():
         # labor productivity
         self.mu_n = self.active_scenario.mu_n
 
+        # employees turnover
+        self.upsilon = self.active_scenario.upsilon
+
 
 
 

@@ -70,7 +70,12 @@
           "var_name": "gamma_2",
           "var_init_value": 0.02,
           "var_type": "sharp"
-        }
+        },
+        {
+          "var_name": "upsilon",
+          "var_init_value": 0.02,
+          "var_type": "sharp"
+        }        
       ],
       "agents_init": {
         "Household": [

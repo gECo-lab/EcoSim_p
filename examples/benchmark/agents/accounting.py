@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from .goods import Good, ConsumptionGood, Loan, Cash, Labor
+import random
 
 class Bookkeeper:
     """
@@ -53,6 +54,7 @@ class Bookkeeper:
         self.offer = None
         self.workforce = {}
         self.capital_stock = {}
+        self.loans={}
         
 
     
@@ -203,6 +205,58 @@ class Bookkeeper:
         self.offer.c_quantity -= an_offer.c_quantity
 
 
+    def get_accepted_offers(self, accepted_offers):
+
+        first_offer = next(iter(accepted_offers.values()))
+        if first_offer.c_category == "kg":
+            self.add_to_capital_stock(accepted_offers)
+        elif first_offer.c_category == "w":
+            self.add_to_workforce(accepted_offers)
+        # elif first_offer.c_category == "l":
+        #     self.add_to_loans(accepted_offers)
+
+
+    def add_to_capital_stock(self, accepted_offers):
+
+        last_k_eq = list(self.capital_stock.values())[-1]
+        id = last_k_eq.c_id
+
+        for k_good in accepted_offers.values():
+            id = id+1
+            k_good.c_id = id
+            k_good.c_owner = self.owner
+            self.capital_stock[id] = k_good
+
+    def add_to_workforce(self, accepted_offers):
+ 
+        for labor in accepted_offers.values():
+            labor.c_owner = self.owner
+            worker = labor.c_producer
+            self.workforce[worker] = labor
+
+    def lay_off(self, N_ct):
+        N_ct = int(N_ct)
+        for _ in range(N_ct):
+            if len(self.workforce) > 0:
+                worker = random.choice(list(self.workforce.keys()))
+                labor = self.workforce.pop(worker)
+                self.assets["labor"].c_quantity -= labor.c_quantity
+            
+
+
+
+    def lay_off_from_turnover(self, upsilon):
+        lay_offs = int(len(self.workforce) * upsilon)
+        lay_offs = int(lay_offs)
+        for _ in range(lay_offs):
+            worker = random.choice(list(self.workforce.keys()))
+            labor = self.workforce.pop(worker)
+            self.assets["labor"].c_quantity -= labor.c_quantity
+ 
+
+  
+
+
 class HHBookkeeper(Bookkeeper):
 
     def __init__(self, owner, assets=None, liabilities=None, 
@@ -255,8 +309,6 @@ class HHBookkeeper(Bookkeeper):
             contracted_labor.c_quantity += labor.c_quantity
             contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
             self.workforce[labor.c_producer] = labor
-
-
 
 
     def is_unemployed(self):

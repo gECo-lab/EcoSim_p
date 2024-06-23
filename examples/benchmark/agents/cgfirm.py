@@ -277,12 +277,13 @@ class CGFirm(Firm):
         space = self.get_a_space(self.cg_mkt_name)
         self.bookkeeper.set_offer(space, self.inv_ct)
 
+
     def update_inventory(self, y):
 
-        self.inv_ct_1 = self.inv_ct
+        self.inv_ct_1.c_quantity = self.inv_ct.c_quantity
 
         self.inv_ct.c_price = (self.inv_ct.c_price + y.c_price)/2
-        self.inv_ct.c_quantity += y.c_quantity
+        self.inv_ct.c_quantity = self.inv_ct.c_quantity + y.c_quantity
 
 
 
@@ -306,13 +307,13 @@ class CGFirm(Firm):
         TODO: This will be changed to calibration in initialization.
         """
         # Inventory (inv_ct)
-        initial_inventory_qnt = rnd.randint(10,50)
+        initial_inventory_qnt = rnd.randint(10,500)
         initial_inventory_price = rnd.randint(1,5)
         self.inv_ct= self.create_initial_inventory(initial_inventory_qnt,
                                             initial_inventory_price)
 
         # Inventory t-1 (inv_ct_1)
-        initial_inventory_t_1_qnt = rnd.randint(10,50)
+        initial_inventory_t_1_qnt = rnd.randint(10,500)
         initial_inventory_t_1_price = rnd.randint(1,5)
         self.inv_ct_1= self.create_initial_inventory(initial_inventory_t_1_qnt,
                                             initial_inventory_t_1_price)
@@ -353,7 +354,7 @@ class CGFirm(Firm):
                                              initial_sales_price)
         
         ## Generate initial salaries (We_xt)
-        self.ud_ct = rnd.random()
+        self.ud_ct = rnd.randint(1,5)
         self.We_xt = rnd.randint(10, 50)
         self.Ndc_t = rnd.randint(10, 50)
         self.Ndc_t_1 = rnd.randint(10, 50)

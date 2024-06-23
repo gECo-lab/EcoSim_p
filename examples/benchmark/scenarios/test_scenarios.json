@@ -22,13 +22,13 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 20
+          "parameter_value": 40
         }
       ],
       "scenario_variables": [
         {
           "var_name": "expect_lambda",
-          "var_init_value": 0.58,
+          "var_init_value": 0.25,
           "var_type": "sharp"
         },
         {

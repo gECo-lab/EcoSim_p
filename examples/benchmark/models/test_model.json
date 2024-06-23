@@ -40,7 +40,7 @@
         "Labor_Market",
         "CG_Market"
       ],
-      "no_of_agents": 1000
+      "no_of_agents": 2000
     },
     {
       "agent_type": "CGFirm",
@@ -49,7 +49,7 @@
         "Labor_Market",
         "CG_Market"
       ],
-      "no_of_agents": 5
+      "no_of_agents": 10
     }
   ],
   "observers": [

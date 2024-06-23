@@ -11,6 +11,7 @@ Todo:
 """
 
 from kernel.space.basicSpaces import Space
+import random
 
 class Market(Space):
     """ Abstract Market """
@@ -39,11 +40,12 @@ class Market(Space):
             while self.have_unmet_demand:
                 if self.has_offers():
                     self.an_offer = self.get_offer()
-                    self.seller = self.an_offer.c_owner
+                    self.seller = self.an_offer.c_producer
                     if self.an_offer.c_quantity <= self.this_remaining_demand:
                         self.this_remaining_demand -= self.an_offer.c_quantity
                         self.seller.offer_accepted(self.buyer)
-                        self.accepted_offers[self.seller] = self.an_offer
+                        self.accepted_offers[self.seller.name] = self.an_offer
+                        self.offers.pop(self.seller.name)
                     else:
                         self.partial_offer = self.set_partial_offer(self.an_offer)
                         self.partial_offer.c_quantity = self.this_remaining_demand
@@ -51,7 +53,7 @@ class Market(Space):
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
                         self.seller.offer_partially_accepted(self.buyer, self.partial_offer)
-                        self.accepted_offers[self.seller] = self.partial_offer
+                        self.accepted_offers[self.seller.name] = self.partial_offer
                     if self.this_remaining_demand == 0:
                         self.have_unmet_demand = False
                         self.release_offers()
@@ -72,7 +74,7 @@ class Market(Space):
         - an_owner: The owner of the demand.
         - a_good: The good for which the demand is being set.
         """
-        self.demand[an_owner] = a_good
+        self.demand[an_owner.name] = a_good
 
     def set_offer(self, an_owner, a_good):
         """
@@ -85,7 +87,7 @@ class Market(Space):
         Returns:
         None
         """
-        self.offers[an_owner] = a_good
+        self.offers[an_owner.name] = a_good
 
 
     def get_demand(self):
@@ -108,7 +110,7 @@ class Market(Space):
     def get_offer(self):
          """ Implements the maching in market """
          if(self.market_type == "random"):
-             an_offer = self.random_offer_macthing()
+             an_offer = self.random_offer_matching()
          elif(self.market_type == "hop"):
              an_offer = self.hop_offer_matching()
          elif(self.market_type == "lop"):
@@ -126,7 +128,7 @@ class Market(Space):
         """ Randomly pop a demand from the demand dictionary and return it """
         if not self.demand:
             raise ValueError("No demand available in market ", self.name)
-        else:
+        else:   
             a_demand = self.demand.popitem()[1]
             return a_demand
 
@@ -176,10 +178,13 @@ class Market(Space):
         """ A market answers the number of offers it has """
         return self.offers.__len__()
         
-    def random_offer_macthing(self):
-        """ Randomly pop an offer from the offers dictionary and return it """
-        offer = self.offers.popitem()[1]
-        return offer
+    def random_offer_matching(self):
+        """ Randomly get an item from self.offers dict without excluding it from dict """
+        if not self.offers:
+            raise ValueError("No offers available in market ", self.name)
+        else:
+            offer = random.choice(list(self.offers.values()))
+            return offer
 
     def release_demand(self):
         """Inform the bider that their demand was not satisfied
@@ -191,8 +196,7 @@ class Market(Space):
     def release_offers(self):
         """Inform the producers/household that their offer was not bought
         """
-        for offer in self.offers.values():
-            self.offers = {}
+        self.offers = {}
 
     def set_partial_offer(self, an_offer):
         partial_offer = type(an_offer)()

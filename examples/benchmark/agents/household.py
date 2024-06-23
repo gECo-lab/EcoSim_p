@@ -64,8 +64,8 @@ class Household(EconomicAgent):
     def create_initial_values(self):
 
         ## Household Variables:
-        self.demand_qnt = 1 + rnd.randint(100,10000)
-        self.demand_expected_price = rnd.randint(10,50)
+        self.demand_qnt = 1 + rnd.randint(10,100)
+        self.demand_expected_price = rnd.randint(1,5)
         self.labor_qnt = rnd.randint(20,60)
         self.hourly_wage = self.compute_reservation_wages()
 
@@ -162,7 +162,7 @@ class Household(EconomicAgent):
 
     def calculate_consumer_demand(self):
 
-        self.demand_qnt = 1 + rnd.randint(100,10000)
+        self.demand_qnt = 1 + rnd.randint(1,10)
         return self.demand_qnt
 
 

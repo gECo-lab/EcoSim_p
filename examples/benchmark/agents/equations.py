@@ -65,7 +65,7 @@ class Equations():
         """
 
         return zet_1 + self.expect_lambda*(zt - zet_1) 
-    
+
 
     def ydt(self, se_ct, inv_t_1):
         """Compute production in T
@@ -77,8 +77,11 @@ class Equations():
         Returns:
             number: Production in t
         """
-
-        self.yd_t =  se_ct * (1 + self.nu) - inv_t_1
+        if inv_t_1 > se_ct:
+            self.yd_t = 0
+        else:
+            self.yd_t =  se_ct * (1 + self.nu) - inv_t_1
+    
         return self.yd_t
     
  
@@ -102,8 +105,10 @@ class Equations():
         Returns:
             number: unitary price of good in t
         """
-
-        self.p_t =  (1 + mu_xt)*(We_xt * Nd_xt)/yd_xt
+        if yd_xt == 0:
+            self.p_t = 1
+        else:
+            self.p_t =  (1 + mu_xt)*(We_xt * Nd_xt)/yd_xt
         return self.p_t
 
     
@@ -195,8 +200,11 @@ class CGFirmEquations(Equations):
         Returns:
             N_ct: Number of workers needed
         """
-
-        return ud_ct*(k_ct/self.l_k)
+        if k_ct == 0:
+            ndct = 0
+        else:    
+            ndct = ud_ct*(k_ct/self.l_k)
+        return ndct
     
 
 class KGFirmEquations(Equations):

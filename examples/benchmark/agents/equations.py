@@ -50,6 +50,9 @@ class Equations():
         # employees turnover
         self.upsilon = self.active_scenario.upsilon
 
+        # unemployment threshold
+        self.u_w = self.active_scenario.u_w
+
 
 
 
@@ -126,12 +129,11 @@ class Equations():
             number: new mark-up
         """
 
-        FN = foldnorm.rvs(self.nu, size=1)
-
+        FN_mu = foldnorm.rvs(self.nu, size=1)[0]
         if inv_t_1/s_et <= self.nu:
-            return mu_xt + (1 + FN)
+            return mu_xt + (1 + FN_mu)
         else:
-            return mu_xt + (1 - FN)
+            return mu_xt + (1 - FN_mu)
         
     def sales(self, s_ct):
         """Calculate sales value
@@ -175,6 +177,12 @@ class CGFirmEquations(Equations):
         Equations (Object): Specific equations for consumer goods firm
     """
 
+
+    def __init__(self, active_scenario):
+        super().__init__(active_scenario)
+
+
+
     def udct(self, yd_ct, kc_t):
         """Calculates rate of utilization of capital stock
 
@@ -214,6 +222,11 @@ class KGFirmEquations(Equations):
         Equations (Object): Equations for capital goods firm
     """
 
+    def __init__(self, active_scenario):
+        super().__init__(active_scenario)
+
+
+
     def ndkt(self, y_c):
         """Calculates Labor demand for capital firms
 
@@ -225,3 +238,32 @@ class KGFirmEquations(Equations):
         """
 
         return y_c/self.mu_n
+    
+
+class HHEquations(Equations):
+    """Household  equations
+
+    Args:
+        Equations (_type_): _description_
+    """
+
+
+    def __init__(self, active_scenario):
+        super().__init__(active_scenario)
+
+
+    def wd_ht(self, wd_ht_1, u_ht_n):
+
+        FN_w = foldnorm.rvs(0.1, size=1)
+        FN_w = FN_w[0]
+
+        if u_ht_n > 2:
+            self.wdht = wd_ht_1*(1 - FN_w)
+        else:
+            self.wdht = wd_ht_1*(1 + FN_w)
+
+        return self.wdht
+
+
+        
+

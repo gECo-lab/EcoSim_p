@@ -149,10 +149,12 @@ class Scenario(object):
     
     def initialize_agents(self):
         """Initialize the agents """
-        #self.vars_generator_dict = self.vars_generator.initialize_agents_vars()
+#        self.vars_generator_dict = self.vars_generator.initialize_agents_vars()
         for agent_type, agent_vars in self.vars_generator_dict.items():
             for agent  in self.model.agents_of_type(agent_type).values():
                 self.init_an_agent_vars(agent, agent_vars)
+
+
 
     def init_an_agent_vars(self, agent, agent_vars):
         """Init the vars of an agent """

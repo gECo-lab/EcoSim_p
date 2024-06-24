@@ -75,7 +75,17 @@
           "var_name": "upsilon",
           "var_init_value": 0.02,
           "var_type": "sharp"
-        }        
+        },
+        {
+          "var_name": "mu_ct",
+          "var_init_value": 0.318857,
+          "var_type": "sharp"
+        },
+        {
+          "var_name": "u_w",
+          "var_init_value": 0.08,
+          "var_type": "sharp"
+        }
       ],
       "agents_init": {
         "Household": [

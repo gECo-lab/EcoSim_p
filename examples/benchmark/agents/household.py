@@ -2,7 +2,7 @@
 from examples.benchmark.agents.accounting import HHBookkeeper
 from .agents import EconomicAgent
 from .goods import Labor
-from .equations import Equations
+from .equations import HHEquations
 import random as rnd
 
 
@@ -36,7 +36,7 @@ class Household(EconomicAgent):
         super().__init__(simulation, model, agent_number, agent_def)
        
         self.bookkeeper = HHBookkeeper(self)
-        self.eq = Equations(self.active_scenario)
+        self.eq = HHEquations(self.active_scenario)
 
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
@@ -53,38 +53,12 @@ class Household(EconomicAgent):
         self.create_expectations()
         self.compute_reservation_wages()
         if self.unemployed:
+            self.u_ht_n += 1
             self.offer_labor()
             self.receive_dole()
         self.demand_goods()
         self.consume()
         self.pay_taxes()
-
-
-
-    def create_initial_values(self):
-
-        ## Household Variables:
-        self.demand_qnt = 1 + rnd.randint(10,100)
-        self.demand_expected_price = rnd.randint(1,5)
-        self.labor_qnt = rnd.randint(20,60)
-        self.hourly_wage = self.compute_reservation_wages()
-
-        ## Create Initial consumer demand
-        ## Transfer to Balance Sheet??
-        self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
-                                                            self.demand_qnt)
-        
-        ## Expected prices
-
-        self.pe_ht = rnd.randint(1,5)
-        self.pe_ht_1 = rnd.randint(1,5)
-      
-        ## Create Labor Offer
-        ## Transfer to Balance Sheet??
-        self.offered_labor = self.create_labor_offer(self.labor_qnt, 
-                                             self.hourly_wage)
- 
-
 
 
     def create_expectations(self):
@@ -98,10 +72,12 @@ class Household(EconomicAgent):
     def compute_reservation_wages(self):
         """ Workers Compute their reservation wages
 
-        Todo: Rewrite  
         """
 
-        return 1 + rnd.randint(1,10)
+        self.wd_ht_1 = self.wd_ht
+        self.wd_ht = self.eq.wd_ht(self.wd_ht_1, self.u_ht_n)
+
+        return self.wd_ht
 
 
     def offer_labor(self):
@@ -191,9 +167,48 @@ class Household(EconomicAgent):
             self.offered_labor.c_price = (self.offered_labor.c_price + an_offer.c_price)/2
             self.hourly_wage = an_offer.c_price
 
+
+
     def is_unemployed(self):
         self.unemployed = True
         self.bookkeeper.is_unemployed()
+
+    def is_employed(self):
+        self.unemployed = False
+  
+    
+    def create_initial_values(self):
+
+        ## Household Variables:
+        self.demand_qnt = 1 + rnd.randint(10,100)
+        self.demand_expected_price = rnd.randint(1,5)
+   
+
+        ## Create Initial consumer demand
+        ## Transfer to Balance Sheet??
+        self.consumption_good = self.create_consumer_demand(self.demand_expected_price,
+                                                            self.demand_qnt)
+        
+        ## Expected prices
+
+        self.pe_ht = rnd.randint(1,5)
+        self.pe_ht_1 = rnd.randint(1,5)
+      
+        ## Create Labor Offer
+        ## Transfer to Balance Sheet??
+        self.labor_qnt = rnd.randint(20,60)
+        self.wd_ht = 1 + rnd.randint(10,100)
+        self.offered_labor = self.create_labor_offer(self.labor_qnt, 
+                                             self.wd_ht)
+        
+        # time unemployed
+        self.u_ht_n = 0
+
+        self.unemployed = True
+  
+ 
+
+
             
 
 

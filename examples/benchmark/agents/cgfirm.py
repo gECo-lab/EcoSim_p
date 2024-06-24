@@ -151,8 +151,18 @@ class CGFirm(Firm):
     def set_output_price(self):
         """ Firm sets output price for product """
 
+        ## Compute Markup
+
+        self.mu_ct_1 = self.mu_ct
+
+        self.mu_ct = self.eq.muxt(self.mu_ct_1, self.inv_ct_1.c_quantity, self.S_ct.c_quantity)
+
+
+
+
+        ## Compute price 
         self.y_ct.c_price =self.eq.pt(self.mu_ct,
-                                      self.We_t,
+                                      self.We_ct,
                                       self.Ndc_t,
                                       self.y_ct.c_quantity+1
                                      )
@@ -192,65 +202,6 @@ class CGFirm(Firm):
         return self.y_ct
     
 
-    def create_initial_inventory(self, quantity, price):
-        """Firm creates intitial production of goods
-
-        Args:
-            quantity (number): Initial quantity
-            price (number): Initial price
-
-        Returns:
-            ConsumptionGood: A consumer Good Stock
-        """
-
-        return ConsumptionGood(c_quantity=quantity,
-                            c_price=price,
-                            c_owner=self,
-                            c_producer=self)
-    
-
-    def create_initial_K_stock(self, quantity, price):
-            """Firm creates intitial Capital Stock
-
-            Args:
-                quantity (number): Initial quantity
-                price (number): Initial price
-
-            Returns:
-                CapitalGood: A Capital Goods Stock
-            """
-
-            return CapitalGood(c_quantity=quantity,
-                                c_price=price,
-                                c_owner=self,
-                                c_producer=None)
-    
-
-    def create_initial_sales(self, quantity, price):
-        """Firm creates intitial sales of goods
-
-        Args:
-            quantity (number): Initial quantity
-            price (number): Initial price
-
-        Returns:
-            ConsumptionGood: A consumption Good (sold)
-        """
-
-        return ConsumptionGood(c_quantity=quantity,
-                            c_price=price,
-                            c_owner=self,
-                            c_producer=self)
-    
-
-    def create_initial_labor_demand(self, Ndc_t, We_xt):
-
-        return Labor(c_quantity = Ndc_t,
-                     c_price=We_xt,
-                     c_owner=self,
-                     c_producer=self)
-    
-
     def produce(self):
         """CG firm produce consumption goods"""
         # NOTE: This method is just to test the market. Needs developing
@@ -287,6 +238,8 @@ class CGFirm(Firm):
 
 
 
+
+    
     def create_initial_values(self):
         """
         Creates the initial values for various attributes of the CGFirm class.
@@ -297,8 +250,8 @@ class CGFirm(Firm):
         - y_ct: Actual production quantity and price
         - Se_ct: Expected sales quantity and price
         - K: Capital stock quantity and price
-        - s_ct: Sales quantity and price
-        - We_xt: Initial salaries
+        - S_ct: Sales quantity and price
+        - We_ct: Initial salaries
         - labor_demand: Initial labor demand
 
         Returns:
@@ -350,17 +303,75 @@ class CGFirm(Firm):
         # Sales
         initial_sales_qnt = rnd.randint(50,90)
         initial_sales_price = rnd.randint(1,5)
-        self.s_ct = self.create_initial_sales(initial_sales_qnt, 
+        self.S_ct = self.create_initial_sales(initial_sales_qnt, 
                                              initial_sales_price)
         
-        ## Generate initial salaries (We_xt)
+        ## Generate initial salaries (We_ct)
         self.ud_ct = rnd.randint(1,5)
-        self.We_xt = rnd.randint(10, 50)
+        self.We_ct = rnd.randint(10, 50)
         self.Ndc_t = rnd.randint(10, 50)
         self.Ndc_t_1 = rnd.randint(10, 50)
         self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, 
-                                                             self.We_xt)
+                                                             self.We_ct)
         self.bookkeeper.include_asset(self.labor_demand)
    
+    def create_initial_inventory(self, quantity, price):
+        """Firm creates intitial production of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumptionGood: A consumer Good Stock
+        """
+
+        return ConsumptionGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+    
+
+    def create_initial_K_stock(self, quantity, price):
+            """Firm creates intitial Capital Stock
+
+            Args:
+                quantity (number): Initial quantity
+                price (number): Initial price
+
+            Returns:
+                CapitalGood: A Capital Goods Stock
+            """
+
+            return CapitalGood(c_quantity=quantity,
+                                c_price=price,
+                                c_owner=self,
+                                c_producer=None)
+    
+
+    def create_initial_sales(self, quantity, price):
+        """Firm creates intitial sales of goods
+
+        Args:
+            quantity (number): Initial quantity
+            price (number): Initial price
+
+        Returns:
+            ConsumptionGood: A consumption Good (sold)
+        """
+
+        return ConsumptionGood(c_quantity=quantity,
+                            c_price=price,
+                            c_owner=self,
+                            c_producer=self)
+    
+
+    def create_initial_labor_demand(self, Ndc_t, We_ct):
+
+        return Labor(c_quantity = Ndc_t,
+                     c_price=We_ct,
+                     c_owner=self,
+                     c_producer=self)
+
 
        

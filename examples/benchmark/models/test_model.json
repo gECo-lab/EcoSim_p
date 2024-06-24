@@ -61,7 +61,6 @@
       ],
       "observer_agent": "Household",
       "observable_vars": [
-        "hourly_wage",
         "pe_ht",
         "w_ht"      
       ]

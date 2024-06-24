@@ -233,6 +233,7 @@ class Bookkeeper:
             labor.c_owner = self.owner
             worker = labor.c_producer
             self.workforce[worker] = labor
+            worker.is_employed()
 
     def lay_off(self, N_ct):
         N_ct = int(N_ct)
@@ -241,6 +242,7 @@ class Bookkeeper:
                 worker = random.choice(list(self.workforce.keys()))
                 labor = self.workforce.pop(worker)
                 self.assets["labor"].c_quantity -= labor.c_quantity
+                worker.is_unemployed()
             
 
 
@@ -252,6 +254,8 @@ class Bookkeeper:
             worker = random.choice(list(self.workforce.keys()))
             labor = self.workforce.pop(worker)
             self.assets["labor"].c_quantity -= labor.c_quantity
+            worker.is_unemployed()
+
  
 
   

@@ -4,6 +4,8 @@ from .agents import EconomicAgent
 from .goods import Labor
 from .equations import HHEquations
 import random as rnd
+import numpy as np
+
 
 
 class Household(EconomicAgent):
@@ -196,10 +198,14 @@ class Household(EconomicAgent):
       
         ## Create Labor Offer
         ## Transfer to Balance Sheet??
+        self.unemployed = np.random.choice([True,False], size = 1, p = [.2,.8])
         self.labor_qnt = rnd.randint(20,60)
         self.wd_ht = 1 + rnd.randint(10,100)
         self.offered_labor = self.create_labor_offer(self.labor_qnt, 
                                              self.wd_ht)
+        self.bookkeeper.create_labor_capacity(self.offered_labor)
+        if self.unemployed:
+            self.is_unemployed()
         
         # time unemployed
         self.u_ht_n = 0

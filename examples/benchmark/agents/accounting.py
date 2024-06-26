@@ -300,7 +300,7 @@ class HHBookkeeper(Bookkeeper):
 
     def create_labor_capacity(self, labor):
 
-        if isinstance(labor, Labor):
+        if labor.c_category == "w":
             self.assets['labor'] = labor
         else:
             raise ValueError("object needs to be from Labor class")

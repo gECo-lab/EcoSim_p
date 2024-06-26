@@ -81,7 +81,7 @@ class Model:
         """
         try:
             self.an_agent_def = self.json_defs['agents'][agent_type]
-        except KeyError as e:
+        except KeyError:
             print(agent_type, ' not defined in the json file')
 
         self.an_agent_number = self.agents_of_type_number(agent_type) + 1
@@ -104,6 +104,7 @@ class Model:
         self.agent_observers_pop = ObserverCreator(self, self.simulation,
                                                    self.agent_observers_def, path_to_results)
         self.agent_observers = self.agent_observers_pop.observers
+        
 
     def enter_model(self, agent_name, agent):
         """ An agent enters the model (is included in agents dict) """
@@ -113,6 +114,7 @@ class Model:
         if agent.type not in self.agents_by_type:
             self.agents_by_type[agent.type] = dict()
         self.agents_by_type[agent.type][agent_name] = agent
+
 
     def exit_model(self, agent_name):
         """ An agent exits the model (is deleted from agents dict) """

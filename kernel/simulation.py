@@ -50,12 +50,23 @@ class Simulation(object):
         # Simulation Name
         self.name = self.json_model_defs["simulation_name"]
 
+        # Generates the observers definition list
+        self.generate_observers_def()
+
         # Create Model 
         self.model = Model(self, self.json_model_defs, 
                            self.path_to_results)
         
         # Create Scenarios
         self.create_scenarios()
+
+
+    def generate_observers_def(self):
+        """Generates the observers definition list
+
+        """
+        self.observers_def_list = []
+        
 
     def create_scenarios(self):
         """ Scenario creation """

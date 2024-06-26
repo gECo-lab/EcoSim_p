@@ -81,12 +81,19 @@ sum_cooperation <- runs_df %>% group_by(scenario, step) %>%
 
 
 ```{r}
-sum_runs %>%  ggplot(aes(x=step, y = payoff_mean, color = strategy_name))  + geom_point(alpha=0.5) + geom_smooth()
+sum_runs %>%  ggplot(aes(x=step, y = payoff_mean, color = strategy_name))  + geom_point(alpha=0.1) + geom_smooth()
 ```
 
 
 ```{r}
-sum_runs %>%  ggplot(aes(x=step, y = payoff_sum, color = strategy_name)) + geom_point(alpha = 0.5) + geom_smooth()
+sum_runs %>%  ggplot(aes(x=strategy_name, y = payoff_mean, color = strategy_name)) + 
+                geom_violin() + 
+                geom_boxplot(width = 0.2) + 
+                stat_summary(fun.y=mean, 
+                             geom="point", 
+                             shape=20, 
+                             size=3, 
+                             color="red")
 
 ```
 

@@ -54,7 +54,7 @@ class GoodPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = AlwaysCooperate()
-        self.strategy_name = self.strategy.name()
+#        self.strategy_name = self.strategy.name()
 
 
 class BadPlayer(Player):
@@ -62,7 +62,7 @@ class BadPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = AlwaysDefect()
-        self.strategy_name = self.strategy.name()
+ #       self.strategy_name = self.strategy.name()
 
 
 class RandomPlayer(Player):
@@ -70,7 +70,7 @@ class RandomPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = RandomPlay()
-        self.strategy_name = self.strategy.name()
+  #      self.strategy_name = self.strategy.name()
 
 
 class TitForTatPlayer(Player):
@@ -78,14 +78,14 @@ class TitForTatPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = SimpleTitForTat()
-        self.strategy_name = self.strategy.name()
+ #       self.strategy_name = self.strategy.name()
 
 class TitForTatWithRecallPlayer(Player):
     """ Tit for tat player """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = TitForTat()
-        self.strategy_name = self.strategy.name()
+  #      self.strategy_name = self.strategy.name()
 
 
 class RancorousPlayer(Player):
@@ -93,7 +93,7 @@ class RancorousPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = SimpleRancorous()
-        self.strategy_name = self.strategy.name()
+   #     self.strategy_name = self.strategy.name()
 
 
 class RancorousWithRecallPlayer(Player):
@@ -101,4 +101,4 @@ class RancorousWithRecallPlayer(Player):
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
         self.strategy = Rancorous()
-        self.strategy_name = self.strategy.name()
+#        self.strategy_name = self.strategy.name()

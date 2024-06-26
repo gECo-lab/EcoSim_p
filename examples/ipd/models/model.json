@@ -22,6 +22,16 @@
       }
     }
   ],
+  "agents_classes":[
+    "GoodPlayer",
+    "BadPlayer",
+    "RandomPlayer",
+    "TitForTatPlayer",
+    "TitForTatWithRecallPlayer",
+    "RancorousPlayer",
+    "RancorousWithRecallPlayer"
+  ]
+  ,
   "agents": [
     {
       "agent_type": "GoodPlayer",
@@ -29,7 +39,8 @@
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 50
+      "no_of_agents": 30,
+      "has_observer": true
     },
     {
       "agent_type": "BadPlayer",
@@ -37,7 +48,8 @@
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 50
+      "no_of_agents": 30,
+      "has_observer": true
     },
     {
       "agent_type": "RandomPlayer",
@@ -45,7 +57,8 @@
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 50
+      "no_of_agents": 30,
+      "has_observer": true
     },
     {
     "agent_type": "TitForTatWithRecallPlayer",
@@ -53,7 +66,17 @@
     "agent_spaces": [
       "IpdGame"
     ],
-    "no_of_agents": 50
+    "no_of_agents": 10,
+    "has_observer": true
+    },
+    {
+    "agent_type": "TitForTatPlayer",
+    "agent_prefix": "TFT",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 10,
+    "has_observer": true
     },
     {
       "agent_type": "RancorousWithRecallPlayer",
@@ -61,89 +84,17 @@
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 50
-    }
-  ],
-  "observers": [
-    {
-      "observer_type": "Observer",
-      "observer_name": "GPObs",
-      "observer_actions": [
-        "obs_gpl"
-      ],
-      "observer_agent": "GoodPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
+      "no_of_agents": 30,
+      "has_observer": true
     },
     {
-      "observer_type": "Observer",
-      "observer_name": "BPObs",
-      "observer_actions": [
-        "obs_bpl"
+      "agent_type": "RancorousPlayer",
+      "agent_prefix": "Ranc",
+      "agent_spaces": [
+        "IpdGame"
       ],
-      "observer_agent": "BadPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "RObs",
-      "observer_actions": [
-        "obs_bpl"
-      ],
-      "observer_agent": "RandomPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "TTRCLObs",
-      "observer_actions": [
-        "obs_bpl"
-      ],
-      "observer_agent": "TitForTatWithRecallPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "RancRclObs",
-      "observer_actions": [
-        "obs_bpl"
-      ],
-      "observer_agent": "RancorousWithRecallPlayer",
-      "observable_vars": [
-        "my_payoff",
-        "my_play",
-        "other_name",
-        "other_play",
-        "other_payoff",
-        "strategy_name"
-      ]
+      "no_of_agents": 30,
+      "has_observer": true
     }
   ]
 }

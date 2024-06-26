@@ -53,32 +53,5 @@
       "no_of_agents": 10,
       "has_observer": true
     }
-  ],
-  "observers": [
-    {
-      "observer_type": "Observer",
-      "observer_name": "HH_Obs",
-      "observer_actions": [
-        "obs_hh"
-      ],
-      "observer_agent": "Household",
-      "observable_vars": [
-        "pe_ht",
-        "w_ht"      
-      ]
-    },
-    {
-      "observer_type": "Observer",
-      "observer_name": "CG_Obs",
-      "observer_actions": [
-        "obs_cg"
-      ],
-      "observer_agent": "CGFirm",
-      "observable_vars": [
-        "Se_ct",
-        "yd_ct_q",
-        "ud_ct"
-      ]
-    }
   ]
 }

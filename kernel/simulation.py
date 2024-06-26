@@ -54,7 +54,9 @@ class Simulation(object):
         self.generate_observers_def()
 
         # Create Model 
-        self.model = Model(self, self.json_model_defs, 
+        self.model = Model(self, self.
+                           json_model_defs,
+                           self.observers_def_list, 
                            self.path_to_results)
         
         # Create Scenarios
@@ -66,7 +68,43 @@ class Simulation(object):
 
         """
         self.observers_def_list = []
-        
+        self.agent_observable_var = []
+
+        agents_list = self.json_model_defs['agents']
+        agents_init_dict = self.json_scenarios_defs["scenarios"][0]["agents_init"]
+
+        for an_agent in agents_list:
+            if an_agent["has_observer"]:
+                observer_name = an_agent["agent_type"] + "_obs"
+                observer_agent = an_agent["agent_type"]
+                try:
+                    an_agent_obs_vars = agents_init_dict[observer_agent]
+                except KeyError:
+                    # Handle the case when observer_agent key is not present in agents_init_dict
+                    # Add your error handling code here
+                    pass
+                
+                self.obs_vars = []
+                for var in an_agent_obs_vars:
+                    if var["observed"]:
+                        self.obs_vars.append(var["var_name"])
+
+                self.an_observer_def = {"observer_type": "Observer",
+                                        "observer_name": observer_name,
+                                        "observer_agent": observer_agent,
+                                        "observable_vars": self.obs_vars
+                                        }
+                self.observers_def_list.append(self.an_observer_def)
+
+
+
+
+        return self.observers_def_list
+
+
+
+
+
 
     def create_scenarios(self):
         """ Scenario creation """

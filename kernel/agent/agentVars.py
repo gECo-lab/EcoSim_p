@@ -7,9 +7,6 @@ with the agent vars.
 
 """
 
-import datetime as dt
-import numpy as np
-
 
 class AgentVarsCreator(object):
     """

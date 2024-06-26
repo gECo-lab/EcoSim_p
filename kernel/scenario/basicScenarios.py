@@ -101,7 +101,7 @@ class Scenario(object):
         """ Initializes the scenario parameters, 
             variable, schedule, agents vars etc. 
         """
-        # self.create_agents()
+        #self.create_agents()
         self.initialize_agents()
             
     def run(self, run_nr):

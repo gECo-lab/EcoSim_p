@@ -16,7 +16,7 @@ folder runs
 # TODO: Generalize the location specs for the simulation 
 #       results files (actually in the folder runs)
 import sys
-from kernel.simulation import *
+from kernel.simulation import Simulation
 
 
 def new_simulation(path_to_model, model_config, model_defs, scenarios_defs):

@@ -77,24 +77,20 @@ class Simulation(object):
             if an_agent["has_observer"]:
                 observer_name = an_agent["agent_type"] + "_obs"
                 observer_agent = an_agent["agent_type"]
-                try:
-                    an_agent_obs_vars = agents_init_dict[observer_agent]
-                except KeyError:
-                    # Handle the case when observer_agent key is not present in agents_init_dict
-                    # Add your error handling code here
-                    pass
-                
+              
+                an_agent_obs_vars = agents_init_dict.get(observer_agent)
                 self.obs_vars = []
-                for var in an_agent_obs_vars:
-                    if var["observed"]:
-                        self.obs_vars.append(var["var_name"])
+                if an_agent_obs_vars is not None:                                     
+                    for var in an_agent_obs_vars:
+                        if var["observed"]:
+                            self.obs_vars.append(var["var_name"])
 
-                self.an_observer_def = {"observer_type": "Observer",
-                                        "observer_name": observer_name,
-                                        "observer_agent": observer_agent,
-                                        "observable_vars": self.obs_vars
-                                        }
-                self.observers_def_list.append(self.an_observer_def)
+                    self.an_observer_def = {"observer_type": "Observer",
+                                            "observer_name": observer_name,
+                                            "observer_agent": observer_agent,
+                                            "observable_vars": self.obs_vars
+                                            }
+                    self.observers_def_list.append(self.an_observer_def)
 
 
 

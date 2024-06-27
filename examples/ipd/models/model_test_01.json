@@ -1,0 +1,100 @@
+{
+  "simulation_name": "ipd",
+  "simulation_parameters": [
+    {
+      "parameter_name": "total_payoff",
+      "parameter_value": 0.0
+    }
+  ],
+  "model_name": "ipd",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "IpdGame",
+      "space_name": "IpdGame",
+      "space_variables": {
+        "payoffs": 0.0
+      }
+    }
+  ],
+  "agents_classes":[
+    "GoodPlayer",
+    "BadPlayer",
+    "RandomPlayer",
+    "TitForTatPlayer",
+    "TitForTatWithRecallPlayer",
+    "RancorousPlayer",
+    "RancorousWithRecallPlayer"
+  ]
+  ,
+  "agents": [
+    {
+      "agent_type": "GoodPlayer",
+      "agent_prefix": "GPl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 30,
+      "has_observer": true
+    },
+    {
+      "agent_type": "BadPlayer",
+      "agent_prefix": "BPl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 30,
+      "has_observer": true
+    },
+    {
+      "agent_type": "RandomPlayer",
+      "agent_prefix": "RPl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 30,
+      "has_observer": true
+    },
+    {
+    "agent_type": "TitForTatWithRecallPlayer",
+    "agent_prefix": "TTRCLl",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 10,
+    "has_observer": true
+    },
+    {
+    "agent_type": "TitForTatPlayer",
+    "agent_prefix": "TFT",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 10,
+    "has_observer": true
+    },
+    {
+      "agent_type": "RancorousWithRecallPlayer",
+      "agent_prefix": "Rancl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 30,
+      "has_observer": true
+    },
+    {
+      "agent_type": "RancorousPlayer",
+      "agent_prefix": "Ranc",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 30,
+      "has_observer": true
+    }
+  ]
+}

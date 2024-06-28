@@ -1,11 +1,11 @@
+
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -
 
-"""
-Definition of the classes that deal 
-with the agent vars.
 
-"""
+# This will be used to eval the distributions 
+# **** DO NOT REMOVE ***
+import numpy as np
 
 
 class AgentVarsCreator(object):

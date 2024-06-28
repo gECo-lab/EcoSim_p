@@ -1,13 +1,14 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
     
         {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": ["/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/", "config.json", "models/test_model.json", "scenarios/test_scenarios.json"],
+            "args": ["/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/", "config.json", "models/model_test_01.json", "scenarios/scenarios_test_01.json"],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"
         }

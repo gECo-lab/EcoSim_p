@@ -13,7 +13,6 @@ with all simulation objects
 
 import random as rnd
 import time
-from collections import OrderedDict
 
 
 from kernel.agent.agentCreation import AgentPopulationCreator, AgentCreator
@@ -29,12 +28,13 @@ class Model:
     Creates all objects in the Simulation
     """
 
-    def __init__(self, simulation, json_model_defs, observers_def, path_to_results):
+    def __init__(self, simulation, json_model_defs, observers_def, agents_to_create, path_to_results):
         """Load the definitions of the json file"""
         self.seed = time.time()
         self.random = rnd.Random(self.seed)
         self.simulation = simulation
         self.json_defs = json_model_defs
+        self.agents_to_create = agents_to_create
 
         self.name = self.json_defs['model_name']
         self.schedule_def = self.json_defs['schedule']
@@ -66,9 +66,23 @@ class Model:
     def create_agents(self):
         """
         Access the AgentFactory (AgentPopulationCreator).
-        Create the agents
+        Create the agents from the list of agents provided
+        The list of agents (agents_to_create) is composed
+        by the agents included in the "agents_init" part of 
+        the scenarios file
         """
-        self.agents_def = self.json_defs['agents']
+        self.agents_original_def = self.json_defs['agents']
+        self.agents_def = []
+
+        for an_agent_def in self.agents_original_def:
+
+            agent_class = an_agent_def["agent_type"]
+            if agent_class in self.agents_to_create:
+                self.agents_def.append(an_agent_def)
+
+        
+
+
         self.agents_pop = AgentPopulationCreator(self.simulation, self,
                                                  self.agents_def)
 

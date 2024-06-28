@@ -49,18 +49,36 @@ class Simulation(object):
 
         # Simulation Name
         self.name = self.json_model_defs["simulation_name"]
+        self.agents_list = self.json_model_defs['agents']
+        self.agents_init_dict = self.json_scenarios_defs["scenarios"][0]["agents_init"]
+
 
         # Generates the observers definition list
         self.generate_observers_def()
 
+        # Select from the scenario file the agents that will be created
+        self.generate_agents_to_create()
+
         # Create Model 
         self.model = Model(self, self.
                            json_model_defs,
-                           self.observers_def_list, 
+                           self.observers_def_list,
+                           self.agents_to_create, 
                            self.path_to_results)
         
         # Create Scenarios
         self.create_scenarios()
+
+    
+    def generate_agents_to_create(self):
+
+        self.agents_to_create = []
+
+        for an_agent in self.agents_list:
+            agent_class = an_agent["agent_type"]
+            if self.agents_init_dict.get(agent_class) is not None:
+                self.agents_to_create.append(agent_class)
+                
 
 
     def generate_observers_def(self):
@@ -70,15 +88,12 @@ class Simulation(object):
         self.observers_def_list = []
         self.agent_observable_var = []
 
-        agents_list = self.json_model_defs['agents']
-        agents_init_dict = self.json_scenarios_defs["scenarios"][0]["agents_init"]
-
-        for an_agent in agents_list:
+        for an_agent in self.agents_list:
             if an_agent["has_observer"]:
                 observer_name = an_agent["agent_type"] + "_obs"
                 observer_agent = an_agent["agent_type"]
               
-                an_agent_obs_vars = agents_init_dict.get(observer_agent)
+                an_agent_obs_vars = self.agents_init_dict.get(observer_agent)
                 self.obs_vars = []
                 if an_agent_obs_vars is not None:                                     
                     for var in an_agent_obs_vars:

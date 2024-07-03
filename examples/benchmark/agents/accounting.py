@@ -256,6 +256,16 @@ class Bookkeeper:
             self.assets["labor"].c_quantity -= labor.c_quantity
             worker.is_unemployed()
 
+    
+    def pay_wages(self):
+        # NOTE: Salários negativos ou zero e muito grandes. Checar.
+
+        for worker, labor in self.workforce.items():
+            wage = labor.ammount()
+            self.pay(worker, wage)
+     #       print("wage: ", wage, "worker: ", worker.name)
+
+
  
 
   
@@ -318,6 +328,7 @@ class HHBookkeeper(Bookkeeper):
     def is_unemployed(self):
 
         self.assets["labor"].c_quantity = 0.0
+
 
 
 

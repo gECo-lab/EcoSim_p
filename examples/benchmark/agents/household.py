@@ -3,7 +3,6 @@ from examples.benchmark.agents.accounting import HHBookkeeper
 from .agents import EconomicAgent
 from .goods import Labor
 from .equations import HHEquations
-import random as rnd
 import numpy as np
 
 
@@ -43,15 +42,18 @@ class Household(EconomicAgent):
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
 
-        self.create_initial_values()
+        self.first_step = True
 
+   
 
 
 
     def step(self):
         """Household Agent Step method
         """
-
+        if self.first_step:
+            self.create_initial_values()
+            self.first_step = False
         self.create_expectations()
         self.compute_reservation_wages()
         if self.unemployed:
@@ -87,7 +89,7 @@ class Household(EconomicAgent):
 
         # Todo: Rewrite 
         """
-        self.offered_labor.c_quantity =  rnd.randint(20,60)
+        self.offered_labor.c_quantity = np.random.lognormal(1.0, 0.03)
         self.offered_labor.c_price = self.compute_reservation_wages()
         self.has_offer = True
         space = self.get_a_space(self.labor_mkt_name)
@@ -140,7 +142,7 @@ class Household(EconomicAgent):
 
     def calculate_consumer_demand(self):
 
-        self.demand_qnt = 1 + rnd.randint(1,10)
+        self.demand_qnt = 1 + np.random.lognormal(1.0, 0.03)
         return self.demand_qnt
 
 
@@ -181,9 +183,9 @@ class Household(EconomicAgent):
     
     def create_initial_values(self):
 
-        ## Household Variables:
-        self.demand_qnt = 1 + rnd.randint(10,100)
-        self.demand_expected_price = rnd.randint(1,5)
+        ## Household Variables: NOTE: Incluidas no cenario
+        ## self.demand_qnt = np.random.lognormal(1.0, 0.03)
+        ### self.demand_expected_price = np.random.lognormal(1.0, 0.03)
    
 
         ## Create Initial consumer demand
@@ -192,15 +194,17 @@ class Household(EconomicAgent):
                                                             self.demand_qnt)
         
         ## Expected prices
-
-        self.pe_ht = rnd.randint(1,5)
-        self.pe_ht_1 = rnd.randint(1,5)
+        ## NOTE: Incluidas no cenario
+        # self.pe_ht = np.random.lognormal(1.0, 0.03)
+        # self.pe_ht_1 = np.random.lognormal(1.0, 0.03)
       
         ## Create Labor Offer
         ## Transfer to Balance Sheet??
-        self.unemployed = np.random.choice([True,False], size = 1, p = [.2,.8])
-        self.labor_qnt = rnd.randint(20,60)
-        self.wd_ht = 1 + rnd.randint(10,100)
+        # self.unemployed = np.random.choice([True,False], size = 1, p = [.2,.8])[0]
+        ## self.labor_qnt = np.random.lognormal(1.0, 0.03)
+        ## self.wd_ht =  np.random.lognormal(1.0, 0.03)
+
+
         self.offered_labor = self.create_labor_offer(self.labor_qnt, 
                                              self.wd_ht)
         self.bookkeeper.create_labor_capacity(self.offered_labor)
@@ -208,9 +212,9 @@ class Household(EconomicAgent):
             self.is_unemployed()
         
         # time unemployed
-        self.u_ht_n = 0
+        # self.u_ht_n = 0
 
-        self.unemployed = True
+        # self.unemployed = True
   
  
 

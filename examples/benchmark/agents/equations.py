@@ -17,6 +17,7 @@ Todo:
 """
 
 from scipy.stats import foldnorm
+import numpy as np
 
 
 
@@ -129,7 +130,7 @@ class Equations():
             number: new mark-up
         """
 
-        FN_mu = foldnorm.rvs(self.nu, size=1)[0]
+        FN_mu = np.random.lognormal(1.0, 0.03)
         if inv_t_1/s_et <= self.nu:
             return mu_xt + (1 + FN_mu)
         else:
@@ -252,12 +253,22 @@ class HHEquations(Equations):
         super().__init__(active_scenario)
 
 
+
+
     def wd_ht(self, wd_ht_1, u_ht_n):
 
-        FN_w = foldnorm.rvs(0.1, size=1)
-        FN_w = FN_w[0]
 
-        if u_ht_n > 2:
+
+        FN_w = np.random.lognormal(1.0, 0.03)
+        
+        if FN_w > 1:
+            FN_w = FN_w - 1
+
+        ## The step needs to be very low
+        FN_w = FN_w/200
+      
+
+        if u_ht_n > 1:
             self.wdht = wd_ht_1*(1 - FN_w)
         else:
             self.wdht = wd_ht_1*(1 + FN_w)

@@ -236,6 +236,11 @@ class CGFirm(Firm):
         self.inv_ct.c_price = (self.inv_ct.c_price + y.c_price)/2
         self.inv_ct.c_quantity = self.inv_ct.c_quantity + y.c_quantity
 
+    
+    def pay_wages(self):
+
+        self.bookkeeper.pay_wages()
+
 
 
 

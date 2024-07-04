@@ -51,6 +51,8 @@ csv_files <- fs::dir_ls(i, regexp = "macro_model*")
 
 ### Generating runs dataframe
 
+
+
 model_runs  <- csv_files %>%
     map_dfr(read_csv)
 
@@ -59,80 +61,16 @@ model_runs <- model_runs[complete.cases(model_runs),]
 ```
 
 
-## Data Analisys
-
-
-
-### Income distribution
+## Results
 
 
 ```{r}
+## Agregate all variables by step getting the mean of all numerical variables
 
-model_runs %>%
-  filter(run == 0 & step == 0) %>%
-  ggplot(aes(x=income)) +
-    geom_histogram() +
-    geom_vline(aes(xintercept = mean(income, na.rm=TRUE)),col='red',size=.5) +
-    geom_vline(aes(xintercept = median(income, na.rm=TRUE)),col='blue',size=.5) +
-    labs(title = "Income distribution (run 0, step 0)",
-         x = "Income (mean - red, median - blue)",
-         y = "count")
-    
-```
-
-
-
-
-```{r}
-
-last_line <- model_runs[nrow(model_runs),]
-
-this_title <- paste("Income distribution (run", 
-                      as.character(last_line$run), ", step", 
-                      as.character(last_line$step), ")"
-                      )
-model_runs %>%
-  filter( run == last_line$run & step == last_line$step) %>%
-  ggplot(aes(x=income)) +
-    geom_histogram() +
-    geom_vline(aes(xintercept = mean(income, na.rm=TRUE)),col='red',size=.5) +
-    geom_vline(aes(xintercept = median(income, na.rm=TRUE)),col='blue',size=.5) +
-    labs(title = this_title,
-         x = "Income (mean - red, median - blue)",
-         y = "count")
-    
-```
-
-
-### Time series
-
-All runs
-
-```{r}
-model_runs %>%
-  ggplot(aes(x=step, y = zt, color = as.factor(run)))+
-    geom_point() +
-    geom_smooth()
-
-```
-
-
-```{r}
-
-average_model_runs <- model_runs %>%
+aggregated_data <- model_runs %>%
   group_by(step) %>%
-  summarise(
-    mean_zt = mean(zt, na.rm = TRUE)
-    )
-```
-
-
-```{r}
-average_model_runs %>%
-  ggplot(aes(x = step, y = mean_zt)) +
-  geom_line() 
+  summarise(across(where(is.numeric), mean))
 
 ```
-
 
 

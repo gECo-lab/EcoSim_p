@@ -47,6 +47,7 @@ class Observer(object):
         """
         self.observables_keys = {'model': [self.model.name],
                                  'simulation': [self.simulation.name],
+                                 'observer':[self.name],
                                  'scenario': [self.schedule.scenario_name],
                                  'run': [0],
                                  'step': [0],
@@ -57,6 +58,7 @@ class Observer(object):
         """ Updates the general observable variables at each observation (step) """
         self.observation_keys['model'] = self.model.name
         self.observation_keys['simulation'] = self.simulation.name
+        self.observation_keys['observer'] = self.name
         self.observation_keys['scenario'] = self.schedule.scenario_name
         self.observation_keys['run'] = self.schedule.run_nr
         self.observation_keys['step'] = self.step

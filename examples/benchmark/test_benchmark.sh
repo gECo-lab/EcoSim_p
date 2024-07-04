@@ -17,6 +17,7 @@ python3 ecosimp.py examples/benchmark/ config.json models/test_model.json scenar
 
 cd examples/benchmark
 
-#Rscript -e 'rmarkdown::render("benchmark.Rmd", output_format="html_document", output_dir="results")'
+quarto render "analisys/benchmark.qmd" --output-dir=../results 
 
-#sensible-browser results/benchmark.html&
+xdg-open results/benchmark.html
+

@@ -1,0 +1,149 @@
+---
+title: "Macro Simulation (Caiani et. al., 2016)"
+author: "Sérgio Rivero"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE, eval = TRUE)
+
+### Generating the simulation Results
+rm(list=ls())
+```
+
+
+
+```{r loadLibs}
+
+### Getting the Libraries
+library(tidyverse)
+
+```
+
+
+```{r setupDirs}
+
+### Setting up the Directories
+i  <-  "../runs"
+o  <-  "../results"
+```
+
+
+
+```{r getFiles, eval=TRUE}
+
+### Getting the files 
+files <- list.files(path = i, pattern = "macro_model_Household")
+Household <- read.csv(file.path(i, files)) %>%
+  select(-c(run, index_no))
+
+files <- list.files(path = i, pattern = "macro_model_CGFirm")
+CGFirm <- read.csv(file.path(i, files)) %>%
+  select(-c(run, index_no))
+
+
+
+
+```
+
+
+
+```{r generatingDFs, eval=TRUE}
+
+
+household_means <- Household %>%
+  group_by(step) %>%
+  summarise(across(where(is.numeric), mean))
+
+
+
+cg_means <- CGFirm %>%
+  group_by(step) %>%
+  summarise(across(where(is.numeric), mean))
+```
+
+
+## Results
+
+
+
+### Household
+
+```{r}
+# Generate multiple graphs for household dataframe
+graphs <- map(names(household_means)[-1], function(var) {
+  ggplot(household_means, aes(x = step, y = !!sym(var))) +
+    geom_line() +
+    labs(x = "Step", y = paste("means - ", var)) +
+    ggtitle(paste("Household -", var))
+})
+
+# Print the graphs
+print(graphs)
+
+
+
+
+```
+
+```{r, eval=FALSE }
+# Generate multiple graphs for household dataframe
+hh_vars <- CGFirm %>% select(where(is.numeric))
+
+graphs <- map(names(hh_vars)[-1], function(var) {
+  ggplot(hh_vars, aes(x = step, y = !!sym(var))) +
+    geom_point() +
+    labs(x = "Step", y = var) +
+    ggtitle(paste("Household -", var))
+})
+
+# Print the graphs
+print(graphs)
+
+```
+
+
+### Consumer Goods Firms
+
+
+```{r}
+# Generate multiple graphs for cg_means dataframe
+graphs <- map(names(cg_means)[-1], function(var) {
+  ggplot(cg_means, aes(x = step, y = !!sym(var))) +
+    geom_line() +
+    labs(x = "Step", y = paste("means - ", var)) +
+    ggtitle(paste("CGFirm -", var))
+})
+
+# Print the graphs
+print(graphs)
+
+
+
+
+```
+
+```{r, eval=FALSE}
+# Generate multiple graphs for CGFirm dataframe
+graphs <- map(names(CGFirm)[-1], function(var) {
+  ggplot(CGFirm, aes(x = step, y = !!sym(var))) +
+    geom_point() +
+    labs(x = "Step", y = var) +
+    ggtitle(paste("CGFirm -", var))
+})
+
+# Print the graphs
+print(graphs)
+
+
+
+
+```

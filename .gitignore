@@ -145,7 +145,11 @@ cython_debug/
 # Simulation Results
 *.csv
 *.html
+*.png
+# javascript from the results file 
+*.css
+*.js 
+*.woff
 
 # React Forms
-
 interface/json_forms

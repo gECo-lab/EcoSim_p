@@ -273,6 +273,9 @@ class HHEquations(Equations):
         else:
             self.wdht = wd_ht_1*(1 + FN_w)
 
+        if self.wdht <= 0:
+            self.wdht = 0.1    
+
         return self.wdht
 
 

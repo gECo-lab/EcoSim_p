@@ -40,15 +40,18 @@ class CGFirm(Firm):
         
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
-
-
-        self.create_initial_values()
+        self.first = True
      
 
 
     def step(self):
         """ Consumer Goods Firm Step 
         """
+   
+        if self.first:
+            self.create_initial_values()
+            self.first = False
+
         self.create_expectations()
         self.compute_desired_output()
         self.compute_capacity_utilization()
@@ -155,17 +158,34 @@ class CGFirm(Firm):
 
         self.mu_ct_1 = self.mu_ct
 
-        self.mu_ct = self.eq.muxt(self.mu_ct_1, self.inv_ct_1.c_quantity, self.S_ct.c_quantity)
-
-
+        self.mu_ct = self.eq.muxt(self.mu_ct_1, 
+                                  self.inv_ct_1.c_quantity, 
+                                  self.S_ct.c_quantity
+                                  )
 
 
         ## Compute price 
         self.y_ct.c_price =self.eq.pt(self.mu_ct,
                                       self.We_ct,
                                       self.Ndc_t,
-                                      self.y_ct.c_quantity+1
+                                      self.y_ct.c_quantity+1  # Cannot be zero???
                                      )
+        
+    def compute_total_costs(self):
+        """CG Firms compute the total costs:
+            The costs include:
+                - Labor Costs
+                - Cost on Loans
+                - Capital Costs
+        """
+
+
+        self.C_ct = self.C_ct()
+
+
+
+
+
 
     def compute_rate_of_capacity_growth(self):
         """CG Firms compute their rate of capacity growth 
@@ -312,8 +332,7 @@ class CGFirm(Firm):
                                              initial_sales_price)
         
         ## Generate initial salaries (We_ct)
-        self.ud_ct = rnd.randint(1,5)
-        self.We_ct = rnd.randint(10, 50)
+#        self.ud_ct = rnd.randint(1,5)
         self.Ndc_t = rnd.randint(10, 50)
         self.Ndc_t_1 = rnd.randint(10, 50)
         self.labor_demand = self.create_initial_labor_demand(self.Ndc_t, 

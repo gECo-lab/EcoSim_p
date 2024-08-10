@@ -55,10 +55,7 @@ class Bookkeeper:
         self.workforce = {}
         self.capital_stock = {}
         self.loans={}
-        
-
-    
-
+            
 
     def include_asset(self, asset):
         """
@@ -330,14 +327,8 @@ class HHBookkeeper(Bookkeeper):
         self.assets["labor"].c_quantity = 0.0
 
 
+    def calculate_income(self):
 
+        yd_h = self.assets["labor"].ammount()
 
-
-
-        
-            
-
-
-
-
-
+        return yd_h

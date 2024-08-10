@@ -5,10 +5,8 @@
 		}
 	],
 	"settings": {
-		"files.exclude": {
-			"**/.html": true
-		},
-		"workbench.editor.limit.enabled": false,
-		"explorer.expandSingleFolderWorkspaces": false
+		"workbench.editor.customLabels.patterns": {
+			"${dirname}": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/"
+		}
 	}
 }

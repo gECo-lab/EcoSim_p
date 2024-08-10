@@ -12,10 +12,10 @@ rem Remove CSV files from the runs directory
 del /Q runs\*.csv
 
 rem Navigate to the root directory
-cd ..
+cd ..\..
 
 rem Run the Python script with the provided model and scenarios
-python ecosimp.py examples\ipd\config.json "%model%" "%scenarios%"
+python ecosimp.py examples\ipd\ config.json "%model%" "%scenarios%"
 
 rem Navigate back to the ipd directory
 cd examples\ipd

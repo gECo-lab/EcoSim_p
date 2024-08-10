@@ -60,6 +60,7 @@ class Household(EconomicAgent):
             self.u_ht_n += 1
             self.offer_labor()
             self.receive_dole()
+        self.calculate_income()
         self.demand_goods()
         self.consume()
         self.pay_taxes()
@@ -68,8 +69,8 @@ class Household(EconomicAgent):
     def create_expectations(self):
         """Agent Creates Expectations
         """
-        pht_1 = self.consumption_good.c_price
-        self.pe_ht = self.eq.zet(pht_1,
+        self.pe_ht_1 = self.consumption_good.c_price
+        self.pe_ht = self.eq.zet(self.pe_ht,
                                self.pe_ht_1)
     
 
@@ -100,6 +101,10 @@ class Household(EconomicAgent):
 
         Todo: Rewrite
         """
+    
+    def calculate_income(self):
+
+        self.income = self.bookkeeper.calculate_income()
 
 
     def demand_goods(self):
@@ -117,7 +122,7 @@ class Household(EconomicAgent):
         """
 
         # include payment
-        self.w_ht = self.offered_labor.ammount()
+        self.w_ht = self.income
         self.consumption_good.c_quantity = 0
 
 
@@ -139,6 +144,7 @@ class Household(EconomicAgent):
 
     def update_consumer_demand(self):  
         self.consumption_good.c_quantity = self.demand_qnt
+
 
     def calculate_consumer_demand(self):
 

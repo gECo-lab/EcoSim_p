@@ -97,14 +97,7 @@
             "observed": true
           },
           {
-            "var_name": "zet",
-            "var_type": "stochastic",
-            "var_dist": "np.random.lognormal(1.0, 0.03)",
-            "var_value": 0.0,
-            "observed": true
-          },
-          {
-            "var_name": "zt",
+            "var_name": "Se_ct",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(1.0, 0.03)",
             "var_value": 0.0,
@@ -185,19 +178,12 @@
           {
             "var_name": "ud_ct",
             "var_type": "stochastic",
-            "var_dist": "np.random.lognormal(1.0, 0.03)",
+            "var_dist": "np.random.randint(1,5)",
             "var_value": 0.0,
             "observed": true
           },
           {
-            "var_name": "zet",
-            "var_type": "stochastic",
-            "var_dist": "np.random.lognormal(1.0, 0.03)",
-            "var_value": 0.0,
-            "observed": true
-          },
-          {
-            "var_name": "zt",
+            "var_name": "Se_ct",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(1.0, 0.03)",
             "var_value": 0.0,
@@ -225,14 +211,21 @@
             "observed": true
           },
           {
-            "var_name": "We_t",
+            "var_name": "We_ct",
             "var_type": "stochastic",
-            "var_dist": "np.random.lognormal(1.0, 0.03)",
+            "var_dist": "np.random.randint(10, 50)",
             "var_value": 0.0,
             "observed": true
           },
           {
             "var_name": "mu_ct",
+            "var_type": "stochastic",
+            "var_dist": "np.random.lognormal(1.0,0.03)",
+            "var_value": 0.0,
+            "observed": true
+          },
+          {
+            "var_name": "C_ct",
             "var_type": "stochastic",
             "var_dist": "np.random.lognormal(1.0,0.03)",
             "var_value": 0.0,

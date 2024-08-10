@@ -215,6 +215,29 @@ class CGFirmEquations(Equations):
             ndct = ud_ct*(k_ct/self.l_k)
         return ndct
     
+    def C_ct(self):
+        """Compute total Costs (CGFirms)"""
+        
+        return self.W_ct() + self.Il_ct() + self.Ck_ct()
+
+
+    def W_ct(self):
+        """Compute Labor Costs"""
+        pass
+
+
+    def Il_ct(self):
+        """Compute Loans costs"""
+        pass
+
+    def Ck_ct(self):
+        """Compute Capital Costs"""
+        pass
+
+        
+
+
+    
 
 class KGFirmEquations(Equations):
     """Capital goods firm specific equations
@@ -239,6 +262,8 @@ class KGFirmEquations(Equations):
         """
 
         return y_c/self.mu_n
+    
+        
     
 
 class HHEquations(Equations):

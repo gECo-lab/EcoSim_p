@@ -22,6 +22,12 @@
       }
     }
   ],
+  "agents_classes":[
+    "Household",
+    "CGFirm",
+    "KGFirm",
+    "Bank"
+  ],
   "agents": [
     {
       "agent_type": "Household",

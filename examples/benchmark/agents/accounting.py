@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .goods import Good, ConsumptionGood, Loan, Cash, Labor
+from .goods import Good, ConsumptionGood, Cash
 import random
 
 class Bookkeeper:
@@ -52,8 +52,6 @@ class Bookkeeper:
         self.assets[my_cash.c_name] = my_cash
 
         self.offer = None
-        self.workforce = {}
-        self.capital_stock = {}
         self.loans={}
             
 
@@ -67,16 +65,13 @@ class Bookkeeper:
         Raises:
             ValueError: If the asset is not an instance of the Good class.
         """
-        if isinstance(asset, Good):
-            if asset.c_name in self.assets:
-                existing_asset = self.assets[asset.c_name]
-                existing_asset.c_quantity += asset.c_quantity
-                existing_asset.c_price = (existing_asset.c_price + asset.c_price) / 2
-            else:
-                self.assets[asset.c_name] = asset
+        
+        if asset.c_name in self.assets:
+            existing_asset = self.assets[asset.c_name]
+            existing_asset.c_quantity += asset.c_quantity
+            existing_asset.c_price = (existing_asset.c_price + asset.c_price) / 2
         else:
-            raise ValueError("Asset must be an instance of the Good class.")
-    
+            self.assets[asset.c_name] = asset
     def exclude_asset(self, asset):
         """
         Excludes an asset from the balance sheet.
@@ -100,16 +95,13 @@ class Bookkeeper:
         Raises:
             ValueError: If the liability is not an instance of the Loan class.
         """
-        if isinstance(liability, Good):
-            if liability.c_name in self.liabilities:
-                existing_liability = self.liabilities[liability.c_name]
-                existing_liability.c_quantity += liability.c_quantity
-                existing_liability.c_price = (existing_liability.c_price + liability.c_price) / 2
-            else:
-                self.liabilitys[liability.c_name] = liability
-        else:
-            raise ValueError("Liability must be an instance of the Good class.")
 
+        if liability.c_name in self.liabilities:
+            existing_liability = self.liabilities[liability.c_name]
+            existing_liability.c_quantity += liability.c_quantity
+            existing_liability.c_price = (existing_liability.c_price + liability.c_price) / 2
+        else:
+            self.liabilitys[liability.c_name] = liability
 
     def exclude_liability(self, liability):
         """
@@ -213,6 +205,17 @@ class Bookkeeper:
         #     self.add_to_loans(accepted_offers)
 
 
+class FirmBookkeeper(Bookkeeper):
+    """Bookkeeper for the firms"""
+
+
+    def __init__(self, owner, assets=None, liabilities=None, cash=None):
+            super().__init__(owner, assets, liabilities, cash)
+
+            self.workforce = {}
+            self.capital_stock = {}
+                
+
     def add_to_capital_stock(self, accepted_offers):
 
         last_k_eq = list(self.capital_stock.values())[-1]
@@ -240,9 +243,7 @@ class Bookkeeper:
                 labor = self.workforce.pop(worker)
                 self.assets["labor"].c_quantity -= labor.c_quantity
                 worker.is_unemployed()
-            
-
-
+        
 
     def lay_off_from_turnover(self, upsilon):
         lay_offs = int(len(self.workforce) * upsilon)
@@ -260,14 +261,23 @@ class Bookkeeper:
         for worker, labor in self.workforce.items():
             wage = labor.ammount()
             self.pay(worker, wage)
-     #       print("wage: ", wage, "worker: ", worker.name)
+     
+    def labor_costs(self):
+        """Calculate labor costs"""
+        W_ct = 0
+        for worker, labor in self.workforce.items():
+            W_ct += labor.ammount()
+            
+        return W_ct
+    
+    def workforce_size(self):
+        """Size of the workforce in the firm"""
 
+        return len(self.workforce)
 
- 
+        
 
   
-
-
 class HHBookkeeper(Bookkeeper):
 
     def __init__(self, owner, assets=None, liabilities=None, 

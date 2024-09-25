@@ -1,6 +1,5 @@
 {
   "simulation_name": "macro_model",
-  "simulation_model": "macro_model",
   "simulation_parameters": [
   ],
   "model_name": "macro_model",
@@ -31,6 +30,10 @@
         "market_type": "random"
       }
     }
+  ],
+  "agents_classes":[
+    "Household",
+    "CGFirm"
   ],
   "agents": [
     {

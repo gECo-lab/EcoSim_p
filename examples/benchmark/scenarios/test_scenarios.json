@@ -230,6 +230,13 @@
             "var_dist": "np.random.lognormal(1.0,0.03)",
             "var_value": 0.0,
             "observed": true
+          },
+          {
+            "var_name": "N_ct",
+            "var_type": "stochastic",
+            "var_dist": "np.random.randint(1,10)",
+            "var_value": 0.0,
+            "observed": true
           }
         ]
         }

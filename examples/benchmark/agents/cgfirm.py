@@ -26,17 +26,21 @@ Todo:
 """
 
 from .firm import Firm
+from examples.benchmark.agents.accounting import FirmBookkeeper
 from .equations import CGFirmEquations
 from .goods import CapitalGood, ConsumptionGood, Labor
 import random as rnd
+
 
 
 class CGFirm(Firm):
     """ Consumers Goods Firm """
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
-        
+
+        self.bookkeeper = FirmBookkeeper(self)
         self.eq = CGFirmEquations(self.active_scenario)
+        self.eq.set_bookkeeper(self.bookkeeper)
         
         self.labor_mkt_name = "Labor_Market"
         self.cg_mkt_name = "CG_Market"
@@ -112,17 +116,17 @@ class CGFirm(Firm):
         self.Ndc_t_1 = self.Ndc_t_1    
         self.Ndc_t = self.eq.ndct(self.K_ct.c_quantity, self.ud_ct)
   
-        self.N_ct = self.Ndc_t - self.Ndc_t_1
+        self.delta_N_ct = self.Ndc_t - self.Ndc_t_1
 
-        if self.N_ct > 0:
-            self.labor_demand.c_quantity = self.N_ct
-        elif self.N_ct < 0:
-            self.N_ct *= -1
-            self.lay_off(self.N_ct)
+        if self.delta_N_ct > 0:
+            self.labor_demand.c_quantity = self.delta_N_ct
+        elif self.delta_N_ct < 0:
+            self.delta_N_ct *= -1
+            self.lay_off(self.delta_N_ct)
 
-    def lay_off(self, N_ct):
+    def lay_off(self, delta_N_ct):
         """ Lay of the employees"""
-        self.bookkeeper.lay_off(N_ct) 
+        self.bookkeeper.lay_off(delta_N_ct) 
 
     def lay_off_from_turnover(self):
         """ Lay of the employees"""
@@ -171,7 +175,7 @@ class CGFirm(Firm):
                                       self.y_ct.c_quantity+1  # Cannot be zero???
                                      )
         
-    def compute_total_costs(self):
+    def compute_total_costs(self): # aqui
         """CG Firms compute the total costs:
             The costs include:
                 - Labor Costs
@@ -180,10 +184,7 @@ class CGFirm(Firm):
         """
 
 
-        self.C_ct = self.C_ct()
-
-
-
+        self.C_ct = self.eq.C_ct()
 
 
 
@@ -260,6 +261,11 @@ class CGFirm(Firm):
     def pay_wages(self):
 
         self.bookkeeper.pay_wages()
+
+    def workforce(self):
+        """Return the size of the workforce for the firm"""
+
+        self.N_ct = self.bookkeeper.workforce_size()
 
 
 

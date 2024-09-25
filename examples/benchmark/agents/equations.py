@@ -12,11 +12,10 @@ from equations import Equations
 
 
 Todo:
-    * Organize equations calss
+    * Organize equations calssf
 
 """
 
-from scipy.stats import foldnorm
 import numpy as np
 
 
@@ -25,6 +24,7 @@ class Equations():
     """ The equations class for the benchmark model implementation"""
     def __init__(self, active_scenario):
         self.active_scenario = active_scenario
+
 
         self.get_constants()
 
@@ -54,6 +54,10 @@ class Equations():
         # unemployment threshold
         self.u_w = self.active_scenario.u_w
 
+    def set_bookkeeper(self, bookkeeper):
+        """Set the bookkeeper for equations"""
+
+        self.bookkeeper = bookkeeper
 
 
 
@@ -132,9 +136,14 @@ class Equations():
 
         FN_mu = np.random.lognormal(1.0, 0.03)
         if inv_t_1/s_et <= self.nu:
-            return mu_xt + (1 + FN_mu)
+            mu_t = mu_xt + (1 + FN_mu)
         else:
-            return mu_xt + (1 - FN_mu)
+            mu_t = mu_xt + (1 - FN_mu)
+        
+        if mu_t < 0:
+            return mu_xt
+        else:
+            return mu_t
         
     def sales(self, s_ct):
         """Calculate sales value
@@ -184,6 +193,7 @@ class CGFirmEquations(Equations):
 
 
 
+
     def udct(self, yd_ct, kc_t):
         """Calculates rate of utilization of capital stock
 
@@ -215,15 +225,19 @@ class CGFirmEquations(Equations):
             ndct = ud_ct*(k_ct/self.l_k)
         return ndct
     
-    def C_ct(self):
+    def C_ct(self):  # aqui 
         """Compute total Costs (CGFirms)"""
+
+        return  self.W_ct() + self.Il_ct() + self.Ck_ct()
         
-        return self.W_ct() + self.Il_ct() + self.Ck_ct()
 
 
     def W_ct(self):
         """Compute Labor Costs"""
-        pass
+        
+        W_ct = self.bookkeeper.labor_costs()
+
+        return W_ct
 
 
     def Il_ct(self):
@@ -233,6 +247,26 @@ class CGFirmEquations(Equations):
     def Ck_ct(self):
         """Compute Capital Costs"""
         pass
+
+    def Sr_ct(self):
+        """Sales Revenue"""
+
+        return self.S_ct() + self.Id_ct() + self.Inv_ct()
+    
+    def S_ct(self):
+        """Sales Revenue"""
+        pass
+
+    def Id_ct(self):
+        """Interest on deposits"""
+        pass
+
+    def Inv_ct(self):
+        """Difference on inventory costs"""
+        pass
+
+
+
 
         
 

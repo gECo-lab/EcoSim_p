@@ -1,4 +1,4 @@
--{
+{
   "scenarios": [
     {
       "scenario_type": "Scenario",
@@ -208,95 +208,7 @@
                 "var_value": "grim_rcl",
                 "observed": true
                 }
-              ],
-              "TitForTatPlayer": [
-                {
-                  "var_name": "my_payoff",
-                  "var_type": "integer",
-                  "var_dist": "none",
-                  "var_value": 1,
-                  "observed": true
-                  },
-                  {
-                  "var_name": "my_play",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "C",
-                  "observed": true
-                  },
-                  {
-                  "var_name": "other_name",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": " ",
-                  "observed": true
-                  },
-                  {
-                  "var_name": "other_play",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "C",
-                  "observed": true
-                  },  
-                  {
-                  "var_name": "other_payoff",
-                  "var_type": "integer",
-                  "var_dist": "none",
-                  "var_value": 1,
-                  "observed": true
-                  },  
-                  {
-                  "var_name": "strategy_name",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "tft",
-                  "observed": true
-                  }
-                    ],  
-              "RancorousPlayer": [
-                {
-                  "var_name": "my_payoff",
-                  "var_type": "integer",
-                  "var_dist": "none",
-                  "var_value": 1,
-                  "observed": true
-                  },
-                  {
-                  "var_name": "my_play",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "C",
-                  "observed": true
-                  },
-                  {
-                  "var_name": "other_name",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": " ",
-                  "observed": true
-                  },
-                  {
-                  "var_name": "other_play",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "C",
-                  "observed": true
-                  },  
-                  {
-                  "var_name": "other_payoff",
-                  "var_type": "integer",
-                  "var_dist": "none",
-                  "var_value": 1,
-                  "observed": true
-                  },  
-                  {
-                  "var_name": "strategy_name",
-                  "var_type": "character",
-                  "var_dist": "none",
-                  "var_value": "grim",
-                  "observed": true
-                  }
-                    ]
+              ]
         }
     }
   ]

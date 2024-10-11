@@ -233,6 +233,12 @@ class CGFirm(Firm):
 
         self.N_ct = self.bookkeeper.workforce_size()
 
+    #######################################################
+    ##### Create Initial Values for agent variables
+    ##### NOTE: These initial Values must be included 
+    #           in the calibration file
+    #######################################################
+
     def create_initial_values(self):
         """
         Creates the initial values for various attributes of the CGFirm class.

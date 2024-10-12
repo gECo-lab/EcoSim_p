@@ -53,25 +53,31 @@ class CGFirm(Firm):
             self.create_initial_values()
             self.first = False
 
+        ## Production-Sales
         self.create_expectations()
         self.compute_desired_output()
         self.compute_capacity_utilization()
         self.compute_labor_demand()
         self.demand_labor()
         self.set_output_price()
-        self.compute_rate_of_capacity_growth()
-        self.compute_demand_of_K_goods()
-        self.choose_K_supplier()
-        self.compute_credit_demand()
-        self.select_lending_bank()
         self.produce()
         self.offer_goods()
-        self.buy_K_goods()
+        self.compute_sales()
+
+        ## Finance
         self.pay_loans()
         self.pay_wages()
         self.distribute_dividends()
         self.select_deposit_bank()
         self.pay_taxes()
+
+        ## Investiment
+        self.compute_rate_of_capacity_growth()
+        self.compute_demand_of_K_goods()
+        self.choose_K_supplier()
+        self.compute_credit_demand()
+        self.select_lending_bank()
+        self.buy_K_goods()
 
     def create_expectations(self):
         """Agent Creates Expectations"""
@@ -152,6 +158,10 @@ class CGFirm(Firm):
             self.y_ct.c_quantity + 1,  # Cannot be zero???
         )
 
+    def compute_sales(self):
+        
+
+
     def compute_total_costs(self):  # aqui
         """CG Firms compute the total costs:
         The costs include:
@@ -218,6 +228,17 @@ class CGFirm(Firm):
         self.bookkeeper.set_offer(space, self.inv_ct)
 
     def update_inventory(self, y):
+        """
+        Updates the inventory with the given inventory data.
+
+        This method updates the current inventory's price and quantity based on the 
+        provided inventory data `y`. The price is averaged between the current price 
+        and the new price, while the quantity is incremented by the new quantity.
+
+        Args:
+            y: An object containing the new inventory data with attributes `c_price` 
+               and `c_quantity`.
+        """
 
         self.inv_ct_1.c_quantity = self.inv_ct.c_quantity
 

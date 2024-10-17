@@ -77,50 +77,6 @@
             "observed": true
             }
             ],
-        "RandomPlayer": [
-          {
-            "var_name": "my_payoff",
-            "var_type": "integer",
-            "var_dist": "none",
-            "var_value": 1,
-            "observed": true
-            },
-            {
-            "var_name": "my_play",
-            "var_type": "character",
-            "var_dist": "none",
-            "var_value": "C",
-            "observed": true
-            },
-            {
-            "var_name": "other_name",
-            "var_type": "character",
-            "var_dist": "none",
-            "var_value": " ",
-            "observed": true
-            },
-            {
-            "var_name": "other_play",
-            "var_type": "character",
-            "var_dist": "none",
-            "var_value": "C",
-            "observed": true
-            },  
-            {
-            "var_name": "other_payoff",
-            "var_type": "integer",
-            "var_dist": "none",
-            "var_value": 1,
-            "observed": true
-            },  
-            {
-            "var_name": "strategy_name",
-            "var_type": "character",
-            "var_dist": "none",
-            "var_value": "random",
-            "observed": true
-            }
-            ],
             "TitForTatWithRecallPlayer": [
               {
                 "var_name": "my_payoff",

@@ -159,7 +159,7 @@ class CGFirm(Firm):
         )
 
     def compute_sales(self):
-        
+        pass
 
 
     def compute_total_costs(self):  # aqui

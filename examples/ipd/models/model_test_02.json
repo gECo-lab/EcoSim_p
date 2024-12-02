@@ -1,0 +1,64 @@
+{
+  "simulation_name": "ipd",
+  "simulation_parameters": [
+    {
+      "parameter_name": "total_payoff",
+      "parameter_value": 0.0
+    }
+  ],
+  "model_name": "ipd",
+  "schedule": [
+    {
+      "schedule_type": "MixedSchedule",
+      "schedule_name": "MyMxSchd"
+    }
+  ],
+  "spaces": [
+    {
+      "space_type": "IpdGame",
+      "space_name": "IpdGame",
+      "space_variables": {
+        "payoffs": 0.0
+      }
+    }
+  ],
+  "agents_classes":[
+    "GoodPlayer",
+    "BadPlayer",
+    "RandomPlayer",
+    "TitForTatPlayer",
+    "TitForTatWithRecallPlayer",
+    "RancorousPlayer",
+    "RancorousWithRecallPlayer"
+  ]
+  ,
+  "agents": [
+    {
+      "agent_type": "BadPlayer",
+      "agent_prefix": "BPl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 1,
+      "has_observer": true
+    },
+    {
+    "agent_type": "TitForTatWithRecallPlayer",
+    "agent_prefix": "TTRCLl",
+    "agent_spaces": [
+      "IpdGame"
+    ],
+    "no_of_agents": 1,
+    "has_observer": true
+    },
+    {
+      "agent_type": "RancorousWithRecallPlayer",
+      "agent_prefix": "Rancl",
+      "agent_spaces": [
+        "IpdGame"
+      ],
+      "no_of_agents": 1,
+      "has_observer": true
+    }
+  ]
+}

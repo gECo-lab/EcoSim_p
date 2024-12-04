@@ -3,11 +3,15 @@
 
 rm runs/*.csv
 
-cd ../..
+app_dir=$(pwd)
 
-python3 ecosimp.py examples/ipd/ config.json "models/model_test_01.json" "scenarios/scenarios_test_01.json"
+kernel_dir=$"/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p"
 
-cd examples/ipd
+cd "$kernel_dir"
+
+python3 ecosimp.py "$app_dir" "model_test_01.json" "scenarios_test_01.json"
+
+cd /home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/ipd/ipd/
 
 Rscript -e 'rmarkdown::render("analisys/ipd.rmd", output_format="html_document", output_dir="results")'
 

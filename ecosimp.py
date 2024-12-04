@@ -15,34 +15,29 @@ folder runs
 """
 # TODO: Generalize the location specs for the simulation 
 #       results files (actually in the folder runs)
+
 import sys
 from kernel.simulation import Simulation
 
 
-def new_simulation(path_to_model, model_config, model_defs, scenarios_defs):
+def new_simulation(app_dir, model_defs, scenarios_defs):
     """ This is the main simulation method 
         without a graphical interface.
-        This method receives 4 parameters:
-         - path_to_model - The path to the model that is executing
+        This method receives 3 parameters:
          - model_config - The configuration file for the model tha
            is executing
-         - model_defs - The model definition file
-         - scenario_defs - The scenarios definition file
+         - model_defs - The model definition file name
+         - scenario_defs - The scenarios definition file name
     """
 
-    config_file = path_to_model + model_config
-    model_file = path_to_model + model_defs
-    scenarios_file = path_to_model + scenarios_defs
-
-    new_sim = Simulation(config_file, model_file, scenarios_file)
+    new_sim = Simulation(app_dir, model_defs, scenarios_defs)
 
     new_sim.execute_simulation()
 
 
 if __name__ == "__main__":
 
-    path_to_model = str(sys.argv[1])
-    model_config = str(sys.argv[2])
-    model_defs = str(sys.argv[3])
-    scenarios_defs = str(sys.argv[4])
-    new_simulation(path_to_model, model_config, model_defs, scenarios_defs)
+    app_dir = str(sys.argv[1])
+    model_defs = str(sys.argv[2])
+    scenarios_defs = str(sys.argv[3])
+    new_simulation(app_dir, model_defs, scenarios_defs)

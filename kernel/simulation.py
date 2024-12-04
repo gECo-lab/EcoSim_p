@@ -6,8 +6,6 @@ Simulation Class (This implements a batch simulation)
 """
 
 
-## TODO: Reimplement depebdency injection
-
 import json
 import sys
 import datetime as dt
@@ -19,29 +17,45 @@ from kernel.model.basicModels import Model
 class Simulation(object):
     """This class implements a simulation"""
 
-    def __init__(self, simulation_config_file, model_file, scenarios_file):
+    def __init__(self, app_dir, model_file, scenarios_file):
         """ Initialize a Simulation """
-        self.simulation_config = None
+
+        self.simulation_config_file = app_dir + "/config.json"
+
+        with open(self.simulation_config_file) as read_file:
+            self.simulation_config = json.load(read_file)
+
         self.json_model_defs = None
         self.json_scenarios_defs = None 
         self.active_scenario = None
 
-        # Read the simulation configuration file
-        with open(simulation_config_file) as read_file:
-            self.simulation_config = json.load(read_file)
+
+
+
+        # Get Simulation Paths
+        self.path_to_app = self.simulation_config['paths']['app']
+        self.path_to_model = self.simulation_config['paths']['models']
+        self.path_to_scenarios = self.simulation_config['paths']['scenarios']
+        self.path_to_runs = self.simulation_config['paths']['runs']
+
+        self.model_file = self.path_to_model + model_file
+        self.scenarios_file = self.path_to_scenarios + scenarios_file
+
+
+        # # Read the simulation configuration file
+        # with open(self.config_file) as read_file:
+        #     self.simulation_config = json.load(read_file)
 
         # Initialize the model from a json file
-        with open(model_file) as read_file:
+        with open(self.model_file) as read_file:
             self.json_model_defs = json.load(read_file)
 
         # Initialize the simulation from a json file
-        with open(scenarios_file) as read_file:
+        with open(self.scenarios_file) as read_file:
             self.json_scenarios_defs = json.load(read_file)
 
-        # Get Simulation Paths
-        self.path_to_model = self.simulation_config['paths']['model']
-        self.path_to_results = self.simulation_config['paths']['results']
-        sys.path.insert(0, self.path_to_model)
+
+        sys.path.insert(0, self.path_to_app)
         self.initialize_simulation()
      
     def initialize_simulation(self):
@@ -64,7 +78,7 @@ class Simulation(object):
                            json_model_defs,
                            self.observers_def_list,
                            self.agents_to_create, 
-                           self.path_to_results)
+                           self.path_to_runs)
         
         # Create Scenarios
         self.create_scenarios()

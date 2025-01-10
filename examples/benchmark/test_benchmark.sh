@@ -11,11 +11,15 @@
 
 rm runs/*.csv
 
-cd ../..
+app_dir=$(pwd)
 
-python3 ecosimp.py examples/benchmark/ config.json models/test_model.json scenarios/test_scenarios.json
+kernel_dir=$"/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p"
 
-cd examples/benchmark
+cd "$kernel_dir"
+
+python3 ecosimp.py "$app_dir" "test_model.json" "test_scenarios.json"
+
+cd "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark"
 
 quarto render "analisys/benchmark.qmd" --output-dir=../results 
 

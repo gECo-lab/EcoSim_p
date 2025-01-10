@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """ Generic Firm from the basic macroeconomic model 
 
 Example:
@@ -25,46 +25,33 @@ Todo:
 from .agents import EconomicAgent
 
 
-
 class Firm(EconomicAgent):
-    """ Generic Firm """
+    """Generic Firm"""
+
     def __init__(self, simulation, model, agent_number, agent_def):
         super().__init__(simulation, model, agent_number, agent_def)
 
-       
-
     def step(self):
-        """ Firm Agent Step method """
+        """Firm Agent Step method"""
         ## Implemented By Subclass
 
-
     def compute_credit_demand(self):
-        """ Firm computes demand for credit """
-
+        """Firm computes demand for credit"""
 
     def select_lending_bank(self):
-        """ Firm selects lending bank in the credit market """
-
+        """Firm selects lending bank in the credit market"""
 
     def produce(self):
-        """ Firm produces output """
-
+        """Firm produces output"""
 
     def offer_goods(self):
-        """ Firm offer goods in a market"""
-
+        """Firm offer goods in a market"""
 
     def pay_loans(self):
-        """ Firm pays interest and share of principal on loans """
-
+        """Firm pays interest and share of principal on loans"""
 
     def pay_wages(self):
-        """ Firm pays wages to households (workers) """
+        """Firm pays wages to households (workers)"""
 
     def distribute_dividends(self):
-        """Firm distributes dividends to households
-        """
-
-
-
-
+        """Firm distributes dividends to households"""

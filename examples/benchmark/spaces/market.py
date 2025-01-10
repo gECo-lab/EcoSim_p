@@ -13,10 +13,12 @@ Todo:
 from kernel.space.basicSpaces import Space
 import random
 
+
 class Market(Space):
-    """ Abstract Market """
+    """Abstract Market"""
+
     def __init__(self, model, name, variables):
-        """ Intialize abstract market """
+        """Intialize abstract market"""
         super().__init__(model, name, variables)
         self.offers = {}
         self.demand = {}
@@ -25,7 +27,6 @@ class Market(Space):
     def update(self):
         """ """
         self.matching()
-
 
     def matching(self):
 
@@ -52,7 +53,9 @@ class Market(Space):
                         self.an_offer.c_quantity -= self.this_remaining_demand
                         self.this_remaining_demand = 0.0
                         self.have_unmet_demand = False
-                        self.seller.offer_partially_accepted(self.buyer, self.partial_offer)
+                        self.seller.offer_partially_accepted(
+                            self.buyer, self.partial_offer
+                        )
                         self.accepted_offers[self.seller.name] = self.partial_offer
                     if self.this_remaining_demand == 0:
                         self.have_unmet_demand = False
@@ -63,8 +66,6 @@ class Market(Space):
                     self.market_has_no_offers()
                     self.have_unmet_demand = False
                     self.buyer.get_accepted_offers(self.accepted_offers)
-
-
 
     def set_demand(self, an_owner, a_good):
         """
@@ -89,46 +90,45 @@ class Market(Space):
         """
         self.offers[an_owner.name] = a_good
 
-
     def get_demand(self):
-         """ Implements the maching in market """
-         if(self.market_type == "random"):
-             a_demand = self.random_demand_matching()
-         elif(self.market_type == "hop"):
-             a_demand = self.hop_demand_matching()
-         elif(self.market_type == "lop"):
-             a_demand = self.lop_demand_matching()
-         elif(self.market_type == "bhop"):
-             a_demand = self.bhop_demand_matching()
-         elif(self.market_type == "blop"):
-             a_demand = self.blop_demand_matching()
-         else:
-             # Add error treatment here
-             raise ValueError("Invalid market matching type")
-         return a_demand
-    
+        """Implements the maching in market"""
+        if self.market_type == "random":
+            a_demand = self.random_demand_matching()
+        elif self.market_type == "hop":
+            a_demand = self.hop_demand_matching()
+        elif self.market_type == "lop":
+            a_demand = self.lop_demand_matching()
+        elif self.market_type == "bhop":
+            a_demand = self.bhop_demand_matching()
+        elif self.market_type == "blop":
+            a_demand = self.blop_demand_matching()
+        else:
+            # Add error treatment here
+            raise ValueError("Invalid market matching type")
+        return a_demand
+
     def get_offer(self):
-         """ Implements the maching in market """
-         if(self.market_type == "random"):
-             an_offer = self.random_offer_matching()
-         elif(self.market_type == "hop"):
-             an_offer = self.hop_offer_matching()
-         elif(self.market_type == "lop"):
-             an_offer = self.lop_offer_matching()
-         elif(self.market_type == "bhop"):
-             an_offer = self.bhop_offer_matching()
-         elif(self.market_type == "blop"):
-             an_offer = self.blop__offer_matching()
-         else:
-             # Add error treatment here
-             raise ValueError("Invalid market matching type")
-         return an_offer
+        """Implements the maching in market"""
+        if self.market_type == "random":
+            an_offer = self.random_offer_matching()
+        elif self.market_type == "hop":
+            an_offer = self.hop_offer_matching()
+        elif self.market_type == "lop":
+            an_offer = self.lop_offer_matching()
+        elif self.market_type == "bhop":
+            an_offer = self.bhop_offer_matching()
+        elif self.market_type == "blop":
+            an_offer = self.blop__offer_matching()
+        else:
+            # Add error treatment here
+            raise ValueError("Invalid market matching type")
+        return an_offer
 
     def random_demand_matching(self):
-        """ Randomly pop a demand from the demand dictionary and return it """
+        """Randomly pop a demand from the demand dictionary and return it"""
         if not self.demand:
             raise ValueError("No demand available in market ", self.name)
-        else:   
+        else:
             a_demand = self.demand.popitem()[1]
             return a_demand
 
@@ -156,30 +156,29 @@ class Market(Space):
     def blop_offer_matching(self):
         pass
 
-
     def market_has_no_offers(self):
         self.demand = {}
-        
+
     def has_offers(self):
-        """ A market answers if is has offers (True or False) """
+        """A market answers if is has offers (True or False)"""
         if not self.offers:
             return False
         else:
             return True
 
     def has_demand(self):
-        """ A market answers if is has demand (True or False) """
+        """A market answers if is has demand (True or False)"""
         if not self.demand:
             return False
         else:
             return True
 
     def no_of_offers(self):
-        """ A market answers the number of offers it has """
+        """A market answers the number of offers it has"""
         return self.offers.__len__()
-        
+
     def random_offer_matching(self):
-        """ Randomly get an item from self.offers dict without excluding it from dict """
+        """Randomly get an item from self.offers dict without excluding it from dict"""
         if not self.offers:
             raise ValueError("No offers available in market ", self.name)
         else:
@@ -187,23 +186,20 @@ class Market(Space):
             return offer
 
     def release_demand(self):
-        """Inform the bider that their demand was not satisfied
-        """
+        """Inform the bider that their demand was not satisfied"""
         for demand in self.demand.values():
             demand.c_owner.release_demand()
             self.demand = {}
 
     def release_offers(self):
-        """Inform the producers/household that their offer was not bought
-        """
+        """Inform the producers/household that their offer was not bought"""
         self.offers = {}
 
     def set_partial_offer(self, an_offer):
         partial_offer = type(an_offer)()
         partial_offer = an_offer.copy_attributes(partial_offer)
         return partial_offer
-  
-   
+
 
 class CGMarket(Market):
     """Consumers Goods Market
@@ -211,6 +207,7 @@ class CGMarket(Market):
     Args:
         Market (_type_): _description_
     """
+
     def __init__(self, model, name, variables):
         super().__init__(model, name, variables)
 
@@ -224,5 +221,3 @@ class LaborMarket(Market):
 
     def __init__(self, model, name, variables):
         super().__init__(model, name, variables)
-
-        

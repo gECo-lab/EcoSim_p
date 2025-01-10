@@ -2,6 +2,7 @@
 from .goods import Good, ConsumptionGood, Cash
 import random
 
+
 class Bookkeeper:
     """
     Represents a balance sheet for an agent in an economic simulation.
@@ -14,7 +15,7 @@ class Bookkeeper:
         cash (Cash): The amount of cash owned by the agent.
 
     Methods:
-        __init__(self, owner, assets=None, liabilities=None, cash_flow=None, cash=None): 
+        __init__(self, owner, assets=None, liabilities=None, cash_flow=None, cash=None):
             Initializes a new instance of the Bookkeeper class.
         include_asset(self, asset): Includes an asset in the balance sheet.
         exclude_asset(self, asset): Excludes an asset from the balance sheet.
@@ -26,7 +27,6 @@ class Bookkeeper:
         pay(self, an_agent_balance_sheet, quantity): Pays a specified amount to another agent.
         receive(self, quantity): Receives a specified amount of money.
     """
-
 
     def __init__(self, owner, assets=None, liabilities=None, cash=None):
         self.owner = owner
@@ -46,14 +46,13 @@ class Bookkeeper:
             self.liabilities = {}
 
         if cash is not None:
-           my_cash = Cash(c_quantity=cash)
+            my_cash = Cash(c_quantity=cash)
         else:
-           my_cash = Cash(c_quantity=0.0)
+            my_cash = Cash(c_quantity=0.0)
         self.assets[my_cash.c_name] = my_cash
 
         self.offer = None
-        self.loans={}
-            
+        self.loans = {}
 
     def include_asset(self, asset):
         """
@@ -65,13 +64,14 @@ class Bookkeeper:
         Raises:
             ValueError: If the asset is not an instance of the Good class.
         """
-        
+
         if asset.c_name in self.assets:
             existing_asset = self.assets[asset.c_name]
             existing_asset.c_quantity += asset.c_quantity
             existing_asset.c_price = (existing_asset.c_price + asset.c_price) / 2
         else:
             self.assets[asset.c_name] = asset
+
     def exclude_asset(self, asset):
         """
         Excludes an asset from the balance sheet.
@@ -83,7 +83,6 @@ class Bookkeeper:
             del self.assets[asset.c_name]
         else:
             raise ValueError("Asset not found in balance sheet.")
- 
 
     def include_liability(self, liability):
         """
@@ -99,7 +98,9 @@ class Bookkeeper:
         if liability.c_name in self.liabilities:
             existing_liability = self.liabilities[liability.c_name]
             existing_liability.c_quantity += liability.c_quantity
-            existing_liability.c_price = (existing_liability.c_price + liability.c_price) / 2
+            existing_liability.c_price = (
+                existing_liability.c_price + liability.c_price
+            ) / 2
         else:
             self.liabilitys[liability.c_name] = liability
 
@@ -114,7 +115,6 @@ class Bookkeeper:
             del self.assets[liability.c_name]
         else:
             raise ValueError("Liability not found in balance sheet.")
-
 
     def have_money(self, quantity):
         """
@@ -132,7 +132,6 @@ class Bookkeeper:
         else:
             raise ValueError("Cash not found in Balance Sheet")
 
-
     def pay(self, an_agent, quantity):
         """
         Pays a specified amount to another agent.
@@ -149,7 +148,7 @@ class Bookkeeper:
             an_agent.bookkeeper.receive(quantity)
             return True
         else:
-            return False        
+            return False
 
     def receive(self, quantity):
         """
@@ -161,38 +160,32 @@ class Bookkeeper:
         self.assets["cash"].c_quantity += quantity
         # TODO: If the agent is a firm, needs to update sales.
 
-
     def got_good(self, a_good):
-            # TODO: Este métodoo precisa de revisão
-            # É ncessário lidar com ativo e passivo para os bens.
+        # TODO: Este métodoo precisa de revisão
+        # É ncessário lidar com ativo e passivo para os bens.
 
-            self.include_asset(a_good)
+        self.include_asset(a_good)
 
-      
     def set_offer(self, space, offer):
         self.offer = offer
         space.set_offer(self.owner, self.offer)
 
+    def offer_accepted(
+        self,
+        buyer,
+    ):
 
-    def offer_accepted(self, 
-                       buyer, 
-                       ):
-        
         buyer.bookkeeper.pay(self.owner, self.offer.ammount())
         self.offer.c_owner = buyer
         buyer.bookkeeper.got_good(self.offer)
         self.owner.release_offer(self.offer)
 
-    def offer_partially_accepted(self, 
-                                 buyer,
-                                 an_offer 
-                       ):
-        
+    def offer_partially_accepted(self, buyer, an_offer):
+
         buyer.bookkeeper.pay(self.owner, an_offer.ammount())
         an_offer.c_owner = buyer
         buyer.bookkeeper.got_good(an_offer)
         self.offer.c_quantity -= an_offer.c_quantity
-
 
     def get_accepted_offers(self, accepted_offers):
 
@@ -208,13 +201,11 @@ class Bookkeeper:
 class FirmBookkeeper(Bookkeeper):
     """Bookkeeper for the firms"""
 
-
     def __init__(self, owner, assets=None, liabilities=None, cash=None):
-            super().__init__(owner, assets, liabilities, cash)
+        super().__init__(owner, assets, liabilities, cash)
 
-            self.workforce = {}
-            self.capital_stock = {}
-                
+        self.workforce = {}
+        self.capital_stock = {}
 
     def add_to_capital_stock(self, accepted_offers):
 
@@ -222,13 +213,13 @@ class FirmBookkeeper(Bookkeeper):
         id = last_k_eq.c_id
 
         for k_good in accepted_offers.values():
-            id = id+1
+            id = id + 1
             k_good.c_id = id
             k_good.c_owner = self.owner
             self.capital_stock[id] = k_good
 
     def add_to_workforce(self, accepted_offers):
- 
+
         for labor in accepted_offers.values():
             labor.c_owner = self.owner
             worker = labor.c_producer
@@ -243,7 +234,6 @@ class FirmBookkeeper(Bookkeeper):
                 labor = self.workforce.pop(worker)
                 self.assets["labor"].c_quantity -= labor.c_quantity
                 worker.is_unemployed()
-        
 
     def lay_off_from_turnover(self, upsilon):
         lay_offs = int(len(self.workforce) * upsilon)
@@ -254,34 +244,32 @@ class FirmBookkeeper(Bookkeeper):
             self.assets["labor"].c_quantity -= labor.c_quantity
             worker.is_unemployed()
 
-    
     def pay_wages(self):
         # NOTE: Salários negativos ou zero e muito grandes. Checar.
 
         for worker, labor in self.workforce.items():
             wage = labor.ammount()
             self.pay(worker, wage)
-     
+
     def labor_costs(self):
         """Calculate labor costs"""
         W_ct = 0
         for worker, labor in self.workforce.items():
             W_ct += labor.ammount()
-            
+
         return W_ct
-    
+
     def workforce_size(self):
         """Size of the workforce in the firm"""
 
         return len(self.workforce)
 
-        
 
-  
 class HHBookkeeper(Bookkeeper):
 
-    def __init__(self, owner, assets=None, liabilities=None, 
-                 cash=None, consumption=None):
+    def __init__(
+        self, owner, assets=None, liabilities=None, cash=None, consumption=None
+    ):
         super().__init__(owner, assets, liabilities, cash)
 
         if consumption is not None:
@@ -290,9 +278,7 @@ class HHBookkeeper(Bookkeeper):
             else:
                 raise ValueError("consumption must be a dictionary.")
         else:
-            self.consumption = ConsumptionGood(c_name=owner.name,
-                                               c_owner=self.owner)
-        
+            self.consumption = ConsumptionGood(c_name=owner.name, c_owner=self.owner)
 
     def got_good(self, a_good):
 
@@ -304,38 +290,32 @@ class HHBookkeeper(Bookkeeper):
             self.add_labor(a_good)
         elif a_good.c_category == "k":
             self.include_asset(a_good)
-        else: 
+        else:
             raise ValueError("Asset must be a Good")
-    
 
     def add_consumption_goods(self, consumption):
-        
-        self.consumption.c_quantity = consumption.c_quantity
-        self.consumption.c_price = (self.consumption.c_price +
-                                    consumption.c_price)/2
 
+        self.consumption.c_quantity = consumption.c_quantity
+        self.consumption.c_price = (self.consumption.c_price + consumption.c_price) / 2
 
     def create_labor_capacity(self, labor):
 
         if labor.c_category == "w":
-            self.assets['labor'] = labor
+            self.assets["labor"] = labor
         else:
             raise ValueError("object needs to be from Labor class")
-        
 
     def add_labor(self, labor):
 
         if labor.c_name in self.assets:
             contracted_labor = self.assets[labor.c_name]
             contracted_labor.c_quantity += labor.c_quantity
-            contracted_labor.c_price = (contracted_labor.c_price + labor._c_price)/2
+            contracted_labor.c_price = (contracted_labor.c_price + labor._c_price) / 2
             self.workforce[labor.c_producer] = labor
-
 
     def is_unemployed(self):
 
         self.assets["labor"].c_quantity = 0.0
-
 
     def calculate_income(self):
 

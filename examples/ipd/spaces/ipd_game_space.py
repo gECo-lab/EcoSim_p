@@ -7,9 +7,9 @@ from kernel.space.basicSpaces import Space
 class IpdGame(Space):
     """ Abstract Market """
     STRATEGY = ['C', 'D']
-    PAYOFFS = {'CC': [3, 3],
-               'CD': [0, 5],
-               'DC': [5, 0],
+    PAYOFFS = {'CC': [4, 4],
+               'CD': [0, 7],
+               'DC': [7, 0],
                'DD': [1, 1]}
 
     def __init__(self, 

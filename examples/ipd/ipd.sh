@@ -1,15 +1,17 @@
 model=$1
 scenarios=$2
-
+kernel=$3
 . venv
 
 rm runs/*.csv
 
-cd ../..
+app_dir=$(pwd)
 
-python3 ecosimp.py examples/ipd/ config.json "$model" "$scenarios"
+cd "$kernel"
 
-cd examples/ipd
+python3 ecosimp.py "$app_dir" "$model" "$scenarios"
+
+cd "$app_dir"
 
 Rscript -e 'rmarkdown::render("analisys/ipd.rmd", output_format="html_document", output_dir="results")'
 

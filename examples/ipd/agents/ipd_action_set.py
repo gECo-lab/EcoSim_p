@@ -89,7 +89,8 @@ class TitForTat(Strategy):
         self.strategy = ["D", "C"]
 
         self.other_last_strategy = random.choice(self.strategy)
-        self.selected_strategy = random.choice(self.strategy)
+        #self.selected_strategy = random.choice(self.strategy)
+        self.selected_strategy = "c"
         self.others = {}
 
     def update_game(self, aGame):
@@ -170,9 +171,7 @@ class Rancorous(Strategy):
         """ Rancorous Strategy """
         self.recall_games(other_player)
         
-        if self.anyone_defected:
-            self.selected_strategy = "D"
-        elif self.last_game.other_play == "D":
+        if self.last_game.other_play == "D":
             self.selected_strategy = "D"
             self.anyone_defected = True
         else:

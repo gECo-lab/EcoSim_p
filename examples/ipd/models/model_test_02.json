@@ -30,33 +30,16 @@
     "TitForTatWithRecallPlayer",
     "RancorousPlayer",
     "RancorousWithRecallPlayer"
-  ],
+  ]
+  ,
   "agents": [
-    {
-      "agent_type": "GoodPlayer",
-      "agent_prefix": "GPl",
-      "agent_spaces": [
-        "IpdGame"
-      ],
-      "no_of_agents": 10,
-      "has_observer": true
-    },
     {
       "agent_type": "BadPlayer",
       "agent_prefix": "BPl",
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 10,
-      "has_observer": true
-    },
-    {
-      "agent_type": "RandomPlayer",
-      "agent_prefix": "RPl",
-      "agent_spaces": [
-        "IpdGame"
-      ],
-      "no_of_agents": 10,
+      "no_of_agents": 1,
       "has_observer": true
     },
     {
@@ -65,7 +48,7 @@
     "agent_spaces": [
       "IpdGame"
     ],
-    "no_of_agents": 10,
+    "no_of_agents": 1,
     "has_observer": true
     },
     {
@@ -74,7 +57,7 @@
       "agent_spaces": [
         "IpdGame"
       ],
-      "no_of_agents": 10,
+      "no_of_agents": 1,
       "has_observer": true
     }
   ]

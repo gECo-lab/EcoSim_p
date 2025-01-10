@@ -28,7 +28,7 @@ class Model:
     Creates all objects in the Simulation
     """
 
-    def __init__(self, simulation, json_model_defs, observers_def, agents_to_create, path_to_results):
+    def __init__(self, simulation, json_model_defs, observers_def, agents_to_create, path_to_runs):
         """Load the definitions of the json file"""
         self.seed = time.time()
         self.random = rnd.Random(self.seed)
@@ -46,7 +46,7 @@ class Model:
 
         self.create_schedule(self.schedule_def)
         self.create_spaces()
-        self.create_observers(observers_def, path_to_results)
+        self.create_observers(observers_def, path_to_runs)
 
 
     def create_schedule(self, schedule_def):
@@ -108,7 +108,7 @@ class Model:
         self.enter_model(self.new_agent.name, self.new_agent)
 
 
-    def create_observers(self, observers_def, path_to_results):
+    def create_observers(self, observers_def, path_to_runs):
         """
         Access the ObserverFactory (ObserverCreator).
         Create the Observers
@@ -116,7 +116,7 @@ class Model:
         self.agent_observers = {}
         self.agent_observers_def = observers_def
         self.agent_observers_pop = ObserverCreator(self, self.simulation,
-                                                   self.agent_observers_def, path_to_results)
+                                                   self.agent_observers_def, path_to_runs)
         self.agent_observers = self.agent_observers_pop.observers
 
 

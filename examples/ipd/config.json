@@ -2,8 +2,11 @@
   "Description": "Configuration file for the ipd model",
   "paths":
     {
-      "kernel": "kernel/",
-      "model": "examples/ipd/",
-      "results": "examples/ipd/runs/"
+      "kernel": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/kernel/",
+      "app": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/",
+      "models": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/models/",
+      "scenarios": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/scenarios/",
+      "runs": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/runs/",
+      "results": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/ipd/results/"
     }
 }

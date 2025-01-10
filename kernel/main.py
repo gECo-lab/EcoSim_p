@@ -23,9 +23,14 @@ def new_simulation(path_to_model, model_config, model_defs, scenarios_defs):
         scenario_defs - The scenarios definition file
     """
 
-    config_file = path_to_model + model_config
-    model_file = path_to_model + model_defs
-    scenarios_file = path_to_model + scenarios_defs
+    #config_file = path_to_model + model_config
+    #model_file = path_to_model + model_defs
+    #scenarios_file = path_to_model + scenarios_defs
+
+    config_file = model_config
+    model_file = model_defs
+    scenarios_file = scenarios_defs
+
 
     new_sim = simulation.Simulation(config_file, model_file, scenarios_file)
 

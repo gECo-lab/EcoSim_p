@@ -2,8 +2,11 @@
   "Description": "Configuration file for the macroeconomic model",
   "paths":
     {
-      "kernel": "kernel/",
-      "model": "examples/benchmark/",
-      "results": "examples/benchmark/runs/"
+      "kernel": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/kernel/",
+      "app": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/",
+      "models": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/models/",
+      "scenarios": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/scenarios/",
+      "runs": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/runs/",
+      "results": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/examples/benchmark/results/"      
     }
 }
